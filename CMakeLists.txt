@@ -16,6 +16,10 @@ target_link_libraries(game_text game)
 include(CTest) 
 enable_testing() 
 
-# rdubernard
+# test rdubernard
 add_executable(game_test_rdubernard game_test_rdubernard.c)
 add_test(game_test_rdubernard ./game_test_rdubernard dummy)
+
+# TODO(game_test_ibensaad)
+# TODO(game_test_gifrim)
+
