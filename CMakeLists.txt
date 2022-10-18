@@ -20,6 +20,11 @@ enable_testing()
 add_executable(game_test_rdubernard game_test_rdubernard.c)
 add_test(game_test_rdubernard ./game_test_rdubernard dummy)
 
+# test gifrim
+add_executable(game_test_gifrim game_test_gifrim.c)
+add_test(game_test_gifrim ./game_test_gifrim dummy)
+
+
 # TODO(game_test_ibensaad)
-# TODO(game_test_gifrim)
+
 
