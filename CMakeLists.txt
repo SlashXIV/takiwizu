@@ -25,6 +25,9 @@ add_executable(game_test_gifrim game_test_gifrim.c)
 add_test(game_test_gifrim ./game_test_gifrim dummy)
 
 
-# TODO(game_test_ibensaad)
+# test game_test_ibensaad
+
+add_executable(game_test_ibensaad game_test_ibensaad.c)
+add_test(game_test_ibensaad ./game_test_ibensaad dummy)
 
 
