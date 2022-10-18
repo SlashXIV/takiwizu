@@ -17,7 +17,7 @@ bool test_dummy(){
 // MAIN ROUTINE
 int main(int argc, char *argv[]){
     // CMD CONTAIN ONLY EXECUTABLE (0 ARGS)
-    if (argc == 1){
+    if (argc == 1 || argc > 2){
         usage(argv[0]);
     }
     
