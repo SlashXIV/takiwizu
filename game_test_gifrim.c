@@ -32,12 +32,8 @@ int main(int argc, char *argv[]){
         return EXIT_SUCCESS;
     } else {
         fprintf(stderr, "=> Test \"%s\" finished: FAILURE\n", argv[1]);
-        return EXIT_SUCCESS;
+        return EXIT_FAILURE;
     }
 
-
-
-
-    return EXIT_SUCCESS;
 
 }
