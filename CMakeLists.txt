@@ -25,10 +25,11 @@ add_executable(test_gifrim_dummy game_test_gifrim.c)
 add_test(test_gifrim_dummy ./test_gifrim_dummy dummy)
 
 
-# test game_test_ibensaad
+# test ibensaad
 
 add_executable(game_test_ibensaad game_test_ibensaad.c)
-add_test(game_test_ibensaad ./game_test_ibensaad dummy)
+add_test(game_test_ibensaad ./game_test_ibensaad_dummy)
 
 
 # test game.h
+ 
