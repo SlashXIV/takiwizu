@@ -12,20 +12,26 @@ add_executable(game_text game_text.c) # FINAL EXEC
 # [====== LIBRARY LINK ======]
 target_link_libraries(game_text game)
 
-# [====== DUMMY TESTS ======]
+# [====== TESTS ======]
 include(CTest)
 enable_testing()
 
-# -> dummy test (rdubernard)
+# TESTS EXES OF EACH MEMBERS
 add_executable(game_test_rdubernard game_test_rdubernard.c)
-add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
+target_link_libraries(game_test_rdubernard game)
+
+
+add_executable(game_test_gifrim game_test_gifrim.c)
+add_executable(game_test_ibensaad game_test_ibensaad.c)
 
 # -> dummy test (gifrim)
-add_executable(game_test_gifrim game_test_gifrim.c)
 add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 
 # -> dummy test (ibensaad)
-add_executable(game_test_ibensaad game_test_ibensaad.c)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 
-# [====== GAME TESTS ======]
+# [====== GAME TESTS ROBIN ======]
+
+
+add_test(test_rdubernard_dummy ./game_test_rdubernard dummy) 
+add_test(test_rdubernard_get_square ./game_test_rdubernard get_square)
