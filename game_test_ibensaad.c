@@ -9,7 +9,7 @@ void usage(char * command){
     exit(EXIT_FAILURE);
 }
 
-bool testDummy(){
+bool test_dummy(){
     return true;
 }
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
 
     if(!strcmp(argv[1],"dummy")){
 
-        okey = testDummy();
+        okey = test_dummy();
 
     }
     
