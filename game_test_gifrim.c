@@ -9,14 +9,14 @@ void usage_gifrim(int argc) {
     exit(EXIT_FAILURE);
 }
 
-bool dummy() {
+bool test_dummy() {
     return true;
 }
 
 
 int main(int argc, char *argv[]){
 
-    bool ok = dummy();
+    bool ok = test_dummy();
 
     if(argc < 2 || argc > 2)
         usage_gifrim(argc);
