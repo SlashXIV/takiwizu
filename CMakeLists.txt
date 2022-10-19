@@ -22,13 +22,13 @@ add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
 
 # test gifrim
 add_executable(game_test_gifrim game_test_gifrim.c)
-add_test(game_test_gifrim ./game_test_gifrim dummy)
+add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 
 
 # test ibensaad
 
 add_executable(game_test_ibensaad game_test_ibensaad.c)
-add_test(game_test_ibensaad ./game_test_ibensaad dummy)
+add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 
 
 # test game.h
