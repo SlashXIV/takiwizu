@@ -28,7 +28,7 @@ add_test(test_gifrim_dummy ./test_gifrim_dummy dummy)
 # test ibensaad
 
 add_executable(game_test_ibensaad game_test_ibensaad.c)
-add_test(game_test_ibensaad ./game_test_ibensaad_dummy)
+add_test(game_test_ibensaad ./game_test_ibensaad dummy)
 
 
 # test game.h
