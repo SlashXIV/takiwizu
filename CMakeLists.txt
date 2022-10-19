@@ -16,7 +16,7 @@ target_link_libraries(game_text game)
 include(CTest)
 enable_testing()
 
-# TESTS EXES OF EACH MEMBERS
+# TEST EXES OF EACH MEMBERS
 add_executable(game_test_rdubernard game_test_rdubernard.c)
 target_link_libraries(game_test_rdubernard game)
 
@@ -31,7 +31,5 @@ add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 
 # [====== GAME TESTS ROBIN ======]
-
-
-add_test(test_rdubernard_dummy ./game_test_rdubernard dummy) 
+add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
 add_test(test_rdubernard_get_square ./game_test_rdubernard get_square)
