@@ -24,6 +24,23 @@ bool test_default_solution(){
     
 }
 
+bool test_game_default(){
+    game g = game_default();
+
+    //On test si certains élément ne sont pas dans la grille du jeu:
+
+    if(game_get_square(g,0,1)!=S_IMMUTABLE_ONE){
+        return false;
+    }
+    if(game_get_square(g,0,2)!=S_IMMUTABLE_ZERO){
+        return false;
+    }
+    if(game_get_square(g,1,0)!=S_EMPTY){
+        return false;
+    }
+    return true;
+}
+
 int main(int argc, char *argv[]){
 
 
@@ -46,6 +63,12 @@ int main(int argc, char *argv[]){
     else if(!strcmp(argv[1],"default_solution")){
         okey = test_default_solution();
 
+    }
+
+//Test game_default:
+
+    else if(!strcmp(argv[1],"default")){
+        okey = test_game_default();
     }
 
     else {
