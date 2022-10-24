@@ -29,6 +29,8 @@ add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 
 # -> dummy test (ibensaad)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
+add_test(test_ibensaad_default_solution ./game_test_ibensaad default_solution)
+target_link_libraries(game_test_ibensaad game)
 
 # [====== GAME TESTS ROBIN ======]
 add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
