@@ -29,17 +29,15 @@ target_link_libraries(game_test_gifrim game)
 add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 add_test(test_gifrim_game_check_move ./game_test_gifrim game_check_move)
 add_test(test_gifrim_game_has_error ./game_test_gifrim game_has_error)
-#add_test(test_gifrim_game_is_immutable ./game_test_gifrim game_is_immutable)
+add_test(test_gifrim_game_is_immutable ./game_test_gifrim game_is_immutable)
 add_test(test_gifrim_game_is_empty ./game_test_gifrim game_is_empty)
-#add_test(test_gifrim_game_get_number ./game_test_gifrim game_get_number)
+add_test(test_gifrim_game_get_number ./game_test_gifrim game_get_number)
 
 # -> dummy test (ibensaad)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 add_test(test_ibensaad_default_solution ./game_test_ibensaad default_solution)
 add_test(test_ibensaad_default ./game_test_ibensaad default)
-add_test(test_ibensaad_restart ./game_test_ibensaad restart)
 target_link_libraries(game_test_ibensaad game)
-
 
 # [====== GAME TESTS ROBIN ======]
 add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
