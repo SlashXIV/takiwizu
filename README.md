@@ -1,4 +1,4 @@
-<pre>
+
 <center>Voici le projet <ins>Takuzu</ins> de l'équipe <ins>TM06A</ins></center> 
 
 Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes effectuées lors de ce projet :
@@ -15,6 +15,31 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 En attente des prochains TD... :hourglass:
 
 
+<img src="https://www.knightfeatures.com/digital/takuzu-html5" width="80" height="80"/>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
@@ -32,13 +57,6 @@ En attente des prochains TD... :hourglass:
 
 
 
-
-
-
-
-
-
-</pre>
 ### Petit bonus, voici la toute première version du fichier `README.md` ↓
 
 # Modification de Gab  
