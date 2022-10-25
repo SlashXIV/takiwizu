@@ -188,21 +188,22 @@ int main(int argc, char *argv[]){
         ok = test_game_has_error();
 
     }
-
+/*
     else if(!strcmp(argv[1],"game_is_immutable")){
         ok = test_game_is_immutable();
 
-    }
+    }*/
 
     else if(!strcmp(argv[1],"game_is_empty")){
         ok = test_game_is_empty();
 
     }
 
+/*
     else if(!strcmp(argv[1],"game_get_number")){
         ok = test_game_get_number();
 
-    }
+    }*/
 
 
     // TEST RESULTS
