@@ -29,7 +29,6 @@ bool test_get_square(void){
     game_play_move(g, 0, 0, S_ONE);
     game_play_move(g, 0, 5, S_ZERO);
 
-    game_print(g);
     // game_default() each total square on this basic configuration
     unsigned int total_empty = 25;
     unsigned int total_immutable_white = 6;
@@ -93,6 +92,7 @@ bool test_get_square(void){
         cpt_immutable_white == total_immutable_white
     );
 
+    game_delete(g);
 
     // découle de l'utilisation itérée de game_get_square()
     return values_matches;
@@ -134,6 +134,7 @@ bool test_set_square(void){
         return false;
     }
 
+    game_delete(g);
     return true;
 }
 
@@ -166,8 +167,13 @@ bool test_game_equal(){
         return false;
     }
 
+    game_delete(g_empty);
+    game_delete(g_default);
+    game_delete(g_end);
+
     return true;
 }
+
 // ISSUE 3 -> game_copy()
 bool test_game_copy(){
     game g_default_primal = game_default();
@@ -177,11 +183,25 @@ bool test_game_copy(){
         return false;
     } 
     
+    game_delete(g_default_clone);
+    game_delete(g_default_primal);
+
     return true;
 }
 
-// -> game_copy()          
-// -> game_new_empty()     
+// ISSUE 2 -> game_new_empty()
+bool test_game_new_empty(){
+    game g = game_new_empty();
+
+    for (int x = 0; x < DEFAULT_SIZE; x++){
+        for (int y = 0; y < DEFAULT_SIZE ; y++){
+            if (game_get_square(g, x, y) != S_EMPTY){
+                return false;
+            }
+        }
+    }
+    game_delete(g);
+}
 // -> game_new()           
 
 
