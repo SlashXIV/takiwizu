@@ -29,7 +29,6 @@ bool test_get_square(void){
     game_play_move(g, 0, 0, S_ONE);
     game_play_move(g, 0, 5, S_ZERO);
 
-    game_print(g);
     // game_default() each total square on this basic configuration
     unsigned int total_empty = 25;
     unsigned int total_immutable_white = 6;
@@ -83,16 +82,6 @@ bool test_get_square(void){
             }
         }    
     }
-    // printf("counted :\n");
-
-    // printf("\tI white =%d\n", cpt_immutable_white);
-    // printf("\tI black =%d\n", cpt_immutable_black);
-  
-    // printf("\n");
-
-    // printf("\twhite = %d\n", cpt_white);
-    // printf("\tblack = %d\n", cpt_black);
-    // printf("\tempty = %d\n", cpt_empty);
 
     // verifying that the values match 
     bool values_matches = (
@@ -103,16 +92,116 @@ bool test_get_square(void){
         cpt_immutable_white == total_immutable_white
     );
 
+    game_delete(g);
 
     // découle de l'utilisation itérée de game_get_square()
     return values_matches;
 }
 
-// -> game_set_square()
-// -> game_delete()        
-// -> game_equal()         
-// -> game_copy()          
-// -> game_new_empty()     
+// ISSUE #6 -> game_set_square()
+bool test_set_square(void){
+    // GENERATE EMPTY GAME
+    game g = game_new_empty();
+
+    // FILLING FIRST ROW OF EACH SQUARE AND CHECKING IF IT WORKED
+    // -> 'B'
+    game_set_square(g, 0, 0, S_IMMUTABLE_ONE);
+    if (game_get_square(g, 0, 0) != S_IMMUTABLE_ONE){
+        return false;
+    }
+
+    // -> 'W'
+    game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
+    if (game_get_square(g, 0, 1) != S_IMMUTABLE_ZERO){
+        return false;
+    }
+    
+    // -> 'b'
+    game_set_square(g, 0, 2, S_ONE);
+    if (game_get_square(g, 0, 2) != S_ONE){
+        return false;
+    }
+
+    // -> 'w'
+    game_set_square(g, 0, 3, S_ZERO);
+    if (game_get_square(g, 0, 3) != S_ZERO){
+        return false;
+    }
+
+    // -> ' '
+    game_set_square(g, 0, 3, S_EMPTY);
+    if (game_get_square(g, 0, 3) != S_EMPTY){
+        return false;
+    }
+
+    game_delete(g);
+    return true;
+}
+
+// ISSUE #5 -> game_delete()
+bool test_game_delete(){
+    game g = game_new_empty();
+    game_delete(g);
+    return true;
+}        
+
+// ISSUE #4 -> game_equal()
+bool test_game_equal(){
+    game g_empty = game_new_empty();
+    game g_default = game_default();
+    game g_end = game_default_solution();
+
+    if (!game_equal(g_end, g_end)){
+        return false;
+    }
+
+    if (game_equal(g_empty, g_default)){
+        return false;
+    }
+
+    if (!game_equal(g_empty, g_empty)){
+        return false;
+    }
+
+    if (game_equal(g_end, g_default)){
+        return false;
+    }
+
+    game_delete(g_empty);
+    game_delete(g_default);
+    game_delete(g_end);
+
+    return true;
+}
+
+// ISSUE 3 -> game_copy()
+bool test_game_copy(){
+    game g_default_primal = game_default();
+    game g_default_clone = game_copy(g_default_primal);
+
+    if(!game_equal(g_default_clone, g_default_primal)){
+        return false;
+    } 
+    
+    game_delete(g_default_clone);
+    game_delete(g_default_primal);
+
+    return true;
+}
+
+// ISSUE 2 -> game_new_empty()
+bool test_game_new_empty(){
+    game g = game_new_empty();
+
+    for (int x = 0; x < DEFAULT_SIZE; x++){
+        for (int y = 0; y < DEFAULT_SIZE ; y++){
+            if (game_get_square(g, x, y) != S_EMPTY){
+                return false;
+            }
+        }
+    }
+    game_delete(g);
+}
 // -> game_new()           
 
 
@@ -136,10 +225,28 @@ int main(int argc, char *argv[]){
     
     // -> get_square
     else if (!strcmp("get_square", argv[1])){
-        
         ok = test_get_square();
     }
     
+    // -> set_square
+    else if (!strcmp("set_square", argv[1])){
+        ok = test_set_square();
+    }
+
+    // -> game_delete
+    else if (!strcmp("game_delete", argv[1])){
+        ok = test_game_delete();
+    }
+
+    // -> game_equal
+    else if (!strcmp("game_equal", argv[1])){
+        ok = test_game_equal();
+    }
+
+    else if (!strcmp("game_copy", argv[1])){
+        ok = test_game_copy();
+    }
+
     else {
         // INVALID : "?"
         fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
