@@ -28,6 +28,7 @@ bool test_game_check_move(){
     if(!game_check_move(g,5,0,S_ZERO))
         return false;
 
+    game_delete(g);
     return true;
 }
     
@@ -63,6 +64,7 @@ bool test_game_has_error(){
     if(fifth_test!=0) //we test if this one have an error
         return false;
     
+    game_delete(g);
     return true;
 
 }
@@ -104,6 +106,8 @@ bool test_game_is_immutable(){
     
     else
         return true;
+
+        game_delete(g);
 }
 
 
@@ -134,6 +138,8 @@ bool test_game_is_empty(){
     
     else
         return true;
+
+    game_delete(g);
 }
 
 
@@ -160,6 +166,8 @@ bool test_game_get_number(){
     else
         return true;
 
+    game_delete(g);
+
 
 }
 
@@ -185,6 +193,8 @@ bool test_game_get_next_number(){
     
     else
         return true;
+    
+    game_delete(g);
 }
 
 
@@ -209,7 +219,8 @@ bool test_game_get_next_square(){
     else
         return true;
 
-
+    game_delete(g);
+ 
 
 }
 

@@ -5,13 +5,14 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 <a href = "https://fr.wikipedia.org/wiki/Takuzu"> Cliquez ici </a> pour avoir un aperçu des <font color="red">règles</font> du jeu.
 
 
-1. Compilation avec GCC et Makefile :check:
-2. Jouer en Mode Texte :check:
-3. Travailler en équipe avec Git :check:
-4. CMake :check:
-5. Tests unitaires :check:
+1. Compilation avec GCC et Makefile :white_check_mark:
+2. Jouer en Mode Texte :white_check_mark:
+3. Travailler en équipe avec Git :white_check_mark:
+4. CMake :white_check_mark:
+5. Tests unitaires :white_check_mark:
 
 En attente des prochains TD... :hourglass:
+<pre>
 
 
 
@@ -34,7 +35,10 @@ En attente des prochains TD... :hourglass:
 
 
 
-## Petit bonus, voici la toute première version du fichier `README.md` ↓
+
+
+</pre>
+### Petit bonus, voici la toute première version du fichier `README.md` ↓
 
 
 # Modification de Gab  
