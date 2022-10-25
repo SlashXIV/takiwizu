@@ -25,7 +25,9 @@ add_executable(game_test_gifrim game_test_gifrim.c)
 add_executable(game_test_ibensaad game_test_ibensaad.c)
 
 # -> dummy test (gifrim)
+target_link_libraries(game_test_gifrim game)
 add_test(test_gifrim_dummy ./game_test_gifrim dummy)
+add_test(test_gifrim_game_check_move ./game_test_gifrim game_check_move)
 
 # -> dummy test (ibensaad)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)

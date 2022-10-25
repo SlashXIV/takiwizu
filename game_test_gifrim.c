@@ -2,6 +2,9 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
+#include"game.h"
+#include"game_aux.h"
+
 
 
 void usage_gifrim(int argc) {
@@ -13,17 +16,40 @@ bool test_dummy() {
     return true;
 }
 
+bool test_game_check_move(){
+
+    game g = game_default(); 
+
+    if(!game_check_move(g,0,4,S_ZERO))
+        return false;
+    
+
+    if(!game_check_move(g,5,0,S_ZERO))
+        return false;
+
+    return true;
+}
 
 int main(int argc, char *argv[]){
 
     bool ok = test_dummy();
 
-    if(argc < 2 || argc > 2)
-        usage_gifrim(argc);
-    
-    if(strcmp("dummy",argv[1])){
-        ok=false;
+    if (argc == 1 || argc > 2){
+        usage_gifrim(argv[0]);
     }
+
+    
+    if(!strcmp(argv[1],"dummy")){
+
+        ok = test_dummy();
+
+    }
+
+    else if(!strcmp(argv[1],"game_check_move")){
+        ok = test_game_check_move;
+
+    }
+
 
 
     // TEST RESULTS
