@@ -15,7 +15,7 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 En attente des prochains TD... :hourglass:
 
 
-<img src="https://images.squarespace-cdn.com/content/v1/52711462e4b0932c24aa05ae/1571058938982-RQDIAN589QQ2OJTM4OXW/image-asset.gif?format=300w" width="80" height="80"/>
+<img src="https://images.squarespace-cdn.com/content/v1/52711462e4b0932c24aa05ae/1571058938982-RQDIAN589QQ2OJTM4OXW/image-asset.gif?format=300w" width="120" height="160"/>
 
 <br>
 <br>

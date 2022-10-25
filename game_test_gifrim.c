@@ -48,45 +48,44 @@ bool test_game_has_error(){
 }
 
 
-bool test_game_is_immutable(){
+    bool test_game_is_immutable(){
 
-    // immutable coords = (0,1), (0,2), (2,1), (2,4), (3,1), (3,2), (4,2), (4,5), (5,5)
-    // we have to try if we can't play on this coords
+        // immutable coords = (0,1), (0,2), (2,1), (2,4), (3,1), (3,2), (4,2), (4,5), (5,5)
+        // we have to try if we can't play on this coords
 
-    game g = game_default();
+        game g = game_default();
 
-    if(!game_is_immutable(g,0,1))
-        return false;
+        if(!game_is_immutable(g,0,1))
+            return false;
 
-    else if(!game_is_immutable(g,0,2))
-        return false;
-    
-    else if(!game_is_immutable(g,2,1))
-        return false;
-    
-    else if(!game_is_immutable(g,2,4))
-        return false;
-    
-    else if(!game_is_immutable(g,3,1))
-        return false;
+        if(!game_is_immutable(g,0,2))
+            return false;
+        
+        if(!game_is_immutable(g,2,1))
+            return false;
+        
+        if(!game_is_immutable(g,2,4))
+            return false;
+        
+        if(!game_is_immutable(g,3,1))
+            return false;
 
-    else if(!game_is_immutable(g,3,2))
-        return false;
+        if(!game_is_immutable(g,3,2))
+            return false;
 
-    else if(!game_is_immutable(g,4,2))
-        return false;
-    
-    else if(!game_is_immutable(g,4,5))
-        return false;
-    
-    else if(!game_is_immutable(g,5,5))
-        return false; 
-    
-    
-
+        if(!game_is_immutable(g,4,2))
+            return false;
+        
+        if(!game_is_immutable(g,4,5))
+            return false;
+        
+        if(!game_is_immutable(g,5,5))
+            return false; 
+        
+        
         game_delete(g);
         return true;
-}
+    }
 
 
 bool test_game_is_empty(){
@@ -187,19 +186,15 @@ bool test_game_get_next_square(){
         return false;
     
     else if(game_get_next_square(g,4,1,DOWN,1)!=S_EMPTY)
-            return false;
+        return false;
 
     game_play_move(g,5,1,S_ZERO);
 
-     if(game_get_next_square(g,4,1,DOWN,1)!=S_ZERO)
-            return false;
-    
-    else
-        return true;
+    if(game_get_next_square(g,4,1,DOWN,1)!=S_ZERO)
+        return false;
 
     game_delete(g);
- 
-
+    return true;
 }
 
 
