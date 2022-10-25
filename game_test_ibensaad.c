@@ -41,6 +41,31 @@ bool test_game_default(){
     return true;
 }
 
+//bool test_game_print la fonction renvoie juste true et ne test rien askip (à vérifier sur la fiche du TD5) 
+//Attention, certaines fonctions sont faciles à tester et d'autres sont plus difficiles, et encore pour
+// certaines fonctions, le test n'est pas vraiment réalisable sans outils externes, comme par exemple game_print()
+// ou game_delete(). Dans ce cas, on se contentera juste d'appeler la fonction pour vérifier qu'elle ne provoque pas 
+//d'erreur grave (comme segmentation fault).
+
+bool test_game_restart(){
+    game g1 = game_default();
+    game g2 = game_default();
+    //We play a move in the game g1:
+    game_play_move(g1,2,0,S_ONE);
+
+    //We restart the game g1:
+
+    game_restart(g1);
+
+    //We test if the restarted game g1 is like the game g2 in it's initial state:
+    if(!game_equal(g1,g2)){
+        return false;
+    }
+    return true;
+}
+
+
+
 int main(int argc, char *argv[]){
 
 
@@ -71,6 +96,11 @@ int main(int argc, char *argv[]){
         okey = test_game_default();
     }
 
+    else if(!strcmp(argv[1],"restart")){
+        okey = test_game_restart();
+    }
+
+
     else {
 
         fprintf(stderr,"-> Error : the name : %s is not found!\n",argv[1]);
@@ -91,10 +121,10 @@ int main(int argc, char *argv[]){
     }
 
 
-    /* game game_default_solution(void);
-       game game_default(void);
+    /* game game_default_solution(void); ok
+       game game_default(void); ok
         void game_print(cgame g);
-        void game_restart(game g);
+        void game_restart(game g); ok
         void game_play_move(game g, uint i, uint j, square s);
         bool game_is_over(cgame g);
     */

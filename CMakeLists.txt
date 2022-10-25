@@ -37,7 +37,9 @@ add_test(test_gifrim_game_is_empty ./game_test_gifrim game_is_empty)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 add_test(test_ibensaad_default_solution ./game_test_ibensaad default_solution)
 add_test(test_ibensaad_default ./game_test_ibensaad default)
+add_test(test_ibensaad_restart ./game_test_ibensaad restart)
 target_link_libraries(game_test_ibensaad game)
+
 
 # [====== GAME TESTS ROBIN ======]
 add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
