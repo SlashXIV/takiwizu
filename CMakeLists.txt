@@ -29,7 +29,7 @@ target_link_libraries(game_test_gifrim game)
 add_test(test_gifrim_dummy ./game_test_gifrim dummy)
 add_test(test_gifrim_game_check_move ./game_test_gifrim game_check_move)
 add_test(test_gifrim_game_has_error ./game_test_gifrim game_has_error)
-
+add_test(test_gifrim_game_is_immutable ./game_test_gifrim game_is_immutable)
 
 # -> dummy test (ibensaad)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)

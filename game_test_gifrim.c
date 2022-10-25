@@ -48,6 +48,43 @@ bool test_game_has_error(){
 }
 
 
+bool test_game_is_immutable(){
+
+    // immutable coords = (0,1), (0,2), (2,1), (2,4), (3,1), (3,2), (4,2), (4,5), (5,5)
+    // we have to try if we can't play on this coords
+
+    game g = game_default;
+    if(!game_is_immutable(g,0,1))
+        return false;
+
+    else if(!game_is_immutable(g,0,2))
+        return false;
+    
+    else if(!game_is_immutable(g,2,1))
+        return false;
+    
+    else if(!game_is_immutable(g,2,4))
+        return false;
+    
+    else if(!game_is_immutable(g,3,1))
+        return false;
+
+    else if(!game_is_immutable(g,3,2))
+        return false;
+
+    else if(!game_is_immutable(g,4,2))
+        return false;
+    
+    else if(!game_is_immutable(g,4,5))
+        return false;
+    
+    else if(!game_is_immutable(g,5,5))
+        return false;
+    
+    else
+        return true;
+}
+
 
 
 int main(int argc, char *argv[]){
@@ -72,6 +109,11 @@ int main(int argc, char *argv[]){
 
     else if(!strcmp(argv[1],"game_has_error")){
         ok = test_game_has_error;
+
+    }
+
+    else if(!strcmp(argv[1],"game_is_immutable")){
+        ok = test_game_is_immutable;
 
     }
 
