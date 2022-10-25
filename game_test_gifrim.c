@@ -30,6 +30,26 @@ bool test_game_check_move(){
     return true;
 }
 
+bool test_game_has_error(){
+
+    game g = game_default();
+
+    int first_test = game_has_error(g,0,0);
+    int second_test = game_has_error(g,1,1);
+
+    if(first_test=!0) //we test if this move don't have error
+        return false;
+
+    if(second_test==0) //we test if this one have an error
+        return false;
+
+    return true;
+
+}
+
+
+
+
 int main(int argc, char *argv[]){
 
     bool ok = test_dummy();
@@ -50,6 +70,10 @@ int main(int argc, char *argv[]){
 
     }
 
+    else if(!strcmp(argv[1],"game_has_error")){
+        ok = test_game_has_error;
+
+    }
 
 
     // TEST RESULTS
