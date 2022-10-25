@@ -168,7 +168,18 @@ bool test_game_equal(){
 
     return true;
 }
-// -> game_equal()         
+// ISSUE 3 -> game_copy()
+bool test_game_copy(){
+    game g_default_primal = game_default();
+    game g_default_clone = game_copy(g_default_primal);
+
+    if(!game_equal(g_default_clone, g_default_primal)){
+        return false;
+    } 
+    
+    return true;
+}
+
 // -> game_copy()          
 // -> game_new_empty()     
 // -> game_new()           
@@ -211,7 +222,11 @@ int main(int argc, char *argv[]){
     else if (!strcmp("game_equal", argv[1])){
         ok = test_game_equal();
     }
-    
+
+    else if (!strcmp("game_copy", argv[1])){
+        ok = test_game_copy();
+    }
+
     else {
         // INVALID : "?"
         fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
