@@ -82,10 +82,10 @@ bool test_game_is_immutable(){
     else if(!game_is_immutable(g,5,5))
         return false; 
     
-    else
-        return true;
+    
 
         game_delete(g);
+        return true;
 }
 
 
