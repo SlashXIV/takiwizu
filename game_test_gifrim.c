@@ -34,15 +34,34 @@ bool test_game_has_error(){
 
     game g = game_default();
 
+    game_play_move(g,1,1,S_ONE);
+
     int first_test = game_has_error(g,0,0);
-    int second_test = game_has_error(g,1,1);
+    
+    int second_test = game_has_error(g,5,0);
 
-    if(first_test=!0) //we test if this move don't have error
+    int third_test = game_has_error(g,1,1);
+
+    int fourth_test = game_has_error(g,2,1);
+
+    int fifth_test = game_has_error(g,3,1);
+
+    if(first_test!=0) //we test if this move don't have error
         return false;
 
-    if(second_test==0) //we test if this one have an error
+    if(second_test!=0) //we test if this move don't have error
         return false;
 
+
+    if(third_test!=0) //we test if this one have an error
+        return false;
+    
+    if(fourth_test!=0) //we test if this one have an error
+        return false;
+    
+    if(fifth_test!=0) //we test if this one have an error
+        return false;
+    
     return true;
 
 }
@@ -54,6 +73,7 @@ bool test_game_is_immutable(){
     // we have to try if we can't play on this coords
 
     game g = game_default;
+
     if(!game_is_immutable(g,0,1))
         return false;
 
@@ -79,7 +99,7 @@ bool test_game_is_immutable(){
         return false;
     
     else if(!game_is_immutable(g,5,5))
-        return false;
+        return false; 
     
     else
         return true;
@@ -115,6 +135,27 @@ bool test_game_is_empty(){
         return true;
 }
 
+bool test_game_get_number(){
+
+    // (0,0) is an empty square, (0,1) is an immutable square, (5,1) gonna be an occuped square 
+    // lets try the function on thoses examples !
+    game g = game_default();
+
+
+    game_play_move(g,5,1,S_ONE);
+
+    if(game_get_number(g,0,0)!=S_EMPTY)
+        return false;
+    
+    else if(game_get_number(g,0,1)!=S_ONE)
+        return false;
+
+    else if(game_get_number(g,5,1)!=S_ONE)
+        return false;
+
+    else
+        return true;
+}
 
 
 int main(int argc, char *argv[]){
@@ -133,22 +174,27 @@ int main(int argc, char *argv[]){
     }
 
     else if(!strcmp(argv[1],"game_check_move")){
-        ok = test_game_check_move;
+        ok = test_game_check_move();
 
     }
 
     else if(!strcmp(argv[1],"game_has_error")){
-        ok = test_game_has_error;
+        ok = test_game_has_error();
 
     }
 
     else if(!strcmp(argv[1],"game_is_immutable")){
-        ok = test_game_is_immutable;
+        ok = test_game_is_immutable();
 
     }
 
     else if(!strcmp(argv[1],"game_is_empty")){
-        ok = test_game_is_empty;
+        ok = test_game_is_empty();
+
+    }
+
+    else if(!strcmp(argv[1],"game_get_number")){
+        ok = test_game_get_number();
 
     }
 
