@@ -1,3 +1,4 @@
+<pre>
 <center>Voici le projet <ins>Takuzu</ins> de l'équipe <ins>TM06A</ins></center> 
 
 Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes effectuées lors de ce projet :
@@ -12,7 +13,7 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 5. Tests unitaires :white_check_mark:
 
 En attente des prochains TD... :hourglass:
-<pre>
+
 
 
 

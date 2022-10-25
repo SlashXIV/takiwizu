@@ -36,32 +36,10 @@ bool test_game_has_error(){
 
     game g = game_default();
 
-    game_play_move(g,1,1,S_ONE);
+    game_set_square(g, 2, 0, S_ONE);
+    game_set_square(g, 2, 2, S_ONE);
 
-    int first_test = game_has_error(g,0,0);
-    
-    int second_test = game_has_error(g,5,0);
-
-    int third_test = game_has_error(g,1,1);
-
-    int fourth_test = game_has_error(g,2,1);
-
-    int fifth_test = game_has_error(g,3,1);
-
-    if(first_test!=0) //we test if this move don't have error
-        return false;
-
-    if(second_test!=0) //we test if this move don't have error
-        return false;
-
-
-    if(third_test!=0) //we test if this one have an error
-        return false;
-    
-    if(fourth_test!=0) //we test if this one have an error
-        return false;
-    
-    if(fifth_test!=0) //we test if this one have an error
+    if (game_has_error(g, 4, 2) == 0 || game_has_error(g, 3, 2) == 0 || game_has_error(g, 2, 2) == 0  || game_has_error(g, 5, 1) != 0) 
         return false;
     
     game_delete(g);
@@ -231,7 +209,7 @@ int main(int argc, char *argv[]){
     bool ok = test_dummy();
 
     if (argc == 1 || argc > 2){
-        usage_gifrim(argv[0]);
+        usage_gifrim(argc);
     }
 
     
@@ -274,6 +252,10 @@ int main(int argc, char *argv[]){
     else if(!strcmp(argv[1],"game_get_next_square")){
         ok = test_game_get_next_square();
 
+    }
+    else {
+        fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
+        exit(EXIT_FAILURE);
     }
 
 
