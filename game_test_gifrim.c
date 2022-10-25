@@ -86,6 +86,36 @@ bool test_game_is_immutable(){
 }
 
 
+bool test_game_is_empty(){
+
+    game g = game_default();
+
+    // some empty squares (in the default game) that I will check (0,0), (1,1), (1,2)
+    // some occuped squares (in the default game) that I will check (0,1), (2,1), (5,5)  
+
+    if(!game_is_empty(g,0,0))
+        return false;
+    
+    else if(!game_is_empty(g,1,1))
+        return false;
+
+    else if(!game_is_empty(g,1,2))
+        return false;
+    
+    else if(game_is_empty(g,0,1))
+        return false;
+    
+    else if(game_is_empty(g,2,1))
+        return false;
+    
+    else if(game_is_empty(g,5,5))
+        return false;
+    
+    else
+        return true;
+}
+
+
 
 int main(int argc, char *argv[]){
 
@@ -114,6 +144,11 @@ int main(int argc, char *argv[]){
 
     else if(!strcmp(argv[1],"game_is_immutable")){
         ok = test_game_is_immutable;
+
+    }
+
+    else if(!strcmp(argv[1],"game_is_empty")){
+        ok = test_game_is_empty;
 
     }
 
