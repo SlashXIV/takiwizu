@@ -66,14 +66,14 @@ bool test_game_has_error(){
     return true;
 
 }
-/*
+
 
 bool test_game_is_immutable(){
 
     // immutable coords = (0,1), (0,2), (2,1), (2,4), (3,1), (3,2), (4,2), (4,5), (5,5)
     // we have to try if we can't play on this coords
 
-    game g = game_default;
+    game g = game_default();
 
     if(!game_is_immutable(g,0,1))
         return false;
@@ -104,7 +104,7 @@ bool test_game_is_immutable(){
     
     else
         return true;
-}*/
+}
 
 
 bool test_game_is_empty(){
@@ -135,7 +135,7 @@ bool test_game_is_empty(){
     else
         return true;
 }
-/*
+
 
 bool test_game_get_number(){
 
@@ -145,15 +145,15 @@ bool test_game_get_number(){
     game g = game_default();
 
 
-    game_play_move(g,5,1,S_ONE);
+    game_play_move(g,5,1,S_ZERO);
 
-    if(game_get_number(g,0,0)!=S_EMPTY)
+    if(game_get_number(g,0,0)!=-1)
         return false;
     
-    else if(game_get_number(g,0,1)!=S_ONE)
+    else if(game_get_number(g,0,1)!=1)
         return false;
 
-    else if(game_get_number(g,5,1)!=S_ONE)
+    else if(game_get_number(g,5,1)!=0)
        return false; 
 
 
@@ -161,7 +161,58 @@ bool test_game_get_number(){
         return true;
 
 
-}*/
+}
+
+bool test_game_get_next_number(){
+
+    game g = game_default();
+
+    
+
+    if(game_get_next_number(g,0,1,DOWN, 2)!=0)
+        return false;
+
+    else if (game_get_next_number(g,0,1,RIGHT,2)!=-1)
+        return false;
+    
+    else if(game_get_next_number(g,4,1,DOWN,1)==0)
+            return false;
+
+    game_play_move(g,5,1,S_ZERO);
+
+     if(game_get_next_number(g,4,1,DOWN,1)!=0)
+            return false;
+    
+    else
+        return true;
+}
+
+
+bool test_game_get_next_square(){
+
+    game g = game_default();
+
+    if(game_get_next_square(g,0,1,DOWN, 2)!=S_IMMUTABLE_ZERO)
+        return false;
+
+    else if (game_get_next_square(g,0,1,RIGHT,2)!=S_EMPTY)
+        return false;
+    
+    else if(game_get_next_square(g,4,1,DOWN,1)!=S_EMPTY)
+            return false;
+
+    game_play_move(g,5,1,S_ZERO);
+
+     if(game_get_next_square(g,4,1,DOWN,1)!=S_ZERO)
+            return false;
+    
+    else
+        return true;
+
+
+
+}
+
 
 
 int main(int argc, char *argv[]){
@@ -188,22 +239,31 @@ int main(int argc, char *argv[]){
         ok = test_game_has_error();
 
     }
-/*
+
     else if(!strcmp(argv[1],"game_is_immutable")){
         ok = test_game_is_immutable();
 
-    }*/
+    }
 
     else if(!strcmp(argv[1],"game_is_empty")){
         ok = test_game_is_empty();
 
     }
 
-/*
+
     else if(!strcmp(argv[1],"game_get_number")){
         ok = test_game_get_number();
 
-    }*/
+    }
+    else if(!strcmp(argv[1],"game_get_next_number")){
+        ok = test_game_get_next_number();
+
+    }
+
+    else if(!strcmp(argv[1],"game_get_next_square")){
+        ok = test_game_get_next_square();
+
+    }
 
 
     // TEST RESULTS
