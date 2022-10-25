@@ -20,6 +20,7 @@ bool test_game_check_move(){
 
     game g = game_default(); 
 
+    
     if(!game_check_move(g,0,4,S_ZERO))
         return false;
     
@@ -29,7 +30,7 @@ bool test_game_check_move(){
 
     return true;
 }
-
+    
 bool test_game_has_error(){
 
     game g = game_default();
@@ -65,7 +66,7 @@ bool test_game_has_error(){
     return true;
 
 }
-
+/*
 
 bool test_game_is_immutable(){
 
@@ -103,7 +104,7 @@ bool test_game_is_immutable(){
     
     else
         return true;
-}
+}*/
 
 
 bool test_game_is_empty(){
@@ -134,9 +135,11 @@ bool test_game_is_empty(){
     else
         return true;
 }
+/*
 
 bool test_game_get_number(){
 
+    //-1 = empty W=0 B=1 
     // (0,0) is an empty square, (0,1) is an immutable square, (5,1) gonna be an occuped square 
     // lets try the function on thoses examples !
     game g = game_default();
@@ -151,11 +154,14 @@ bool test_game_get_number(){
         return false;
 
     else if(game_get_number(g,5,1)!=S_ONE)
-        return false;
+       return false; 
+
 
     else
         return true;
-}
+
+
+}*/
 
 
 int main(int argc, char *argv[]){
