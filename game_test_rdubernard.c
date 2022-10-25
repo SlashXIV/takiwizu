@@ -83,16 +83,6 @@ bool test_get_square(void){
             }
         }    
     }
-    // printf("counted :\n");
-
-    // printf("\tI white =%d\n", cpt_immutable_white);
-    // printf("\tI black =%d\n", cpt_immutable_black);
-  
-    // printf("\n");
-
-    // printf("\twhite = %d\n", cpt_white);
-    // printf("\tblack = %d\n", cpt_black);
-    // printf("\tempty = %d\n", cpt_empty);
 
     // verifying that the values match 
     bool values_matches = (
@@ -108,7 +98,45 @@ bool test_get_square(void){
     return values_matches;
 }
 
-// -> game_set_square()
+// ISSUE #6 -> game_set_square()
+bool test_set_square(void){
+    // GENERATE EMPTY GAME
+    game g = game_new_empty();
+
+    // FILLING FIRST ROW OF EACH SQUARE
+    // -> 'B'
+    game_set_square(g, 0, 0, S_IMMUTABLE_ONE);
+    if (game_get_square(g, 0, 0) != S_IMMUTABLE_ONE){
+        return false;
+    }
+
+    // -> 'W'
+    game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
+    if (game_get_square(g, 0, 1) != S_IMMUTABLE_ZERO){
+        return false;
+    }
+    
+    // -> 'b'
+    game_set_square(g, 0, 2, S_ONE);
+    if (game_get_square(g, 0, 2) != S_ONE){
+        return false;
+    }
+
+    // -> 'w'
+    game_set_square(g, 0, 3, S_ZERO);
+    if (game_get_square(g, 0, 3) != S_ZERO){
+        return false;
+    }
+
+    // -> ' '
+    game_set_square(g, 0, 3, S_EMPTY);
+    if (game_get_square(g, 0, 3) != S_EMPTY){
+        return false;
+    }
+
+    return true;
+}
+
 // -> game_delete()        
 // -> game_equal()         
 // -> game_copy()          
@@ -136,10 +164,14 @@ int main(int argc, char *argv[]){
     
     // -> get_square
     else if (!strcmp("get_square", argv[1])){
-        
         ok = test_get_square();
     }
     
+    // -> set_square
+    else if (!strcmp("set_square", argv[1])){
+        ok = test_set_square();
+    }
+
     else {
         // INVALID : "?"
         fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);

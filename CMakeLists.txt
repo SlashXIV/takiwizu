@@ -18,9 +18,6 @@ enable_testing()
 
 # TEST EXES OF EACH MEMBERS
 add_executable(game_test_rdubernard game_test_rdubernard.c)
-target_link_libraries(game_test_rdubernard game)
-
-
 add_executable(game_test_gifrim game_test_gifrim.c)
 add_executable(game_test_ibensaad game_test_ibensaad.c)
 
@@ -34,11 +31,13 @@ add_test(test_gifrim_game_is_empty ./game_test_gifrim game_is_empty)
 #add_test(test_gifrim_game_get_number ./game_test_gifrim game_get_number)
 
 # -> dummy test (ibensaad)
+target_link_libraries(game_test_ibensaad game)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 add_test(test_ibensaad_default_solution ./game_test_ibensaad default_solution)
 add_test(test_ibensaad_default ./game_test_ibensaad default)
-target_link_libraries(game_test_ibensaad game)
 
-# [====== GAME TESTS ROBIN ======]
+# <====== GAME TESTS rdubernard ======>
+target_link_libraries(game_test_rdubernard game)
 add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
 add_test(test_rdubernard_get_square ./game_test_rdubernard get_square)
+add_test(test_rdubernard_set_square ./game_test_rdubernard set_square)
