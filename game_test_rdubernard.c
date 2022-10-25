@@ -103,7 +103,7 @@ bool test_set_square(void){
     // GENERATE EMPTY GAME
     game g = game_new_empty();
 
-    // FILLING FIRST ROW OF EACH SQUARE
+    // FILLING FIRST ROW OF EACH SQUARE AND CHECKING IF IT WORKED
     // -> 'B'
     game_set_square(g, 0, 0, S_IMMUTABLE_ONE);
     if (game_get_square(g, 0, 0) != S_IMMUTABLE_ONE){
@@ -137,7 +137,13 @@ bool test_set_square(void){
     return true;
 }
 
-// -> game_delete()        
+
+// ISSUE #5 -> game_delete()
+bool test_game_delete(){
+    game g = game_new_empty();
+    game_delete(g);
+    return true;
+}        
 // -> game_equal()         
 // -> game_copy()          
 // -> game_new_empty()     
@@ -170,6 +176,11 @@ int main(int argc, char *argv[]){
     // -> set_square
     else if (!strcmp("set_square", argv[1])){
         ok = test_set_square();
+    }
+
+    // -> game_delete
+    else if (!strcmp("game_delete", argv[1])){
+        ok = test_game_delete();
     }
 
     else {
