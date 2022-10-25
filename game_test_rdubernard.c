@@ -202,7 +202,21 @@ bool test_game_new_empty(){
     }
     game_delete(g);
 }
-// -> game_new()           
+ 
+// ISSUE 1 -> game_new()
+bool test_game_new(){
+    uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
+    square square_array[nb_cases];
+
+    for (uint i = 0; i < nb_cases; i++){
+        square_array[i] = S_EMPTY;
+    }
+
+    game g = game_new(square_array);
+
+    game_delete(g);
+    return true;
+}  
 
 
 /* [====== MAIN ROUTINE ======] */
@@ -243,8 +257,14 @@ int main(int argc, char *argv[]){
         ok = test_game_equal();
     }
 
+    // -> game_copy
     else if (!strcmp("game_copy", argv[1])){
         ok = test_game_copy();
+    }
+
+    // -> game_new
+    else if (!strcmp("game_new", argv[1])){
+        ok = test_game_new();
     }
 
     else {
