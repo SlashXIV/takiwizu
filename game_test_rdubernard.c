@@ -137,13 +137,37 @@ bool test_set_square(void){
     return true;
 }
 
-
 // ISSUE #5 -> game_delete()
 bool test_game_delete(){
     game g = game_new_empty();
     game_delete(g);
     return true;
 }        
+
+// ISSUE #4 -> game_equal()
+bool test_game_equal(){
+    game g_empty = game_new_empty();
+    game g_default = game_default();
+    game g_end = game_default_solution();
+
+    if (!game_equal(g_end, g_end)){
+        return false;
+    }
+
+    if (game_equal(g_empty, g_default)){
+        return false;
+    }
+
+    if (!game_equal(g_empty, g_empty)){
+        return false;
+    }
+
+    if (game_equal(g_end, g_default)){
+        return false;
+    }
+
+    return true;
+}
 // -> game_equal()         
 // -> game_copy()          
 // -> game_new_empty()     
@@ -183,6 +207,11 @@ int main(int argc, char *argv[]){
         ok = test_game_delete();
     }
 
+    // -> game_equal
+    else if (!strcmp("game_equal", argv[1])){
+        ok = test_game_equal();
+    }
+    
     else {
         // INVALID : "?"
         fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
