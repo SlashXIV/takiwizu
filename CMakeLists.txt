@@ -32,6 +32,8 @@ add_test(test_gifrim_game_has_error ./game_test_gifrim game_has_error)
 add_test(test_gifrim_game_is_immutable ./game_test_gifrim game_is_immutable)
 add_test(test_gifrim_game_is_empty ./game_test_gifrim game_is_empty)
 add_test(test_gifrim_game_get_number ./game_test_gifrim game_get_number)
+add_test(test_game_get_next_number ./game_test_gifrim game_get_next_number)
+add_test(test_game_get_next_square ./game_test_gifrim game_get_next_square)
 
 # -> dummy test (ibensaad)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)

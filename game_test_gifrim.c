@@ -163,6 +163,57 @@ bool test_game_get_number(){
 
 }
 
+bool test_game_get_next_number(){
+
+    game g = game_default();
+
+    
+
+    if(game_get_next_number(g,0,1,DOWN, 2)!=0)
+        return false;
+
+    else if (game_get_next_number(g,0,1,RIGHT,2)!=-1)
+        return false;
+    
+    else if(game_get_next_number(g,4,1,DOWN,1)==0)
+            return false;
+
+    game_play_move(g,5,1,S_ZERO);
+
+     if(game_get_next_number(g,4,1,DOWN,1)!=0)
+            return false;
+    
+    else
+        return true;
+}
+
+
+bool test_game_get_next_square(){
+
+    game g = game_default();
+
+    if(game_get_next_square(g,0,1,DOWN, 2)!=S_IMMUTABLE_ZERO)
+        return false;
+
+    else if (game_get_next_square(g,0,1,RIGHT,2)!=S_EMPTY)
+        return false;
+    
+    else if(game_get_next_square(g,4,1,DOWN,1)!=S_EMPTY)
+            return false;
+
+    game_play_move(g,5,1,S_ZERO);
+
+     if(game_get_next_square(g,4,1,DOWN,1)!=S_ZERO)
+            return false;
+    
+    else
+        return true;
+
+
+
+}
+
+
 
 int main(int argc, char *argv[]){
 
@@ -202,6 +253,15 @@ int main(int argc, char *argv[]){
 
     else if(!strcmp(argv[1],"game_get_number")){
         ok = test_game_get_number();
+
+    }
+    else if(!strcmp(argv[1],"game_get_next_number")){
+        ok = test_game_get_next_number();
+
+    }
+
+    else if(!strcmp(argv[1],"game_get_next_square")){
+        ok = test_game_get_next_square();
 
     }
 
