@@ -15,12 +15,19 @@ bool test_dummy(){
     return true;
 }
 
+//We call game_delete at the end of each fonction to free the memorry.
+
 bool test_default_solution(){
 
     game g = game_default_solution();
+
     //If the party is won, then game_default_solution work and it return true!
-   
-    return game_is_over(g);
+
+   if(game_is_over(g)==false){
+        return false;
+   }
+   game_delete(g);
+    return true;
     
 }
 
@@ -38,33 +45,101 @@ bool test_game_default(){
     if(game_get_square(g,1,0)!=S_EMPTY){
         return false;
     }
+    game_delete(g);
     return true;
 }
 
-//bool test_game_print la fonction renvoie juste true et ne test rien askip (à vérifier sur la fiche du TD5) 
-//Attention, certaines fonctions sont faciles à tester et d'autres sont plus difficiles, et encore pour
-// certaines fonctions, le test n'est pas vraiment réalisable sans outils externes, comme par exemple game_print()
-// ou game_delete(). Dans ce cas, on se contentera juste d'appeler la fonction pour vérifier qu'elle ne provoque pas 
-//d'erreur grave (comme segmentation fault).
+bool test_game_print(){
+
+    game g = game_default();
+    game_print(g);
+
+    game_delete(g);
+    return true;
+}
 
 bool test_game_restart(){
     game g1 = game_default();
     game g2 = game_default();
-    //We play a move in the game g1:
-    game_play_move(g1,2,0,S_ONE);
+    //We place a square in the game g1:
+    game_set_square(g1,2,0,S_ONE);
 
     //We restart the game g1:
 
     game_restart(g1);
 
-    //We test if the restarted game g1 is like the game g2 in it's initial state:
+    //We test if the restarted game g1 is like the game g2(which is in an initial state):
     if(!game_equal(g1,g2)){
+        game_delete(g1);
+        game_delete(g2);
         return false;
     }
+
+    game_delete(g1);
+    game_delete(g2);
     return true;
 }
 
+bool test_game_play_move(){
 
+    game g = game_default();
+
+    //We test if in a precise place in the game a square is added:
+
+    game_play_move(g,2,0,S_ONE);
+
+    if(game_get_square(g,2,0)!= S_ONE){
+        return false;
+    }
+
+    game_delete(g);
+    return true;
+}
+
+bool test_game_is_over(){
+
+    game g = game_default();
+
+    game_play_move(g,0,0,S_ZERO);
+    game_play_move(g,0,3,S_ONE);
+    game_play_move(g,0,4,S_ZERO);
+    game_play_move(g,0,5,S_ONE);
+    game_play_move(g,1,0,S_ZERO);
+    game_play_move(g,1,1,S_ONE);
+    game_play_move(g,1,2,S_ONE);
+    game_play_move(g,1,3,S_ZERO);
+    game_play_move(g,1,4,S_ONE);
+    game_play_move(g,1,5,S_ZERO);
+    game_play_move(g,2,0,S_ONE);
+    game_play_move(g,2,2,S_ZERO);
+    game_play_move(g,2,3,S_ONE);
+    game_play_move(g,2,5,S_ONE);
+    game_play_move(g,3,0,S_ONE);
+    game_play_move(g,3,3,S_ZERO);
+    game_play_move(g,3,4,S_ZERO);
+    game_play_move(g,3,5,S_ONE);
+    game_play_move(g,4,0,S_ZERO);
+    game_play_move(g,4,1,S_ONE);
+    game_play_move(g,4,3,S_ZERO);
+    game_play_move(g,4,4,S_ONE);
+    game_play_move(g,5,0,S_ONE);
+    game_play_move(g,5,1,S_ZERO);
+    game_play_move(g,5,2,S_ZERO);
+    game_play_move(g,5,3,S_ONE);
+    game_play_move(g,5,4,S_ONE);
+
+    //We played all the movements to have the solution (moves.txt)
+    //game_is_over should return true, if not the test will return false
+
+    if(!game_is_over(g)){
+        return false;
+    }
+
+    
+    game_delete(g);
+    return true;
+
+}
 
 int main(int argc, char *argv[]){
 
@@ -96,10 +171,27 @@ int main(int argc, char *argv[]){
         okey = test_game_default();
     }
 
+//Test game_restart:
+
     else if(!strcmp(argv[1],"restart")){
         okey = test_game_restart();
     }
+//Test game_print:
 
+    else if(!strcmp(argv[1],"print")){
+        okey = test_game_print();
+    }
+//Test game_play_move:
+
+    else if(!strcmp(argv[1],"play_move")){
+        okey = test_game_play_move();
+    }
+
+//Test game_is_over:
+
+    else if(!strcmp(argv[1],"is_over")){
+        okey = test_game_is_over();
+    }
 
     else {
 
@@ -120,13 +212,5 @@ int main(int argc, char *argv[]){
         return EXIT_FAILURE;
     }
 
-
-    /* game game_default_solution(void); ok
-       game game_default(void); ok
-        void game_print(cgame g);
-        void game_restart(game g); ok
-        void game_play_move(game g, uint i, uint j, square s);
-        bool game_is_over(cgame g);
-    */
 
 }

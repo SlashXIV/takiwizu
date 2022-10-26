@@ -37,6 +37,9 @@ target_link_libraries(game_test_ibensaad game)
 add_test(test_ibensaad_dummy ./game_test_ibensaad dummy)
 add_test(test_ibensaad_default_solution ./game_test_ibensaad default_solution)
 add_test(test_ibensaad_default ./game_test_ibensaad default)
+add_test(test_ibensaad_print ./game_test_ibensaad print)
+add_test(test_ibensaad_play_move ./game_test_ibensaad play_move)
+add_test(test_ibensaad_is_over ./game_test_ibensaad is_over)
 
 # <====== GAME TESTS rdubernard ======>
 target_link_libraries(game_test_rdubernard game)
