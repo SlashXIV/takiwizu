@@ -113,10 +113,10 @@ bool test_game_is_empty(){
     else if(game_is_empty(g,5,5))
         return false;
     
-    else
-        return true;
-
     game_delete(g);
+    return true;
+
+    
 }
 
 
@@ -140,11 +140,10 @@ bool test_game_get_number(){
        return false; 
 
 
-    else
-        return true;
-
     game_delete(g);
+    return true;
 
+    
 
 }
 
@@ -168,10 +167,10 @@ bool test_game_get_next_number(){
      if(game_get_next_number(g,4,1,DOWN,1)!=0)
             return false;
     
-    else
-        return true;
-    
     game_delete(g);
+    return true;
+    
+    
 }
 
 
