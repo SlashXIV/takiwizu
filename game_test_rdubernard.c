@@ -114,7 +114,8 @@ bool test_set_square(void){
 
     // -> 'W'
     game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
-    if (game_get_next_square(g, 0, 1, RIGHT, 1) != S_IMMUTABLE_ZERO){
+    // printf("should be 3, val = %d", game_get_next_square(g, 0, 0, RIGHT, 1));
+    if (game_get_next_square(g, 0, 0, RIGHT, 1) != S_IMMUTABLE_ZERO){
         return false;
     }
 
