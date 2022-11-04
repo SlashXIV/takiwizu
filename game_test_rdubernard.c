@@ -101,7 +101,9 @@ bool test_get_square(void){
 // ISSUE #6 -> game_set_square()
 bool test_set_square(void){
     // GENERATE EMPTY GAME
-    game g = game_new_empty();
+    uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
+    square * square_array = calloc(nb_cases, sizeof(square));
+    game g = game_new(square_array);
     
     // FILLING FIRST ROW OF EACH SQUARE AND CHECKING IF IT WORKED
     // -> 'B'
@@ -112,10 +114,10 @@ bool test_set_square(void){
 
     // -> 'W'
     game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
-    if (game_get_square(g, 0, 1) != S_IMMUTABLE_ZERO){
+    if (game_get_next_square(g, 0, 1, RIGHT, 1) != S_IMMUTABLE_ZERO){
         return false;
     }
-    
+
     // -> 'b'
     game_set_square(g, 0, 2, S_ONE);
     if (game_get_square(g, 0, 2) != S_ONE){
