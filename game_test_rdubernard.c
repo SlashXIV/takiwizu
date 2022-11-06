@@ -6,6 +6,17 @@
 #include"game.h"
 #include"game_aux.h"
 
+#define ASSERT(expr)                                                                  \
+  do                                                                                  \
+  {                                                                                   \
+    if ((expr) == 0)                                                                  \
+    {                                                                                 \
+      fprintf(stderr, "[%s:%d] Assertion '%s' failed!\n", __FILE__, __LINE__, #expr); \
+      abort();                                                                        \
+    }                                                                                 \
+  } while (0)
+
+
 /* [====== USAGE ======] */ 
 void usage(char * cmd){
     fprintf(stderr, "Usage %s <testname> [<...>]\n", cmd);
@@ -102,6 +113,7 @@ bool test_get_square(void){
 bool test_game_set_square(){
     // GENERATE
     game g = game_new_empty();
+    ASSERT(g);
     
     // PUT AND ERASE
     game_set_square(g, 1, 3, S_ZERO);
