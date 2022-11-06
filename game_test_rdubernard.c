@@ -280,7 +280,7 @@ int main(int argc, char *argv[]){
     
     // -> get_square
     else if (!strcmp("game_get_square", argv[1])){
-        ok = test_get_square();
+        ok = test_game_get_square();
     }
     
     // -> set_square
