@@ -101,45 +101,76 @@ bool test_get_square(void){
 // ISSUE #6 -> game_set_square()
 bool test_set_square(void){
     // GENERATE EMPTY GAME
-    uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
-    square * square_array = calloc(nb_cases, sizeof(square));
-    game g = game_new(square_array);
+    game g = game_new_empty();
     
-    // FILLING FIRST ROW OF EACH SQUARE AND CHECKING IF IT WORKED
-    // -> 'B'
-    game_set_square(g, 0, 0, S_IMMUTABLE_ONE);
-    if (game_get_square(g, 0, 0) != S_IMMUTABLE_ONE){
-        return false;
+    for (int x = 0; x < DEFAULT_SIZE; x++){
+        for (int y = 0; y < DEFAULT_SIZE/2; y++){
+            game_set_square(g, x, y, S_ONE);
+        }
+        for (int y = DEFAULT_SIZE/2; y < DEFAULT_SIZE; y++){
+            game_set_square(g, x, y, S_ZERO);
+        }
     }
+    
+    game_print(g);
 
-    // -> 'W'
-    game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
-    // printf("should be 3, val = %d", game_get_next_square(g, 0, 0, RIGHT, 1));
-    if (game_get_next_square(g, 0, 0, RIGHT, 1) != S_IMMUTABLE_ZERO){
-        return false;
+    for (int x = 0; x < DEFAULT_SIZE; x++){
+        for (int y = 0; y < DEFAULT_SIZE/2; y++){
+            printf("%d",game_get_square(g, x, y) == S_ONE);
+            if (game_get_square(g, x, y) != S_ONE){
+                game_delete(g);
+                return false;
+            }
+        }
+        for (int y = DEFAULT_SIZE/2; y < DEFAULT_SIZE; y++){
+            printf("%d",game_get_square(g, x, y) == S_ZERO);
+            if (game_get_square(g, x, y) != S_ZERO){
+                game_delete(g);
+                return false;
+            }
+        }
+        printf("\n");
     }
-
-    // -> 'b'
-    game_set_square(g, 0, 2, S_ONE);
-    if (game_get_square(g, 0, 2) != S_ONE){
-        return false;
-    }
-
-    // -> 'w'
-    game_set_square(g, 0, 3, S_ZERO);
-    if (game_get_square(g, 0, 3) != S_ZERO){
-        return false;
-    }
-
-    // -> ' '
-    game_set_square(g, 0, 3, S_EMPTY);
-    if (game_get_square(g, 0, 3) != S_EMPTY){
-        return false;
+    
+    
+    for (int x = 0; x < DEFAULT_SIZE; x++){
+        for (int y = 0; y < DEFAULT_SIZE; y++){
+            game_set_square(g, x, y, S_EMPTY);
+        }
     }
 
     game_print(g);
+    
+    // FILLING EACH SQUARE AT RANDOM POS AND CHECKING IF IT WORKED
+    // -> 'B'
+    game_set_square(g, 2, 4, S_IMMUTABLE_ONE);
+
+    // -> 'W'
+    game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
+    
+    // -> 'b'
+    game_set_square(g, 0, 2, S_ONE);
+    
+    // -> 'w'
+    game_set_square(g, 0, 3, S_ZERO);
+    
+    // -> ' '
+    game_set_square(g, 0, 4, S_EMPTY);
+
+    game_print(g);
+
+    bool values_matches = 
+        game_get_next_square(g, 2, 3, RIGHT, 1) == S_IMMUTABLE_ONE &&
+        game_get_square(g, 0, 1) == S_IMMUTABLE_ZERO &&
+        game_get_square(g, 0, 2) == S_ONE &&
+        game_get_square(g, 0, 3) == S_ZERO &&
+        game_get_square(g, 0, 4) == S_EMPTY;
 
     game_delete(g);
+
+    if (!values_matches){
+        return false;
+    }
     return true;
 }
 
