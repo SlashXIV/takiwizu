@@ -44,7 +44,7 @@ add_test(test_ibensaad_is_over ./game_test_ibensaad is_over)
 # <====== GAME TESTS rdubernard ======>
 target_link_libraries(game_test_rdubernard game)
 add_test(test_rdubernard_dummy ./game_test_rdubernard dummy)
-add_test(test_rdubernard_get_square ./game_test_rdubernard get_square)
+add_test(test_rdubernard_game_get_square ./game_test_rdubernard game_get_square)
 add_test(test_rdubernard_game_set_square ./game_test_rdubernard game_set_square)
 add_test(test_rdubernard_game_delete ./game_test_rdubernard game_delete)
 add_test(test_rdubernard_game_equal ./game_test_rdubernard game_equal)
