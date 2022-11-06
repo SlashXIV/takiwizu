@@ -6,6 +6,18 @@
 #include"game.h"
 #include"game_aux.h"
 
+
+#define ASSERT(expr)                                                                  \
+  do                                                                                  \
+  {                                                                                   \
+    if ((expr) == 0)                                                                  \
+    {                                                                                 \
+      fprintf(stderr, "[%s:%d] Assertion '%s' failed!\n", __FILE__, __LINE__, #expr); \
+      abort();                                                                        \
+    }                                                                                 \
+  } while (0)
+
+
 /* [====== USAGE ======] */ 
 void usage(char * cmd){
     fprintf(stderr, "Usage %s <testname> [<...>]\n", cmd);
@@ -136,39 +148,38 @@ bool test_game_set_square(){
     // GENERATE
     game g = game_new_empty();
 
-    game_set_square(g, 4, 2, S_ONE);
-    if (game_get_square(g, 4, 2) != S_ONE){
+    ASSERT(g);
+
+    game_set_square(g, 1, 3, S_ZERO);
+    if(game_get_square(g, 1, 3) != S_ZERO){
+        game_delete(g);
+        return false;
+    }
+    game_set_square(g, 1, 3, S_EMPTY);
+    if( game_get_square(g, 1, 3) != S_EMPTY){
+        game_delete(g);
+        return false;
+    }
+    game_set_square(g, 5, 3, S_ONE);
+    if(game_get_square(g, 5, 3) != S_ONE){
+        game_delete(g);
+        return false;
+    }
+    game_set_square(g, 2, 5, S_IMMUTABLE_ZERO);
+    if(game_get_square(g, 2, 5) != S_IMMUTABLE_ZERO){
+        game_delete(g);
+        return false;
+    }
+    game_set_square(g, 4, 1, S_IMMUTABLE_ONE);
+    if(game_get_square(g, 4, 1) != S_IMMUTABLE_ONE){
         game_delete(g);
         return false;
     }
 
-    game_set_square(g, 4, 2, S_EMPTY);
-    if (game_get_square(g, 4, 2) != S_EMPTY){
-        game_delete(g);
-        return false;
-    }
-
-    game_set_square(g, 1, 5, S_ZERO);
-    if (game_get_square(g, 1, 5) != S_ZERO){
-        game_delete(g);
-        return false;
-    }
-
-    game_set_square(g, 2, 1, S_IMMUTABLE_ONE);
-    if (game_get_square(g, 2, 1) != S_IMMUTABLE_ONE){
-        game_delete(g);
-        return false;
-    }   
-
-    game_set_square(g, 3, 4, S_IMMUTABLE_ZERO);
-    if (game_get_square(g, 3, 4) != S_IMMUTABLE_ZERO){
-        game_delete(g);
-        return false;
-    }
-    
     game_delete(g);
     return true;
 }
+
 
 // ISSUE #5 -> game_delete()
 bool test_game_delete(){
