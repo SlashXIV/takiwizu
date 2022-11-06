@@ -6,17 +6,6 @@
 #include"game.h"
 #include"game_aux.h"
 
-#define ASSERT(expr)                                                                  \
-  do                                                                                  \
-  {                                                                                   \
-    if ((expr) == 0)                                                                  \
-    {                                                                                 \
-      fprintf(stderr, "[%s:%d] Assertion '%s' failed!\n", __FILE__, __LINE__, #expr); \
-      abort();                                                                        \
-    }                                                                                 \
-  } while (0)
-
-
 /* [====== USAGE ======] */ 
 void usage(char * cmd){
     fprintf(stderr, "Usage %s <testname> [<...>]\n", cmd);
@@ -110,74 +99,42 @@ bool test_get_square(void){
 }
 
 // ISSUE #6 -> game_set_square()
-bool test_game_set_square(void){
-    // GENERATE EMPTY GAME
+bool test_game_set_square(){
+    // GENERATE
+    // game g = game_new_empty();
+    
+    // // PUT AND ERASE
+    // game_set_square(g, 4, 2, S_ZERO);
+    // if(game_get_square(g, 4, 2) != S_ZERO){
+    //     game_delete(g);
+    //     return false;
+    // }
+
+    // game_set_square(g, 4, 2, S_EMPTY);
+    // if(game_get_square(g, 4, 2) != S_EMPTY){
+    //     game_delete(g);
+    //     return false;
+    // }
+    
+    // // OTHERS PUT
+    // game_set_square(g, 1, 5, S_ONE);
+    // game_set_square(g, 2, 1, S_IMMUTABLE_ZERO);
+    // game_set_square(g, 3, 4, S_IMMUTABLE_ONE);
+    
+    // bool values_matches = 
+    //     game_get_square(g, 1, 5) == S_ONE &&
+    //     game_get_square(g, 2, 1) == S_IMMUTABLE_ZERO &&
+    //     game_get_square(g, 3, 4) == S_IMMUTABLE_ONE;
+
+    // game_delete(g);
+
+    // if (!values_matches){
+    //     return false;
+    // }
+    // return true;
+
+    // GENERATE
     game g = game_new_empty();
-    
-    // FILLING 'b' then 'w' MID
-    for (int x = 0; x < DEFAULT_SIZE; x++){
-        for (int y = 0; y < DEFAULT_SIZE/2; y++){
-            game_set_square(g, x, y, S_ONE);
-        }
-        for (int y = DEFAULT_SIZE/2; y < DEFAULT_SIZE; y++){
-            game_set_square(g, x, y, S_ZERO);
-        }
-    }
-    
-    game_print(g);
-    
-    // VERIF
-    for (int x = 0; x < DEFAULT_SIZE; x++){
-        for (int y = 0; y < DEFAULT_SIZE/2; y++){
-            printf("%d",game_get_square(g, x, y) == S_ONE);
-            if (game_get_square(g, x, y) != S_ONE){
-                game_delete(g);
-                return false;
-            }
-        }
-        for (int y = DEFAULT_SIZE/2; y < DEFAULT_SIZE; y++){
-            printf("%d",game_get_square(g, x, y) == S_ZERO);
-            if (game_get_square(g, x, y) != S_ZERO){
-                game_delete(g);
-                return false;
-            }
-        }
-        printf("\n");
-    }
-    
-    // CLEAR
-    for (int x = 0; x < DEFAULT_SIZE; x++){
-        for (int y = 0; y < DEFAULT_SIZE; y++){
-            game_set_square(g, x, y, S_EMPTY);
-        }
-    }
-
-    game_print(g);
-    
-    // FILLING EACH SQUARE AT RANDOM POS 
-    game_set_square(g, 2, 4, S_IMMUTABLE_ONE);
-    game_set_square(g, 0, 1, S_IMMUTABLE_ZERO);
-    game_set_square(g, 0, 2, S_ONE);
-    game_set_square(g, 0, 3, S_ZERO);
-    game_set_square(g, 0, 4, S_EMPTY);
-    game_set_square(g, 3, 2, S_ONE);
-    game_set_square(g, 5, 1, S_ZERO);
-    game_set_square(g, 3, 4, S_IMMUTABLE_ONE);
-    game_set_square(g, 0, 3, S_EMPTY);
-
-    game_print(g);
-
-    // AND CHECKING IF IT WORKED
-    bool values_matches = 
-        game_get_square(g, 3, 2) == S_ONE &&
-        game_get_square(g, 5, 1) == S_ZERO &&
-        game_get_square(g, 3, 4) == S_IMMUTABLE_ONE &&
-        game_get_next_square(g, 2, 3, RIGHT, 1) == S_IMMUTABLE_ONE &&
-        game_get_square(g, 0, 1) == S_IMMUTABLE_ZERO &&
-        game_get_square(g, 0, 2) == S_ONE &&
-        game_get_square(g, 0, 3) == S_EMPTY &&
-        game_get_square(g, 0, 4) == S_EMPTY;
-
 
     game_set_square(g, 4, 2, S_ONE);
     if (game_get_square(g, 4, 2) != S_ONE){
@@ -198,7 +155,7 @@ bool test_game_set_square(void){
     }
 
     game_set_square(g, 2, 1, S_IMMUTABLE_ONE);
-    if (game_get_square(g, 2, 4) != S_IMMUTABLE_ONE){
+    if (game_get_square(g, 2, 1) != S_IMMUTABLE_ONE){
         game_delete(g);
         return false;
     }   
@@ -208,13 +165,8 @@ bool test_game_set_square(void){
         game_delete(g);
         return false;
     }
-
+    
     game_delete(g);
-
-    if (!values_matches){
-        return false;
-    }
-
     return true;
 }
 
