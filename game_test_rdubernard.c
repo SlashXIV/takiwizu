@@ -157,13 +157,21 @@ bool test_set_square(void){
     // -> ' '
     game_set_square(g, 0, 4, S_EMPTY);
 
+    game_set_square(g, 3, 2, S_ONE);
+    game_set_square(g, 5, 1, S_ZERO);
+    game_set_square(g, 3, 4, S_IMMUTABLE_ONE);
+    game_set_square(g, 0, 3, S_EMPTY);
+
     game_print(g);
 
     bool values_matches = 
+        game_get_square(g, 3, 2) == S_ONE &&
+        game_get_square(g, 5, 1) == S_ZERO &&
+        game_get_square(g, 3, 4) == S_IMMUTABLE_ONE &&
         game_get_next_square(g, 2, 3, RIGHT, 1) == S_IMMUTABLE_ONE &&
         game_get_square(g, 0, 1) == S_IMMUTABLE_ZERO &&
         game_get_square(g, 0, 2) == S_ONE &&
-        game_get_square(g, 0, 3) == S_ZERO &&
+        game_get_square(g, 0, 3) == S_EMPTY &&
         game_get_square(g, 0, 4) == S_EMPTY;
 
     game_delete(g);
