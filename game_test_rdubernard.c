@@ -99,7 +99,7 @@ bool test_get_square(void){
 }
 
 // ISSUE #6 -> game_set_square()
-bool test_set_square(void){
+bool test_game_set_square(void){
     // GENERATE EMPTY GAME
     game g = game_new_empty();
     
@@ -299,8 +299,8 @@ int main(int argc, char *argv[]){
     }
     
     // -> set_square
-    else if (!strcmp("set_square", argv[1])){
-        ok = test_set_square();
+    else if (!strcmp("game_set_square", argv[1])){
+        ok = test_game_set_square();
     }
 
     // -> game_delete
