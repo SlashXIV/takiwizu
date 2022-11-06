@@ -125,14 +125,14 @@ bool test_game_set_square(void){
     if (game_get_square(g, 5, 0) != S_IMMUTABLE_ONE){
         game_delete(g);
         return false;
-    }
+    }   
 
-
-    game_set_square(g, 3, 3, S_IMMUTABLE_ZERO);
-    if (game_get_square(g, 3, 3) != S_IMMUTABLE_ZERO){
+    game_set_square(g, 3, 4, S_IMMUTABLE_ZERO);
+    if (game_get_square(g, 3, 4) != S_IMMUTABLE_ZERO){
         game_delete(g);
         return false;
     }
+
     return true;
 }
 
