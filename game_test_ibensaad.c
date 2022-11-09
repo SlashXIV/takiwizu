@@ -68,8 +68,6 @@ bool test_game_restart(){
 
     game_restart(g1);
 
-    if(game_get_square(g1,2,0)==S_ONE)
-        return false;
 
     //We test if the restarted game g1 is like the game g2(which is in an initial state):
     if(!game_equal(g1,g2)){
