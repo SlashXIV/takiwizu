@@ -228,20 +228,15 @@ bool test_game_delete(){
 
 // ISSUE #4 -> game_equal()
 bool test_game_equal(){
+    /*
     game g_empty = game_new_empty();
     game g_default = game_default();
     game g_end = game_default_solution();
 
 
-    game g1 = game_new_empty();
-    game g2= game_new_empty();
+    
 
-    game g_zero = game_new_empty();
-    game g_immutable_zero = game_new_empty();
-    game g_one = game_new_empty();
-    game g_immutable_one = game_new_empty();
-
-    /*if (!game_equal(g_end, g_end)){
+    if (!game_equal(g_end, g_end)){
         return false;
     }
 
@@ -257,41 +252,53 @@ bool test_game_equal(){
         return false;
     }*/
 
-    game_set_square(g_zero,3,3,S_ZERO);
-    game_set_square(g_immutable_zero,3,3,S_IMMUTABLE_ZERO);
-    game_set_square(g_one,2,3,S_ONE);
-    game_set_square(g_immutable_one,2,3,S_IMMUTABLE_ONE);
-
-    if(game_equal(g_zero,g_immutable_zero)){
-        return false;
-    }
-    if(game_equal(g_one,g_immutable_one)){
-        return false;
-    }
+    game g1 = game_new_empty();
+    game g2= game_new_empty();
+    
+    
 
     if(!game_equal(g1,g2)){
         return false;
     }
-
     game_set_square(g1,2,2,S_ONE);
+    game_set_square(g1,3,3,S_ZERO);
+    game_set_square(g1,4,2,S_IMMUTABLE_ONE);
+    game_set_square(g1,1,4,S_IMMUTABLE_ZERO);
+
+
+    if(game_equal(g1,g2)){ 
+        return false;
+    }
+
+    game_set_square(g2,2,2,S_ONE);
+    game_set_square(g2,3,3,S_ZERO);
+    game_set_square(g2,4,2,S_IMMUTABLE_ONE);
+    game_set_square(g2,1,4,S_IMMUTABLE_ZERO);
+
+    if(!game_equal(g1,g2)){ 
+        return false;
+    }
+
+    game_set_square(g1,4,5,S_ONE);
+    game_set_square(g2,4,5,S_IMMUTABLE_ONE);
+    
+
+    if(game_equal(g1,g2)){ 
+        return false;
+    }
+
+    game_set_square(g1,1,5,S_ZERO);
+    game_set_square(g2,1,5,S_IMMUTABLE_ZERO);
 
     if(game_equal(g1,g2)){
         return false;
     }
-    game_set_square(g2,2,2,S_ONE);
-    if(!game_equal(g1,g2)){
-        return false;
-    }
 
 
 
-    game_delete(g_empty);
+    /*game_delete(g_empty);
     game_delete(g_default);
-    game_delete(g_end);
-    game_delete(g_zero);
-    game_delete(g_immutable_zero);
-    game_delete(g_one);
-    game_delete(g_immutable_one);
+    game_delete(g_end);*/
     game_delete(g1);
     game_delete(g2);
 
