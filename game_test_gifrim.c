@@ -27,6 +27,8 @@ bool test_game_check_move(){
 
     if(!game_check_move(g,5,0,S_ZERO))
         return false;
+    
+
 
     game_delete(g);
     return true;
@@ -112,6 +114,11 @@ bool test_game_is_empty(){
     
     else if(game_is_empty(g,5,5))
         return false;
+    
+    game_set_square(g,5,0,S_ZERO);
+    if(game_is_empty(g,5,0))
+        return false;
+    
     
     game_delete(g);
     return true;
