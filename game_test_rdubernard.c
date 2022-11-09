@@ -257,7 +257,7 @@ bool test_game_equal(){
     
     
 
-    if(!game_equal(g1,g2)){
+    if(!game_equal(g1,g2)){ //test de deux jeux identiques
         return false;
     }
     game_set_square(g1,2,2,S_ONE);
@@ -266,7 +266,7 @@ bool test_game_equal(){
     game_set_square(g1,1,4,S_IMMUTABLE_ZERO);
 
 
-    if(game_equal(g1,g2)){ 
+    if(game_equal(g1,g2)){ //test de deux jeux différents
         return false;
     }
 
@@ -275,7 +275,7 @@ bool test_game_equal(){
     game_set_square(g2,4,2,S_IMMUTABLE_ONE);
     game_set_square(g2,1,4,S_IMMUTABLE_ZERO);
 
-    if(!game_equal(g1,g2)){ 
+    if(!game_equal(g1,g2)){  //test de deux jeux identiques
         return false;
     }
 
@@ -283,14 +283,14 @@ bool test_game_equal(){
     game_set_square(g2,4,5,S_IMMUTABLE_ONE);
     
 
-    if(game_equal(g1,g2)){ 
+    if(game_equal(g1,g2)){  //test de S_ONE et S_IMMUABLE_ONE
         return false;
     }
 
     game_set_square(g1,1,5,S_ZERO);
     game_set_square(g2,1,5,S_IMMUTABLE_ZERO);
 
-    if(game_equal(g1,g2)){
+    if(game_equal(g1,g2)){ //test de S_ZERO et S_IMMUTABLE_ZERO
         return false;
     }
 
