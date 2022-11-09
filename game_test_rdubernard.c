@@ -233,6 +233,8 @@ bool test_game_equal(){
     game g_end = game_default_solution();
     game g_zero = game_default();
     game g_immutable_zero = game_default();
+    game g_one = game_default();
+    game g_immutable_one = game_default();
 
     if (!game_equal(g_end, g_end)){
         return false;
@@ -252,8 +254,13 @@ bool test_game_equal(){
 
     game_set_square(g_zero,5,0,S_ZERO);
     game_set_square(g_immutable_zero,5,0,S_IMMUTABLE_ZERO);
+    game_set_square(g_one,5,0,S_ONE);
+    game_set_square(g_immutable_one,5,0,S_IMMUTABLE_ONE);
 
     if(game_equal(g_zero,g_immutable_zero)){
+        return false;
+    }
+    if(game_equal(g_one,g_immutable_one)){
         return false;
     }
 
@@ -262,6 +269,8 @@ bool test_game_equal(){
     game_delete(g_end);
     game_delete(g_zero);
     game_delete(g_immutable_zero);
+    game_delete(g_one);
+    game_delete(g_immutable_one);
 
     return true;
 }
