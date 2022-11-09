@@ -24,6 +24,9 @@ bool test_game_check_move(){
     if(!game_check_move(g,0,4,S_ZERO))
         return false;
     
+    if(game_check_move(g,0,1,S_ZERO))
+        return false;
+
 
     if(!game_check_move(g,5,0,S_ZERO))
         return false;
