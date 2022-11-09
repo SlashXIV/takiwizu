@@ -231,10 +231,10 @@ bool test_game_equal(){
     game g_empty = game_new_empty();
     game g_default = game_default();
     game g_end = game_default_solution();
-    game g_zero = game_default();
-    game g_immutable_zero = game_default();
-    game g_one = game_default();
-    game g_immutable_one = game_default();
+    game g_zero = game_new_empty();
+    game g_immutable_zero = game_new_empty();
+    game g_one = game_new_empty();
+    game g_immutable_one = game_new_empty();
 
     if (!game_equal(g_end, g_end)){
         return false;
@@ -252,10 +252,10 @@ bool test_game_equal(){
         return false;
     }
 
-    game_set_square(g_zero,5,0,S_ZERO);
-    game_set_square(g_immutable_zero,5,0,S_IMMUTABLE_ZERO);
-    game_set_square(g_one,5,0,S_ONE);
-    game_set_square(g_immutable_one,5,0,S_IMMUTABLE_ONE);
+    game_set_square(g_zero,3,3,S_ZERO);
+    game_set_square(g_immutable_zero,3,3,S_IMMUTABLE_ZERO);
+    game_set_square(g_one,2,3,S_ONE);
+    game_set_square(g_immutable_one,2,3,S_IMMUTABLE_ONE);
 
     if(game_equal(g_zero,g_immutable_zero)){
         return false;
