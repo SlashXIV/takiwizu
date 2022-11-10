@@ -40,7 +40,7 @@ bool test_game_default(){
         return false;
     }
     if(game_get_square(g,0,2)!=S_IMMUTABLE_ZERO){
-        return false;j
+        return false;
     if(game_get_square(g,1,0)!=S_EMPTY){
         return false;
     }
