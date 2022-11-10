@@ -41,12 +41,13 @@ bool test_game_default(){
     }
     if(game_get_square(g,0,2)!=S_IMMUTABLE_ZERO){
         return false;
+    }
     if(game_get_square(g,1,0)!=S_EMPTY){
         return false;
     }
     game_delete(g);
     return true;
-}
+    
 }
 
 bool test_game_print(){
