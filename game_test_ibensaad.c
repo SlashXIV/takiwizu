@@ -28,7 +28,7 @@ bool test_default_solution(){
    }
    game_delete(g);
     return true;
-    
+
 }
 
 bool test_game_default(){
@@ -40,8 +40,7 @@ bool test_game_default(){
         return false;
     }
     if(game_get_square(g,0,2)!=S_IMMUTABLE_ZERO){
-        return false;
-    }
+        return false;j
     if(game_get_square(g,1,0)!=S_EMPTY){
         return false;
     }
@@ -84,8 +83,6 @@ bool test_game_restart(){
         game_delete(g2);
         return false;
     }
-
-
     game_delete(g1);
     game_delete(g2);
     return true;
@@ -146,14 +143,12 @@ bool test_game_is_over(){
         return false;
     }
 
-    
     game_delete(g);
     return true;
 
 }
 
 int main(int argc, char *argv[]){
-
 
     if(argc == 1 || argc > 2){
         usage(argv[0]);
@@ -210,8 +205,6 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
 
     }
-
-
 
     if(okey == true){
         fprintf(stderr,"Success, test : %s is okey!\n",argv[1]);
