@@ -47,6 +47,7 @@ bool test_game_default(){
     game_delete(g);
     return true;
 }
+}
 
 bool test_game_print(){
 
