@@ -72,8 +72,6 @@ bool test_game_restart(){
 
     //We test if the restarted game g1 is like the game g2(which is in an initial state):
     if(!game_equal(g1,g2)){
-        game_delete(g1);
-        game_delete(g2);
         return false;
     }
 
@@ -81,10 +79,9 @@ bool test_game_restart(){
     game_restart(g2);
     
     if(!game_equal(g1,g2)){
-        game_delete(g1);
-        game_delete(g2);
         return false;
     }
+    
     game_delete(g1);
     game_delete(g2);
     return true;
