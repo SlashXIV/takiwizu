@@ -76,6 +76,16 @@ bool test_game_restart(){
         return false;
     }
 
+    game_set_square(g2,5,0,S_ZERO);
+    game_restart(g2);
+    
+    if(!game_equal(g1,g2)){
+        game_delete(g1);
+        game_delete(g2);
+        return false;
+    }
+
+
     game_delete(g1);
     game_delete(g2);
     return true;
