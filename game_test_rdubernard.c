@@ -308,6 +308,8 @@ bool test_game_equal(){
     game_delete(g_end);*/
     game_delete(g1);
     game_delete(g2);
+    game_delete(g3);
+    game_delete(g4);
 
     return true;
 }
