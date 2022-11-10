@@ -34,7 +34,7 @@ bool test_default_solution(){
 bool test_game_default(){
     game g = game_default();
 
-    //On test si certains élément ne sont pas dans la grille du jeu:
+    //We test if csome éléments are not in the game:
 
     if(game_get_square(g,0,1)!=S_IMMUTABLE_ONE){
         return false;
