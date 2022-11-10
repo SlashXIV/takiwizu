@@ -110,6 +110,8 @@ bool test_game_is_over(){
 
     game g = game_default();
 
+    game g2 = game_default();
+
     game_play_move(g,0,0,S_ZERO);
     game_play_move(g,0,3,S_ONE);
     game_play_move(g,0,4,S_ZERO);
@@ -141,10 +143,16 @@ bool test_game_is_over(){
     //We played all the movements to have the solution (moves.txt)
     //game_is_over should return true, if not the test will return false
 
+    game_set_square(g2,5,0,S_ZERO);
+    game_set_square(g2,5,1,S_ZERO);
+    game_set_square(g2,5,2,S_ZERO);
+
     if(!game_is_over(g)){
         return false;
     }
-
+    if(game_is_over(g2)){
+        return false;
+    }
     game_delete(g);
     return true;
 
