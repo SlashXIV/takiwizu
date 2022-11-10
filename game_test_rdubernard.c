@@ -254,8 +254,6 @@ bool test_game_equal(){
 
     game g1 = game_new_empty();
     game g2= game_new_empty();
-    game g3 = game_default();
-    game g4 = game_default();
     
     
 
@@ -296,20 +294,13 @@ bool test_game_equal(){
         return false;
     }
 
-
-    game_set_square(g4,2,1,S_ZERO);
-    if(game_equal(g3,g4)){
-
-        return false;
-    }
+    
 
     /*game_delete(g_empty);
     game_delete(g_default);
     game_delete(g_end);*/
     game_delete(g1);
     game_delete(g2);
-    game_delete(g3);
-    game_delete(g4);
 
     return true;
 }
