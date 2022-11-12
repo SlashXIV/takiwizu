@@ -60,30 +60,30 @@ bool test_game_print(){
 }
 
 bool test_game_restart(){
-    game g1 = game_default();
-    game g2 = game_default();
-    //We place a square in the game g1:
+    game g1 = game_new_empty();
+    //We place squares in the game g1:
     game_set_square(g1,2,0,S_ONE);
+    game_set_square(g1,1,2,S_IMMUTABLE_ONE);
+    game_set_square(g1,4,2,S_ZERO);
+    game_set_square(g1,2,2,S_IMMUTABLE_ZERO);
 
     //We restart the game g1:
 
     game_restart(g1);
 
 
-    //We test if the restarted game g1 is like the game g2(which is in an initial state):
-    if(!game_equal(g1,g2)){
+    if(game_get_square(g1,2,2)!=S_EMPTY)
         return false;
-    }
+    if(game_get_square(g1,4,2)!=S_EMPTY)
+        return false;
+    if(game_get_square(g1,1,2)!=S_EMPTY)
+        return false;
+    if(game_get_square(g1,2,0)!=S_EMPTY)
+        return false;
 
-    game_set_square(g2,5,0,S_ZERO);
-    game_restart(g2);
     
-    if(!game_equal(g1,g2)){
-        return false;
-    }
     
     game_delete(g1);
-    game_delete(g2);
     return true;
 }
 
