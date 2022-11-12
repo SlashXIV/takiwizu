@@ -257,42 +257,27 @@ bool test_game_equal(){
     
     
 
-    if(!game_equal(g1,g2)){ //test de deux jeux identiques
+    game_set_square(g1,0,0,S_EMPTY);
+    game_set_square(g1,5,5,S_ONE);
+    game_set_square(g1,2,1,S_IMMUTABLE_ZERO);
+    game_set_square(g1,3,2,S_IMMUTABLE_ONE);
+    game_set_square(g1,4,0,S_ZERO);
+
+    game g3 = game_copy(g1);
+    game g4 = game_copy(g1);
+
+    game_set_square(g4,4,0,S_IMMUTABLE_ZERO);
+    game_set_square(g4,5,5,S_IMMUTABLE_ONE);
+
+
+    if(game_equal(g1,g2)) //we modified g1 so its supposed to return false
         return false;
-    }
-    game_set_square(g1,2,2,S_ONE);
-    game_set_square(g1,3,3,S_ZERO);
-    game_set_square(g1,4,2,S_IMMUTABLE_ONE);
-    game_set_square(g1,1,4,S_IMMUTABLE_ZERO);
-
-
-    if(game_equal(g1,g2)){ //test de deux jeux différents
-        return false;
-    }
-
-    game_set_square(g2,2,2,S_ONE);
-    game_set_square(g2,3,3,S_ZERO);
-    game_set_square(g2,4,2,S_IMMUTABLE_ONE);
-    game_set_square(g2,1,4,S_IMMUTABLE_ZERO);
-
-    if(!game_equal(g1,g2)){  //test de deux jeux identiques
-        return false;
-    }
-
-    game_set_square(g1,4,5,S_ONE);
-    game_set_square(g2,4,5,S_IMMUTABLE_ONE);
     
-
-    if(game_equal(g1,g2)){  //test de S_ONE et S_IMMUABLE_ONE
+    if(!game_equal(g1,g3)) // g3 is a simple copy of g1, so its supposed to return true
         return false;
-    }
-
-    game_set_square(g1,1,5,S_ZERO);
-    game_set_square(g2,1,5,S_IMMUTABLE_ZERO);
-
-    if(game_equal(g1,g2)){ //test de S_ZERO et S_IMMUTABLE_ZERO
+    
+    if(game_equal(g1,g4)) // g4 is a copy of g1 but we change all the simple statements by his immutable value 
         return false;
-    }
 
     
 
@@ -301,6 +286,8 @@ bool test_game_equal(){
     game_delete(g_end);*/
     game_delete(g1);
     game_delete(g2);
+    game_delete(g3);
+    game_delete(g4);
 
     return true;
 }
