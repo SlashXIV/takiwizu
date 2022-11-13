@@ -105,51 +105,37 @@ bool test_game_play_move(){
 
 bool test_game_is_over(){
 
-    game g = game_default();
-
-    game g2 = game_default();
-
-    game_play_move(g,0,0,S_ZERO);
-    game_play_move(g,0,3,S_ONE);
-    game_play_move(g,0,4,S_ZERO);
-    game_play_move(g,0,5,S_ONE);
-    game_play_move(g,1,0,S_ZERO);
-    game_play_move(g,1,1,S_ONE);
-    game_play_move(g,1,2,S_ONE);
-    game_play_move(g,1,3,S_ZERO);
-    game_play_move(g,1,4,S_ONE);
-    game_play_move(g,1,5,S_ZERO);
-    game_play_move(g,2,0,S_ONE);
-    game_play_move(g,2,2,S_ZERO);
-    game_play_move(g,2,3,S_ONE);
-    game_play_move(g,2,5,S_ONE);
-    game_play_move(g,3,0,S_ONE);
-    game_play_move(g,3,3,S_ZERO);
-    game_play_move(g,3,4,S_ZERO);
-    game_play_move(g,3,5,S_ONE);
-    game_play_move(g,4,0,S_ZERO);
-    game_play_move(g,4,1,S_ONE);
-    game_play_move(g,4,3,S_ZERO);
-    game_play_move(g,4,4,S_ONE);
-    game_play_move(g,5,0,S_ONE);
-    game_play_move(g,5,1,S_ZERO);
-    game_play_move(g,5,2,S_ZERO);
-    game_play_move(g,5,3,S_ONE);
-    game_play_move(g,5,4,S_ONE);
-
-    //We played all the movements to have the solution (moves.txt)
-    //game_is_over should return true, if not the test will return false
-
-    game_set_square(g2,5,0,S_ZERO);
-    game_set_square(g2,5,1,S_ZERO);
-    game_set_square(g2,5,2,S_ZERO);
+    game g = game_default_solution();
+    square count;
+    int whiteNbr;
+    int blackNbr;
 
     if(!game_is_over(g)){
         return false;
     }
-    if(game_is_over(g2)){
-        return false;
+
+    for(int i=0; i< DEFAULT_SIZE;i++){
+
+        for(int j=0; j<DEFAULT_SIZE;j++){
+
+            count = game_get_square(g,i,j);
+
+            if ( count == S_IMMUTABLE_ONE || count == S_ONE ) {
+                whiteNbr++;
+            }
+
+            else {
+                blackNbr++;
+
+            }
+
+
+        }
+        if (whiteNbr %3 !=0 || blackNbr %3 !=0){
+            return false;
+        }
     }
+    
     game_delete(g);
     return true;
 
