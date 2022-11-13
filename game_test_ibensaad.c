@@ -106,25 +106,40 @@ bool test_game_play_move(){
 bool test_game_is_over(){
 
     game g = game_default_solution();
-    game_print(g);
-
-    game g_not_over = game_default_solution();
-    game_set_square(g_not_over, 0, 4, S_ONE);
-    game_print(g_not_over);
-
-    if(game_is_over(g_not_over)){
-        return false;
-    }
+    square count;
+    int whiteNbr;
+    int blackNbr;
 
     if(!game_is_over(g)){
         return false;
     }
-    
 
+    for(int i=0; i< DEFAULT_SIZE;i++){
+
+        for(int j=0; j<DEFAULT_SIZE;j++){
+
+            count = game_get_square(g,i,j);
+
+            if ( count == S_IMMUTABLE_ONE || count == S_ONE ) {
+                whiteNbr++;
+            }
+
+            else {
+                blackNbr++;
+
+            }
+
+
+        }
+        if (whiteNbr %3 !=0 || blackNbr %3 !=0){
+            return false;
+        }
+    }
+    
     game_delete(g);
     return true;
-}
 
+}
 int main(int argc, char *argv[]){
 
     if(argc == 1 || argc > 2){
