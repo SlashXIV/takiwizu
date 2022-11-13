@@ -297,10 +297,85 @@ bool test_game_copy(){
     game g_default_primal = game_default();
     game g_default_clone = game_copy(g_default_primal);
 
-    if(!game_equal(g_default_clone, g_default_primal)){
+    game_print(g_default_clone);
+    game_print(g_default_primal);
+
+    // game_default() each total square on this basic configuration
+    unsigned int total_empty = 27;
+    unsigned int total_immutable_white = 6;
+    unsigned int total_immutable_black = 3;
+    unsigned int total_white = 0;
+    unsigned int total_black = 0;
+
+    // cpt of each square type
+    unsigned int cpt_empty = 0;
+    unsigned int cpt_immutable_white = 0;
+    unsigned int cpt_immutable_black = 0;
+    unsigned int cpt_black = 0;
+    unsigned int cpt_white = 0;
+
+    
+    // counting each square type on default config
+    for (int x = 0; x < DEFAULT_SIZE ; x++){
+        for (int y = 0; y < DEFAULT_SIZE; y++){
+            square actual_square = game_get_square(g_default_clone, x, y);
+            
+            switch (actual_square){
+            
+            // actual square type => empty
+            case S_EMPTY:
+                cpt_empty++;
+                break;
+
+            // actual square type => immutable black
+            case S_IMMUTABLE_ONE:
+                cpt_immutable_black++;
+                break;
+
+            // actual square type => immutable white
+            case S_IMMUTABLE_ZERO:
+                cpt_immutable_white++;
+                break;
+            
+            // actual square type => black
+            case S_ONE:
+                // printf("there is a black square at (%d, %d)\n",x, y);
+                cpt_black++;
+                break;
+            
+            // actual square type => white
+            case S_ZERO:
+                cpt_white++;
+                break;
+
+            default: 
+                // printf("zero ?\n");
+                break;
+            }
+        }    
+    }
+
+    // verifying that the values match 
+    printf("white : total = %d / cpt = %d\n", total_white, cpt_white );
+    printf("empty : total = %d / cpt = %d\n", total_empty, cpt_empty );
+    printf("black : total = %d / cpt = %d\n", total_black, cpt_black );
+    printf("immutable_black : total = %d / cpt = %d\n", total_immutable_black, cpt_immutable_black );
+    printf("immutable_white : total = %d / cpt = %d\n", total_immutable_white, cpt_immutable_white );
+    bool values_matches = (
+        cpt_white == total_white &&
+        cpt_empty == total_empty &&
+        cpt_black == total_black &&
+        cpt_immutable_black == total_immutable_black &&
+        cpt_immutable_white == total_immutable_white
+    );
+
+    if(!game_equal(g_default_clone, g_default_primal) || !values_matches){
+        printf("equal_fonc -> %d\n", game_equal(g_default_clone,g_default_primal));
+        printf("values_matches -> %d\n", values_matches);
+        printf("THERE IS AN ERROR : GAME NOT EQUAL OR VALUES DON4 T MATCHES");
         return false;
     } 
-    
+
     game_delete(g_default_clone);
     game_delete(g_default_primal);
 
@@ -394,6 +469,6 @@ int main(int argc, char *argv[]){
         return EXIT_SUCCESS;
     } else {
         fprintf(stderr, "=> Test \"%s\" finished: FAILURE\n", argv[1]);
-        return EXIT_SUCCESS;
+        return EXIT_FAILURE;
     }
 }
