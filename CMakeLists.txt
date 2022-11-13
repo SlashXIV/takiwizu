@@ -31,6 +31,7 @@ add_test(test_gifrim_game_is_empty ./game_test_gifrim game_is_empty)
 add_test(test_gifrim_game_get_number ./game_test_gifrim game_get_number)
 add_test(test_game_get_next_number ./game_test_gifrim game_get_next_number)
 add_test(test_game_get_next_square ./game_test_gifrim game_get_next_square)
+add_test(test_game_restart ./game_test_gifrim game_restart)
 
 # -> dummy test (ibensaad)
 target_link_libraries(game_test_ibensaad game)

@@ -206,6 +206,37 @@ bool test_game_get_next_square(){
     return true;
 }
 
+bool test_game_restart(){
+
+    game g1 = game_new_empty();
+
+    //We place squares in the game g1:
+
+    game_set_square(g1,2,0,S_ONE);
+    game_set_square(g1,1,2,S_IMMUTABLE_ONE);
+    game_set_square(g1,4,2,S_ZERO);
+    game_set_square(g1,2,2,S_IMMUTABLE_ZERO);
+
+    //We restart the game g1:
+
+    game_restart(g1);
+
+
+    if(game_get_square(g1,2,2)!=S_IMMUTABLE_ZERO)
+        return false;
+    else if(game_get_square(g1,4,2)!=S_EMPTY)
+        return false;
+    else if(game_get_square(g1,1,2)!=S_IMMUTABLE_ONE)
+        return false;
+    else if(game_get_square(g1,2,0)!=S_EMPTY)
+        return false;
+
+    
+    
+    game_delete(g1);
+    return true;
+}
+
 
 
 int main(int argc, char *argv[]){
@@ -257,6 +288,10 @@ int main(int argc, char *argv[]){
         ok = test_game_get_next_square();
 
     }
+    else if(!strcmp(argv[1],"game_restart")){
+        ok = test_game_restart();
+    }
+
     else {
         fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
         exit(EXIT_FAILURE);

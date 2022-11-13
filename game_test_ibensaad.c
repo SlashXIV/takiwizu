@@ -58,7 +58,7 @@ bool test_game_print(){
     game_delete(g);
     return true;
 }
-
+/*
 bool test_game_restart(){
     game g1 = game_new_empty();
     //We place squares in the game g1:
@@ -85,7 +85,7 @@ bool test_game_restart(){
     
     game_delete(g1);
     return true;
-}
+}*/
 
 bool test_game_play_move(){
 
@@ -185,10 +185,10 @@ int main(int argc, char *argv[]){
     }
 
 //Test game_restart:
-
+    /*
     else if(!strcmp(argv[1],"restart")){
         okey = test_game_restart();
-    }
+    }*/
 //Test game_print:
 
     else if(!strcmp(argv[1],"print")){
