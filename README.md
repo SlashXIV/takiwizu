@@ -11,6 +11,7 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 3. Travailler en équipe avec Git :white_check_mark:
 4. CMake :white_check_mark:
 5. Tests unitaires :white_check_mark:
+6. Implémentation du Jeu (V1) :white_check_mark:
 
 En attente des prochains TD... :hourglass:
 
