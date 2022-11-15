@@ -58,8 +58,10 @@ bool test_game_print(){
     game_delete(g);
     return true;
 }
+
+//this function is supposed to be here.
 /*
-bool test_game_restart(){
+bool test_game_restart(){ 
     game g1 = game_new_empty();
     //We place squares in the game g1:
     game_set_square(g1,2,0,S_ONE);
