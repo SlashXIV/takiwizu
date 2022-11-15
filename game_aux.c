@@ -4,8 +4,6 @@
 #include <string.h>
 #include "game.h"
 #include "game_aux.h"
-#include "game.c"
-
 
 void game_print(cgame g){
 
