@@ -12,6 +12,8 @@ struct game_s{
 
 };
 
+//We have to implement the functions now:
+
 game game_new(square* squares){
 
     return NULL;
