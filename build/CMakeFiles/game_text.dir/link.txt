@@ -1,0 +1,1 @@
+/usr/bin/cc -std=c99 -Wall -rdynamic CMakeFiles/game_text.dir/game_text.c.o -o game_text   -L/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a  -Wl,-rpath,/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a -lgame 

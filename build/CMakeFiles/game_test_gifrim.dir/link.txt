@@ -1,0 +1,1 @@
+/usr/bin/cc -std=c99 -Wall -rdynamic CMakeFiles/game_test_gifrim.dir/game_test_gifrim.c.o -o game_test_gifrim   -L/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a  -Wl,-rpath,/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a -lgame 

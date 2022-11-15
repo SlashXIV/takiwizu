@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game.h
+stdbool.h
+-
+
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game_aux.h
+stdbool.h
+-
+game.h
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game.h
+
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game_test_ibensaad.c
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+string.h
+-
+game_aux.h
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game_aux.h
+game.h
+/autofs/unitytravail/travail/ibensaad/projet-t/Takuzu/takuzu-06a/game.h
+
