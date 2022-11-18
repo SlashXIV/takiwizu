@@ -51,7 +51,10 @@ square game_get_square(cgame g, uint i, uint j){
 
 int game_get_number(cgame g, uint i, uint j){ //gab
 
-    return 1;
+    //int tab[] = {0,2,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,2,0,0,0,0,0,2,0,0,1,0,0,0,0,0,1};
+    int findInArray = (i*6)+j;
+
+    return g->ArrayOfSquare[findInArray];
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //gab
@@ -66,7 +69,10 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //g
 
 bool game_is_empty(cgame g, uint i, uint j){ //gab
 
-    return true;
+    int findInArray = (i*6)+j;
+    
+
+    return g->ArrayOfSquare[findInArray]==S_EMPTY;
 }
 
 bool game_is_immutable(cgame g, uint i, uint j){ //gab
