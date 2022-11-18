@@ -84,17 +84,17 @@ bool game_check_move(cgame g, uint i, uint j, square s){
     return true;
 }
 
-void game_play_move(game g, uint i, uint j, square s){
+void game_play_move(game g, uint i, uint j, square s){ //ilisa
 
     //return nothing
 }
 
-bool game_is_over(cgame g){
+bool game_is_over(cgame g){ //ilisa
 
     return true;
 }
 
-void game_restart(game g){
+void game_restart(game g){ //ilisa
 
     //return nothing
 }
