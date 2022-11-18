@@ -49,37 +49,37 @@ square game_get_square(cgame g, uint i, uint j){
     return S_EMPTY;
 }
 
-int game_get_number(cgame g, uint i, uint j){
+int game_get_number(cgame g, uint i, uint j){ //gab
 
     return 1;
 }
 
-int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){
+int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //gab
 
     return 1;
 }
 
-int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){
+int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //gab
 
     return 1;
 }
 
-bool game_is_empty(cgame g, uint i, uint j){
+bool game_is_empty(cgame g, uint i, uint j){ //gab
 
     return true;
 }
 
-bool game_is_immutable(cgame g, uint i, uint j){
+bool game_is_immutable(cgame g, uint i, uint j){ //gab
 
     return true;
 }
 
-int game_has_error(cgame g, uint i, uint j){
+int game_has_error(cgame g, uint i, uint j){ //gab
 
     return 1;
 }
 
-bool game_check_move(cgame g, uint i, uint j, square s){
+bool game_check_move(cgame g, uint i, uint j, square s){ //gab
 
     return true;
 }
