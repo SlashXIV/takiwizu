@@ -9,7 +9,7 @@ add_library(game game.c game_aux.c)
 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
-# add_library(libgame.a game.c game_aux.c) # GAME LIB MAKER (useless)
+add_library(libgame.a game.c game_aux.c) # GAME LIB MAKER (useless)
 
 # [====== LIBRARY LINK ======]
 target_link_libraries(game_text game)
