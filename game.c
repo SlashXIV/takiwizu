@@ -322,8 +322,8 @@ bool game_is_over(cgame g){ //ilisa
 
     uint nb_white_lines=0;
     uint nb_black_lines=0;
-    uint nb_black_columns=0;
-    uint nb_white_columns=0;
+    //uint nb_black_columns=0;
+    //uint nb_white_columns=0;
 
 //We have created counters and we use them in a loop to count how many black and white square we have.
 
@@ -332,8 +332,10 @@ bool game_is_over(cgame g){ //ilisa
     uint num_line=0;
     
     while(num_line <DEFAULT_SIZE){
-        for(uint num_column=0; num_column<DEFAULT_SIZE; num_column++)
-            square actual_square = game_get_square(g,i,j);
+        for(uint num_column=0; num_column<DEFAULT_SIZE; num_column++){
+
+        
+            square actual_square = game_get_square(g,num_column,num_line);
 
             if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
                 nb_black_lines++;
@@ -351,18 +353,7 @@ bool game_is_over(cgame g){ //ilisa
     }
 
 
-    //Columns:
-
-    for(uint x=0; x<DEFAULT_SIZE; x++){
-        for(uint y=0; y<DEFAULT_SIZE; y++){
-            if(actual_square==S_ZERO || actual_square==S_IMMUTABLE_ZERO){
-                nb_white_columns++;
-            }
-            if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
-                nb_black_columns++;
-            }
-        }
-    }                                     
+    //Columns:                                    
     return true;
 }
 
