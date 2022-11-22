@@ -108,12 +108,25 @@ square game_get_square(cgame g, uint i, uint j){ // robs
 
 int game_get_number(cgame g, uint i, uint j){ //gab
 
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
+
     int findInArray = (i*6)+j;
 
     return g->ArrayOfSquare[findInArray];
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //gab
+
+
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
 
     if(dir == UP)
         i-=(6*dist);
@@ -132,6 +145,12 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //g
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //gab
 
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
+
     if(dir == UP)
         i-=(6*dist);
     
@@ -149,6 +168,12 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //g
 
 bool game_is_empty(cgame g, uint i, uint j){ //gab
 
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
+
     int findInArray = (i*6)+j;
     
 
@@ -156,6 +181,12 @@ bool game_is_empty(cgame g, uint i, uint j){ //gab
 }
 
 bool game_is_immutable(cgame g, uint i, uint j){ //gab
+
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
 
     int findInArray = (i*6)+j;
 
@@ -166,6 +197,9 @@ bool game_is_immutable(cgame g, uint i, uint j){ //gab
     else if (g->ArrayOfSquare[findInArray] ==S_IMMUTABLE_ONE)
         return true;
     
+    else if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE)
+        return false;
+    
     else
         return false;
 
@@ -174,12 +208,38 @@ bool game_is_immutable(cgame g, uint i, uint j){ //gab
 
 int game_has_error(cgame g, uint i, uint j){ //gab
 
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
+
     return 1;
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s){ //gab
 
-    return true;
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+
+        fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+        exit(EXIT_FAILURE);
+    }
+
+
+    square cas  = game_get_square(g,i,j);
+
+
+    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE)
+        return false;
+    
+    if(cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO)
+        return false;
+    
+    if( cas != S_EMPTY || cas != S_ONE || cas != S_ZERO)
+        return false;
+
+
+    return true; 
 }
 
 void game_play_move(game g, uint i, uint j, square s){ //ilisa
