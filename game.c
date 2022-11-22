@@ -249,6 +249,59 @@ void game_play_move(game g, uint i, uint j, square s){ //ilisa
 
 bool game_is_over(cgame g){ //ilisa
 
+//We test if our pointer g is NULL, if it is the case we exit the programm.
+
+    if(g==NULL){
+        exit(EXIT_FAILURE);
+    }
+    /* rules:
+    --> to win the game we need to have the same number of white and black square in each lines and columns 
+    --> and not more than 3 black or white consecutives square for each lines and columns:
+    */
+
+    uint nb_white_lines=0;
+    uint nb_black_lines=0;
+    uint nb_black_columns=0;
+    uint nb_white_columns=0;
+
+//We have created counters and we use them in a loop to count how many black and white square we have.
+
+    //Lines:
+
+    uint num_line=0;
+    
+    while(num_line <DEFAULT_SIZE){
+        for(uint num_column=0; num_column<DEFAULT_SIZE; num_column++)
+            square actual_square = game_get_square(g,i,j);
+
+            if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
+                nb_black_lines++;
+            }
+            else if(actual_square==S_ZERO || actual_square==S_IMMUTABLE_ZERO){
+                nb_white_lines++;
+            }
+        }
+        if(nb_black_lines != nb_white_lines){ //Check if at least on line does not respect the rule of same number of white and black square.
+            return false;
+        }
+        num_line++;
+        nb_black_lines = 0;
+        nb_white_lines = 0;
+    }
+
+
+    //Columns:
+
+    for(uint x=0; x<DEFAULT_SIZE; x++){
+        for(uint y=0; y<DEFAULT_SIZE; y++){
+            if(actual_square==S_ZERO || actual_square==S_IMMUTABLE_ZERO){
+                nb_white_columns++;
+            }
+            if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
+                nb_black_columns++;
+            }
+        }
+    }                                     
     return true;
 }
 
@@ -256,3 +309,5 @@ void game_restart(game g){ //ilisa
 
     //return nothing
 }
+
+//S_ONE = BLACK, Z_ZERO = WHITE.
