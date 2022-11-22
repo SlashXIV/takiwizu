@@ -219,6 +219,9 @@ int game_has_error(cgame g, uint i, uint j){ //gab
     int whiteLarg = 0;
     int blackLarg =0;
 
+    // LA FONCTION DOIT SEULEMENT RENVOYER UNE ERREUR ET NE RIEN PRINT DU TOUT, LE PRINT CE FAIT DANS LE GAME_TEXT
+    // NE PAS AVOIR 3 CONSECUTIFS CAD trois a la suite => WWW BBB, W BBB
+
     for(int height =0;height<DEFAULT_SIZE;height++){
         if(game_get_square(g,height,j)==S_IMMUTABLE_ONE || game_get_square(g,height,j)==S_ONE)
             blackCol++;
@@ -240,7 +243,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
                 printf("Error at square (%d,%d)\n",error,j);
             }
         }
-        return -1; //-1 mean that there is an error in code
+        return 1; //1 mean that there is an error in code
     }
     
     if(whiteCol<3){
@@ -251,7 +254,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
             }
 
         }
-        return -1; //-1 mean that there is an error in code
+        return 1; //1 mean that there is an error in code
 
     }
 
@@ -261,7 +264,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
                 printf("Error at square (%d,%d)\n",error,j);
             }
         }
-        return -1; //-1 mean that there is an error in code
+        return 1; //1 mean that there is an error in code
     }
 
     if(whiteLarg<3){
@@ -270,7 +273,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
                 printf("Error at square (%d,%d)\n",error,j);
             }
         }
-        return -1; //-1 mean that there is an error in code
+        return 1; //1 mean that there is an error in code
     }
 
 
