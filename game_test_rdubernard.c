@@ -456,6 +456,10 @@ int main(int argc, char *argv[]){
     else if (!strcmp("game_new", argv[1])){
         ok = test_game_new();
     }
+    
+    else if (!strcmp("game_new_empty", argv[1])){
+	ok = test_game_new_empty();
+    }
 
     else {
         // INVALID : "?"
