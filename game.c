@@ -214,7 +214,68 @@ int game_has_error(cgame g, uint i, uint j){ //gab
         exit(EXIT_FAILURE);
     }
 
-    return 1;
+    int whiteCol = 0;
+    int blackCol = 0;
+    int whiteLarg = 0;
+    int blackLarg =0;
+
+    for(int height =0;height<DEFAULT_SIZE;height++){
+        if(game_get_square(g,height,j)==S_IMMUTABLE_ONE || game_get_square(g,height,j)==S_ONE)
+            blackCol++;
+        if(game_get_square(g,height,j)==S_IMMUTABLE_ZERO || game_get_square(g,height,j)==S_ZERO)
+            whiteCol++;
+    }
+
+    for(int width =0;width<DEFAULT_SIZE;width++){
+        if(game_get_square(g,width,j)==S_IMMUTABLE_ONE || game_get_square(g,width,j)==S_ONE)
+            blackLarg++;
+        if(game_get_square(g,width,j)==S_IMMUTABLE_ZERO || game_get_square(g,width,j)==S_ZERO)
+            whiteLarg++;
+    }
+
+    if(blackCol<3){
+        for(int error = 0;error<blackCol;error++){
+
+            if(game_get_square(g,error,j)==S_ONE){
+                printf("Error at square (%d,%d)\n",error,j);
+            }
+        }
+        return -1; //-1 mean that there is an error in code
+    }
+    
+    if(whiteCol<3){
+        for(int error = 0;error<whiteCol;error++){
+
+            if(game_get_square(g,error,j)==S_ONE){
+                printf("Error at square (%d,%d)\n",error,j);
+            }
+
+        }
+        return -1; //-1 mean that there is an error in code
+
+    }
+
+    if(blackLarg<3){
+        for(int error = 0;error<blackLarg;error++){
+            if(game_get_square(g,i,error)==S_ONE){
+                printf("Error at square (%d,%d)\n",error,j);
+            }
+        }
+        return -1; //-1 mean that there is an error in code
+    }
+
+    if(whiteLarg<3){
+        for(int error = 0;error<whiteLarg;error++){
+            if(game_get_square(g,i,error)==S_ONE){
+                printf("Error at square (%d,%d)\n",error,j);
+            }
+        }
+        return -1; //-1 mean that there is an error in code
+    }
+
+
+
+    return 0; //0 mean that there is no error
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s){ //gab
