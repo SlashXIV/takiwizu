@@ -215,67 +215,66 @@ int game_has_error(cgame g, uint i, uint j){ //gab
     }
 
     int whiteCol = 0;
-    int blackCol = 0;
-    int whiteLarg = 0;
-    int blackLarg =0;
+    int blackCol =0;
+    int whiteLine = 0;
+    int blackLine = 0;
+
+    for(int h=0;h<DEFAULT_SIZE;h++){
+
+        if(game_get_square(g,h,j)==S_ZERO ||game_get_square(g,h,j)== S_IMMUTABLE_ZERO )
+            whiteLine++;
+    }
+
+
+    for(int w=0;w<DEFAULT_SIZE;w++){
+        if(game_get_square(g,i,w)==S_ZERO ||game_get_square(g,i,w)== S_IMMUTABLE_ZERO )
+            whiteCol++;
+    }
+
+
+
+    if (whiteLine>3 || whiteCol >3) //we check the parity of the squares if >3 mean that parity isnt respected
+        return 1;     
 
     // LA FONCTION DOIT SEULEMENT RENVOYER UNE ERREUR ET NE RIEN PRINT DU TOUT, LE PRINT CE FAIT DANS LE GAME_TEXT
     // NE PAS AVOIR 3 CONSECUTIFS CAD trois a la suite => WWW BBB, W BBB
 
-    for(int height =0;height<DEFAULT_SIZE;height++){
-        if(game_get_square(g,height,j)==S_IMMUTABLE_ONE || game_get_square(g,height,j)==S_ONE)
-            blackCol++;
-        if(game_get_square(g,height,j)==S_IMMUTABLE_ZERO || game_get_square(g,height,j)==S_ZERO)
-            whiteCol++;
-    }
-
-    for(int width =0;width<DEFAULT_SIZE;width++){
-        if(game_get_square(g,width,j)==S_IMMUTABLE_ONE || game_get_square(g,width,j)==S_ONE)
-            blackLarg++;
-        if(game_get_square(g,width,j)==S_IMMUTABLE_ZERO || game_get_square(g,width,j)==S_ZERO)
-            whiteLarg++;
-    }
-
-    if(blackCol<3){
-        for(int error = 0;error<blackCol;error++){
-
-            if(game_get_square(g,error,j)==S_ONE){
-                printf("Error at square (%d,%d)\n",error,j);
-            }
-        }
-        return 1; //1 mean that there is an error in code
-    }
+   
+   
+    square primaryCase = game_get_square(g,i,j);
     
-    if(whiteCol<3){
-        for(int error = 0;error<whiteCol;error++){
-
-            if(game_get_square(g,error,j)==S_ONE){
-                printf("Error at square (%d,%d)\n",error,j);
-            }
-
-        }
-        return 1; //1 mean that there is an error in code
-
+    if(i*6+j>=34 || i*6+j>=1){
+        if(game_get_square(g,i,j+1)==primaryCase && game_get_square(g,i,j-1)==primaryCase) //checking the width 
+            return 1;
+        
     }
 
-    if(blackLarg<3){
-        for(int error = 0;error<blackLarg;error++){
-            if(game_get_square(g,i,error)==S_ONE){
-                printf("Error at square (%d,%d)\n",error,j);
-            }
-        }
-        return 1; //1 mean that there is an error in code
+    if((i*6)+6+j<=35 || (i*6)-6+j>=0){
+        if(game_get_square(g,i+1,j)==primaryCase && game_get_square(g,i-1,j)==primaryCase) //checking the height 
+            return 1;
     }
 
-    if(whiteLarg<3){
-        for(int error = 0;error<whiteLarg;error++){
-            if(game_get_square(g,i,error)==S_ONE){
-                printf("Error at square (%d,%d)\n",error,j);
-            }
-        }
-        return 1; //1 mean that there is an error in code
+    if(i==5){
+        if(game_get_square(g,i-1,j)==primaryCase && game_get_square(g,i-2,j)==primaryCase) //checking the height in case of corner
+            return 1;
     }
 
+    if(i==0){
+        if(game_get_square(g,i+1,j)==primaryCase && game_get_square(g,i+2,j)==primaryCase) //checking the height in case of corner
+            return 1;
+    }
+
+    if(j==5){
+        if(game_get_square(g,i,j-1)==primaryCase && game_get_square(g,i,j-2)==primaryCase) //checking the height in case of corner
+            return 1;
+    }
+
+    if(j==0){
+        if(game_get_square(g,i,j+1)==primaryCase && game_get_square(g,i,j+2)==primaryCase) //checking the height in case of corner
+            return 1;
+    }
+
+    
 
 
     return 0; //0 mean that there is no error
