@@ -67,7 +67,8 @@ bool game_equal(cgame g1, cgame g2){ // robs
 }
 
 void game_delete(game g){ // robs
-    free(g->ArrayOfSquare);
+    if(g->ArrayOfSquare!=NULL)
+        free(g->ArrayOfSquare);
     free(g);
 }
 
@@ -215,9 +216,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
     }
 
     int whiteCol = 0;
-    int blackCol =0;
     int whiteLine = 0;
-    int blackLine = 0;
 
     for(int h=0;h<DEFAULT_SIZE;h++){
 
@@ -391,7 +390,7 @@ bool game_is_over(cgame g){ //ilisa
 
 void game_restart(game g){ //ilisa
 
-    //return nothing
+    g = game_default();
 }
 
 //S_ONE = BLACK, Z_ZERO = WHITE.
