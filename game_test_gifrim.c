@@ -169,7 +169,7 @@ bool test_game_get_next_number(){
     else if (game_get_next_number(g,0,1,RIGHT,2)!=-1)
         return false;
     
-    else if(game_get_next_number(g,4,1,DOWN,1)==0)
+    else if(game_get_next_number(g,4,1,RIGHT,1)!=1)
             return false;
 
     game_play_move(g,5,1,S_ZERO);

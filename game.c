@@ -42,7 +42,15 @@ game game_copy(cgame g){ // robs
     } 
 
     // sending back a new game with the actual state of squares of g
-    return game_new(g->ArrayOfSquare);
+    game g2 = game_new_empty();
+
+    for(int i=0;i<DEFAULT_SIZE;i++){
+        for(int k=0;k<DEFAULT_SIZE;k++){
+
+            game_set_square(g2,i,k,game_get_square(g,i,k));
+        }
+    }
+    return g2;
 }
 
 bool game_equal(cgame g1, cgame g2){ // robs
@@ -128,49 +136,46 @@ int game_get_number(cgame g, uint i, uint j){ //gab
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //gab
 
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+    if(i<0 || i>= DEFAULT_SIZE || j<0 || j>=DEFAULT_SIZE || g ==NULL){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
     }
 
     if(dir == UP)
-        i-=(6*dist);
+        i-=dist;
     
     if(dir == DOWN)
-        i+=(6*dist);
+        i+=dist;
     
     if(dir == LEFT)
         j-=dist;
     
     if(dir == RIGHT)
         j+=dist;
+    
+    if(j<0 || j>=DEFAULT_SIZE || i<0 || i>=DEFAULT_SIZE)
+        exit(EXIT_FAILURE);
 
     return game_get_square(g,i,j);
 }
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //gab
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+     if(i>= DEFAULT_SIZE || j>=DEFAULT_SIZE || g ==NULL || dist>2){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
     }
 
-    if(dir == UP)
-        i-=(6*dist);
+    if(game_get_next_square(g,i,j,dir,dist)==S_IMMUTABLE_ONE || game_get_next_square(g,i,j,dir,dist)== S_ONE)
+        return 1;
     
-    if(dir == DOWN)
-        i+=(6*dist);
-    
-    if(dir == LEFT)
-        j-=dist;
-    
-    if(dir == RIGHT)
-        j+=dist;
+    if(game_get_next_square(g,i,j,dir,dist)==S_IMMUTABLE_ZERO || game_get_next_square(g,i,j,dir,dist)== S_ZERO)
+        return 0;
 
-    // SI ON SORT DU TABLEAU ON SORT
-    return game_get_number(g,i,j);
+    else
+        return -1;
 }
 
 bool game_is_empty(cgame g, uint i, uint j){ //gab
@@ -305,9 +310,6 @@ bool game_check_move(cgame g, uint i, uint j, square s){ //gab
     
     if(cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO)
         return false;
-    
-    if( cas != S_EMPTY || cas != S_ONE || cas != S_ZERO)
-        return false;
 
 
     return true; 
@@ -352,6 +354,14 @@ void game_restart(game g){ //ilisa
         exit(EXIT_FAILURE);
     }
 
-    g = game_default(); //if g is not NULL, we restart the game by using the function game_default that gives a default game.
+    for(int i=0;i<DEFAULT_SIZE;i++){
+        for(int j=0;j<DEFAULT_SIZE;j++){
+            if(game_get_square(g,i,j)==S_ONE)
+                game_set_square(g,i,j,S_EMPTY);
+
+            if(game_get_square(g,i,j)==S_ZERO)
+                game_set_square(g,i,j,S_EMPTY);
+        }
+    }
 }
 
