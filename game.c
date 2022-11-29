@@ -230,12 +230,10 @@ int game_has_error(cgame g, uint i, uint j){ //gab
 
 
     if (whiteLine>3 || whiteCol >3) //we check the parity of the squares if >3 mean that parity isnt respected
-        return 1;     
+        return 1;
 
-    // LA FONCTION DOIT SEULEMENT RENVOYER UNE ERREUR ET NE RIEN PRINT DU TOUT, LE PRINT CE FAIT DANS LE GAME_TEXT
-    // NE PAS AVOIR 3 CONSECUTIFS CAD trois a la suite => WWW BBB, W BBB
-
-   
+    // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL, THE PRINT DOES THIS IN THE GAME_TEXT
+    // DO NOT HAVE 3 CONSECUTIVE CAD three in a row => WWW BBB, W BBB
    
     square primaryCase = game_get_square(g,i,j);
     
@@ -340,6 +338,6 @@ void game_restart(game g){ //ilisa
         exit(EXIT_FAILURE);
     }
 
-    g = game_default();
+    g = game_default(); //if g is not NULL, we restart the game by using the function game_default that gives a default game.
 }
 
