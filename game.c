@@ -93,10 +93,10 @@ void game_set_square(game g, uint i, uint j, square s){ // robs
 
 square game_get_square(cgame g, uint i, uint j){ // robs
     if (g == NULL){ 
-        fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j : invalid parameters; g pointing on nothing...");
+        fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j : invalid parameters; g pointing on nothing...\n");
         exit(EXIT_FAILURE);
     } else if (i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
-        fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j, : invalid parameters; i (%u) or j (%u) over DEFAULT_SIZE (%d) ...", i, j, DEFAULT_SIZE);
+        fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j, : invalid parameters; i (%u) or j (%u) over DEFAULT_SIZE (%d) ...\n", i, j, DEFAULT_SIZE);
         exit(EXIT_FAILURE);
     }
 
