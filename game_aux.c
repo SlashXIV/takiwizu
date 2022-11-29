@@ -19,19 +19,19 @@ void game_print(cgame g){ //ilisa
         printf("%d |",b);
 
             switch(a){
-        case 0:
+        case S_EMPTY:
             printf(" ");
 
-        case 1:
+        case S_ZERO:
             printf("w");
 
-        case 2:
+        case S_ONE:
             printf("b");
 
-        case 3:
+        case S_IMMUTABLE_ZERO:
             printf("W");
 
-        case 4:
+        case S_IMMUTABLE_ONE:
             printf("B");
         }
 

@@ -109,15 +109,20 @@ square game_get_square(cgame g, uint i, uint j){ // robs
 
 int game_get_number(cgame g, uint i, uint j){ //gab
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+    if(i<0 || i>= DEFAULT_SIZE || j<0 || j>=DEFAULT_SIZE || g ==NULL){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
     }
 
-    int findInArray = (i*6)+j;
+    if(game_get_square(g,i,j)==S_IMMUTABLE_ONE || game_get_square(g,i,j)== S_ONE)
+        return 1;
+    
+    if(game_get_square(g,i,j)==S_IMMUTABLE_ZERO || game_get_square(g,i,j)== S_ZERO)
+        return 0;
 
-    return g->ArrayOfSquare[findInArray];
+    else
+        return -1;
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //gab
@@ -164,6 +169,7 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir, uint dist){ //g
     if(dir == RIGHT)
         j+=dist;
 
+    // SI ON SORT DU TABLEAU ON SORT
     return game_get_number(g,i,j);
 }
 
@@ -181,7 +187,7 @@ bool game_is_empty(cgame g, uint i, uint j){ //gab
 
 bool game_is_immutable(cgame g, uint i, uint j){ //gab
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+    if(i<0 || i>= DEFAULT_SIZE || j<0 || j>=DEFAULT_SIZE || g ==NULL){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
@@ -192,11 +198,8 @@ bool game_is_immutable(cgame g, uint i, uint j){ //gab
     if(game_get_square(g,i,j) ==S_IMMUTABLE_ONE)
         return true;
     
-    else if (game_get_square(g,i,j) ==S_IMMUTABLE_ONE)
+    else if (game_get_square(g,i,j) ==S_IMMUTABLE_ZERO)
         return true;
-    
-    else if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE)
-        return false;
     
     else
         return false;
@@ -217,13 +220,13 @@ int game_has_error(cgame g, uint i, uint j){ //gab
 
     for(int h=0;h<DEFAULT_SIZE;h++){
 
-        if(game_get_square(g,h,j)==S_ZERO ||game_get_square(g,h,j)== S_IMMUTABLE_ZERO )
+        if(game_get_square(g,h,j)==S_ZERO || game_get_square(g,h,j)== S_IMMUTABLE_ZERO )
             whiteLine++;
     }
 
 
     for(int w=0;w<DEFAULT_SIZE;w++){
-        if(game_get_square(g,i,w)==S_ZERO ||game_get_square(g,i,w)== S_IMMUTABLE_ZERO )
+        if(game_get_square(g,i,w)==S_ZERO || game_get_square(g,i,w)== S_IMMUTABLE_ZERO )
             whiteCol++;
     }
 
@@ -235,38 +238,51 @@ int game_has_error(cgame g, uint i, uint j){ //gab
     // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL, THE PRINT DOES THIS IN THE GAME_TEXT
     // DO NOT HAVE 3 CONSECUTIVE CAD three in a row => WWW BBB, W BBB
    
-    square primaryCase = game_get_square(g,i,j);
+    int primaryCase = game_get_number(g,i,j);
     
     if(i*6+j>=34 || i*6+j>=1){
-        if(game_get_square(g,i,j+1)==primaryCase && game_get_square(g,i,j-1)==primaryCase) //checking the width 
+        int superior = game_get_number(g,i,j+1);
+        int inferior = game_get_number(g,i,j-1);
+        if(superior==primaryCase && inferior==primaryCase) //checking the width 
             return 1;
         
     }
-
-    if((i*6)+6+j<=35 || (i*6)-6+j>=0){
-        if(game_get_square(g,i+1,j)==primaryCase && game_get_square(g,i-1,j)==primaryCase) //checking the height 
-            return 1;
-    }
-
+    
     if(i==5){
-        if(game_get_square(g,i-1,j)==primaryCase && game_get_square(g,i-2,j)==primaryCase) //checking the height in case of corner
+        if(game_get_number(g,i-1,j)==primaryCase && game_get_number(g,i-2,j)==primaryCase) //checking the height in case of corner
             return 1;
+        else
+            return 0;
     }
 
     if(i==0){
-        if(game_get_square(g,i+1,j)==primaryCase && game_get_square(g,i+2,j)==primaryCase) //checking the height in case of corner
+        if(game_get_number(g,i+1,j)==primaryCase && game_get_number(g,i+2,j)==primaryCase) //checking the height in case of corner
             return 1;
+        else
+            return 0;
     }
 
     if(j==5){
-        if(game_get_square(g,i,j-1)==primaryCase && game_get_square(g,i,j-2)==primaryCase) //checking the height in case of corner
+        if(game_get_number(g,i,j-1)==primaryCase && game_get_number(g,i,j-2)==primaryCase) //checking the height in case of corner
             return 1;
+        else
+            return 0;
     }
 
     if(j==0){
-        if(game_get_square(g,i,j+1)==primaryCase && game_get_square(g,i,j+2)==primaryCase) //checking the height in case of corner
+        if(game_get_number(g,i,j+1)==primaryCase && game_get_number(g,i,j+2)==primaryCase) //checking the height in case of corner
+            return 1;
+        else
+            return 0;
+    }
+
+    if((i*6)+6+j<=35 || (i*6)-6+j>=0){
+        int superior = game_get_number(g,i+1,j);
+        int inferior = game_get_number(g,i-1,j);
+        if(superior==primaryCase && inferior==primaryCase) //checking the width 
             return 1;
     }
+
 
     
 
@@ -276,7 +292,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
 
 bool game_check_move(cgame g, uint i, uint j, square s){ //gab
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+    if(i<0 || i>= DEFAULT_SIZE || j<0 || j>=DEFAULT_SIZE || g ==NULL){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
@@ -286,8 +302,6 @@ bool game_check_move(cgame g, uint i, uint j, square s){ //gab
     square cas  = game_get_square(g,i,j);
 
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE)
-        return false;
     
     if(cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO)
         return false;
@@ -301,15 +315,15 @@ bool game_check_move(cgame g, uint i, uint j, square s){ //gab
 
 void game_play_move(game g, uint i, uint j, square s){ //ilisa
 
-    if(i<0 || i> DEFAULT_SIZE || j<0 || j>DEFAULT_SIZE || g ==NULL){
+    if(i<0 || i>= DEFAULT_SIZE || j<0 || j>=DEFAULT_SIZE || g ==NULL || game_get_square(g,i,j)==S_IMMUTABLE_ONE || game_get_square(g,i,j)==S_IMMUTABLE_ZERO || s == S_IMMUTABLE_ONE || s == S_IMMUTABLE_ZERO){
 
         fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
         exit(EXIT_FAILURE);
     }
+    
 
-    if(!game_has_error(g,i,j)){
-        game_set_square(g,i,j,s);
-    }
+    game_set_square(g,i,j,s);
+
 }
 
 bool game_is_over(cgame g){ //ilisa
