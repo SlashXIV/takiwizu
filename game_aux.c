@@ -14,42 +14,35 @@ void game_print(cgame g){ //ilisa
     printf("   012345\n");
     printf("   ------\n");
 
-
-
     while (b!=5){
-        
 
         printf("%d |",b);
-
 
             switch(a){
         case 0:
             printf(" ");
-        
+
         case 1:
             printf("w");
-        
+
         case 2:
             printf("b");
-        
+
         case 3:
             printf("W");
-        
+
         case 4:
             printf("B");
         }
-        
+
         while(c!=5){
             a = game_get_square(g,b,c);
             c++;
         }
         c=0;
         b++;
-        
     }
-    
-    
-   
+
     printf("   ------\n");
 
 
@@ -105,8 +98,6 @@ game game_default(void){ //ilisa
 }
 
 game game_default_solution(void){ //ilisa
-
-    
 
     square *tab = malloc((DEFAULT_SIZE*DEFAULT_SIZE)*sizeof(square));
 
