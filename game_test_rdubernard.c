@@ -35,14 +35,10 @@ bool test_dummy(void){
 // ISSUE #7 -> game_get_square()
 bool test_game_get_square(void){
 
-    printf("avant play\n");
     // game init simulation
     game g = game_default();
     game_set_square(g, 0, 0, S_ONE);
-    game_set_square(g, 0, 5, S_ZERO);
-
-    printf("apres play\n");
-    
+    game_set_square(g, 0, 5, S_ZERO);    
 
     // game_default() each total square on this basic configuration
     unsigned int total_empty = 25;
@@ -62,7 +58,6 @@ bool test_game_get_square(void){
     // counting each square type on default config
     for (uint x = 0; x < DEFAULT_SIZE ; x++){
         for (uint y = 0; y < DEFAULT_SIZE; y++){
-            printf("x = %u, y = %u\n", x, y);
             square actual_square = game_get_square(g, x, y);
             switch (actual_square){
                 // actual square type => empty

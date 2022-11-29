@@ -51,8 +51,8 @@ int main(void){
         
         // LIST ERROR ON EACH SQUARE
 
-        for (int i = 0; i < DEFAULT_SIZE; i++){
-            for (int j = 0; j < DEFAULT_SIZE; j++){
+        for (uint i = 0; i < DEFAULT_SIZE; i++){
+            for (uint j = 0; j < DEFAULT_SIZE; j++){
                 if (game_has_error(g, i, j)){
                     printf("Error at square (%d, %d)\n", i, j);
                 }
@@ -92,7 +92,7 @@ int main(void){
             case 'e' : ;
             
                 // ON POSITION
-                int i, j;
+                uint i, j;
                 scanf("%d %d", &i, &j);
                 switch (input_char){
                 

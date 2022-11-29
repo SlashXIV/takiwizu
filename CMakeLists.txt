@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 project(tazuku-06A)
 link_directories(${CMAKE_SOURCE_DIR}) # EQUIVALENT "LDFLAGS = -L ./"
-set(CMAKE_C_FLAGS "-std=c99 -Wall")
+set(CMAKE_C_FLAGS "-std=c99 -Wall -g")
 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
