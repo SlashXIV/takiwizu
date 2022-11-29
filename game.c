@@ -321,65 +321,6 @@ bool game_is_over(cgame g){ //ilisa
     if(g==NULL){
         exit(EXIT_FAILURE);
     }
-    /* rules:
-    --> to win the game we need to have the same number of white and black square in each lines and columns 
-    --> and not more than 3 black or white consecutives square for each lines and columns:
-    
-
-    uint nb_white_lines=0;
-    uint nb_black_lines=0;
-    uint nb_black_columns=0;
-    uint nb_white_columns=0;
-
-//We have created counters and we use them in a loop to count how many black and white square we have.
-
-    //Lines:
-
-    uint num_line=0;
-    
-    while(num_line <DEFAULT_SIZE){
-        for(uint num_column=0; num_column<DEFAULT_SIZE; num_column++){
-
-            square actual_square = game_get_square(g,num_column,num_line);
-
-            if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
-                nb_black_lines++;
-            }
-            else if(actual_square==S_ZERO || actual_square==S_IMMUTABLE_ZERO){
-                nb_white_lines++;
-            }
-        }
-        if(nb_black_lines != nb_white_lines){ //Check if at least on line does not respect the rule of same number of white and black square.
-            return false;
-        }
-        num_line++;
-        nb_black_lines = 0;
-        nb_white_lines = 0;
-    }
-
-
-    //Columns:   
-
-    uint num_column=0;
-    while(num_column <DEFAULT_SIZE){
-        for(uint num_line; num_line<DEFAULT_SIZE; ,um_line++){
-            square actual_square = game_get_square(g,num_column,num_line);
-
-            if(actual_square==S_ONE || actual_square==S_IMMUTABLE_ONE){
-                nb_black_columns++;
-            }
-            else if(actual_square==S_ZERO || actual_square==S_IMMUTABLE_ZERO){
-                nb_white_columns++;
-            }
-        }
-        if(nb_black_columns != nb_white_columns){ //Check if at least on line does not respect the rule of same number of white and black square.
-            return false;
-        }
-        num_column++;
-        nb_black_columns = 0;
-        nb_white_columns = 0;
-    }
-    */
 
     for(int i=0; i<DEFAULT_SIZE; i++){
         for(int j=0; j<DEFAULT_SIZE; j++){
@@ -395,7 +336,10 @@ bool game_is_over(cgame g){ //ilisa
 
 void game_restart(game g){ //ilisa
 
+    if(g==NULL){
+        exit(EXIT_FAILURE);
+    }
+
     g = game_default();
 }
 
-//S_ONE = BLACK, Z_ZERO = WHITE.
