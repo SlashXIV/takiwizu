@@ -11,7 +11,7 @@ void game_print(cgame g){ //ilisa
     printf("   ------\n");
 
     // printing grid and i coords
-    for (uint i = 0; i != 5; i++){
+    for (uint i = 0; i < 6; i++){
         printf("%u |", i);
         for (uint j = 0; j < DEFAULT_SIZE ; j++){
             square actual_square = game_get_square(g, i, j);
