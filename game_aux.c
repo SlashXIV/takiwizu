@@ -10,11 +10,8 @@ void game_print(cgame g){ //ilisa
     printf("   012345\n");
     printf("   ------\n");
 
-    // printing i coords
-    uint i = 0;
-
-    while (i != 5){
-        
+    // printing grid and i coords
+    for (uint i = 0; i != 5; i++){
         printf("%u |", i);
         for (uint j = 0; j < DEFAULT_SIZE ; j++){
             square actual_square = game_get_square(g, i, j);
@@ -41,13 +38,8 @@ void game_print(cgame g){ //ilisa
             }
         } 
         printf("|\n");
-        i++;
     }
-
     printf("   ------\n");
-
-
-
 }
 
 game game_default(void){ //ilisa
