@@ -49,11 +49,7 @@ int main(void){
         printf("\n");
         game_print(g);
 
-        game_set_square(g,2,2,S_ZERO);
-        game_set_square(g,2,3,S_ZERO);
-        
-        // LIST ERROR ON EACH SQUARE
-
+	// LIST ERROR ON EACH SQUARE
         for (uint i = 0; i < DEFAULT_SIZE; i++){
             for (uint j = 0; j < DEFAULT_SIZE; j++){
                 if (game_has_error(g, i, j)){
