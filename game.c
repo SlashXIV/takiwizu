@@ -145,18 +145,25 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //g
     int interI = i;
     int interJ = j;
 
-    if(dir == UP && i>=2)
-        i-=dist;
+    if(i-dist<DEFAULT_SIZE){
+        if(dir == UP && i>=1)
+            i-=dist;
+    }
     
-    if(dir == DOWN && i<=3)
-        i+=dist;
-    
-    if(dir == LEFT && j>=2)
+    if(i+dist<DEFAULT_SIZE){
+        if(dir == DOWN && i<=5)
+            i+=dist;
+    }
+
+    if(j-dist<DEFAULT_SIZE){
+    if(dir == LEFT && j>=1)
         j-=dist;
+    }
     
-    if(dir == RIGHT && j<=3)
-        j+=dist;
-    
+    if(j+dist<DEFAULT_SIZE){
+        if(dir == RIGHT && j<=5 )
+            j+=dist;
+    }
 
     if(interJ == j && interI ==i)
         return -9999;
