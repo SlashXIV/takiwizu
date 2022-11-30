@@ -6,41 +6,42 @@
 #include "game_aux.h"
 
 void game_print(cgame g){ //ilisa
-
-    int a;
-    int b =0;
-    int c = 0;
-    // 0 = " "   1 = "w"   2="b"   3="W"   4="B"
+    // printing j coords
     printf("   012345\n");
     printf("   ------\n");
 
-    while (b!=5){
+    // printing i coords
+    uint i = 0;
 
-        printf("%d |",b);
+    while (i != 5){
+        
+        printf("%u |", i);
+        for (uint j = 0; j < DEFAULT_SIZE ; j++){
+            square actual_square = game_get_square(g, i, j);
+            switch (actual_square){
+            case (S_IMMUTABLE_ONE):
+                printf("B");
+                break;
+            
+            case (S_ONE):
+                printf("b");
+                break;
 
-            switch(a){
-        case S_EMPTY:
-            printf(" ");
+            case (S_IMMUTABLE_ZERO):
+                printf("W");
+                break;
 
-        case S_ZERO:
-            printf("w");
-
-        case S_ONE:
-            printf("b");
-
-        case S_IMMUTABLE_ZERO:
-            printf("W");
-
-        case S_IMMUTABLE_ONE:
-            printf("B");
-        }
-
-        while(c!=5){
-            a = game_get_square(g,b,c);
-            c++;
-        }
-        c=0;
-        b++;
+            case (S_ZERO):
+                printf("w");
+                break;
+                
+            default: // EMPTY
+                printf(" ");
+                break;
+            }
+        } 
+        printf("|\n");
+        i++;
     }
 
     printf("   ------\n");
