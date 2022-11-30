@@ -231,6 +231,35 @@ int game_has_error(cgame g, uint i, uint j){ //gab
         exit(EXIT_FAILURE);
     }
 
+    
+
+    // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL, THE PRINT DOES THIS IN THE GAME_TEXT
+    // DO NOT HAVE 3 CONSECUTIVE CAD three in a row => WWW BBB, W BBB
+   
+    int primaryCase = game_get_number(g,i,j);
+    
+    if(primaryCase!=-1){ //mean that we ignore empty cases
+
+        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,DOWN,2)==primaryCase)
+            return 1;
+
+        if(game_get_next_number(g,i,j,RIGHT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,2)==primaryCase)
+            return 1;
+        
+        if(game_get_next_number(g,i,j,UP,1)==primaryCase && game_get_next_number(g,i,j,UP,2)==primaryCase)
+            return 1;
+        
+        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,LEFT,2)==primaryCase)
+            return 1;
+
+        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,1)==primaryCase)
+            return 1;
+        
+        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,UP,1)==primaryCase)
+            return 1;
+
+
+    
     int whiteCol = 0;
     int whiteLine = 0;
     int blackCol =0;
@@ -261,34 +290,7 @@ int game_has_error(cgame g, uint i, uint j){ //gab
     if (whiteLine>3 || whiteCol >3 || blackCol >3 || blackLine>3) //we check the parity of the squares if >3 mean that parity isnt respected
         return 1;
 
-    // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL, THE PRINT DOES THIS IN THE GAME_TEXT
-    // DO NOT HAVE 3 CONSECUTIVE CAD three in a row => WWW BBB, W BBB
-   
-    int primaryCase = game_get_number(g,i,j);
-    
-    if(primaryCase!=-1){ //mean that we ignore empty cases
-
-        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,DOWN,2)==primaryCase)
-            return 1;
-
-        if(game_get_next_number(g,i,j,RIGHT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,2)==primaryCase)
-            return 1;
-        
-        if(game_get_next_number(g,i,j,UP,1)==primaryCase && game_get_next_number(g,i,j,UP,2)==primaryCase)
-            return 1;
-        
-        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,LEFT,2)==primaryCase)
-            return 1;
-
-        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,1)==primaryCase)
-            return 1;
-        
-        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,UP,1)==primaryCase)
-            return 1;
-
-
     }
-
 
     return 0; //0 mean that there is no error
 }
