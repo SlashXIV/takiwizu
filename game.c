@@ -103,7 +103,7 @@ square game_get_square(cgame g, uint i, uint j){ // robs
     if (g == NULL){ 
         fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j : invalid parameters; g pointing on nothing...\n");
         exit(EXIT_FAILURE);
-    } else if (i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+    } else if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
         fprintf(stderr, "ERROR on game_get_square(game g, uint i, uint j, : invalid parameters; i (%u) or j (%u) over DEFAULT_SIZE (%d) ...\n", i, j, DEFAULT_SIZE);
         exit(EXIT_FAILURE);
     }
@@ -142,20 +142,24 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist){ //g
         exit(EXIT_FAILURE);
     }
 
-    if(dir == UP)
+    int interI = i;
+    int interJ = j;
+
+    if(dir == UP && i>=2)
         i-=dist;
     
-    if(dir == DOWN)
+    if(dir == DOWN && i<=3)
         i+=dist;
     
-    if(dir == LEFT)
+    if(dir == LEFT && j>=2)
         j-=dist;
     
-    if(dir == RIGHT)
+    if(dir == RIGHT && j<=3)
         j+=dist;
     
-    if(j<0 || j>=DEFAULT_SIZE || i<0 || i>=DEFAULT_SIZE)
-        exit(EXIT_FAILURE);
+
+    if(interJ == j && interI ==i)
+        return -9999;
 
     return game_get_square(g,i,j);
 }
@@ -222,22 +226,32 @@ int game_has_error(cgame g, uint i, uint j){ //gab
 
     int whiteCol = 0;
     int whiteLine = 0;
+    int blackCol =0;
+    int blackLine = 0;
 
     for(int h=0;h<DEFAULT_SIZE;h++){
 
         if(game_get_square(g,h,j)==S_ZERO || game_get_square(g,h,j)== S_IMMUTABLE_ZERO )
             whiteLine++;
+        
+        if(game_get_square(g,h,j)==S_ONE || game_get_square(g,h,j)== S_IMMUTABLE_ONE )
+            blackLine++;
+
+
     }
 
 
     for(int w=0;w<DEFAULT_SIZE;w++){
         if(game_get_square(g,i,w)==S_ZERO || game_get_square(g,i,w)== S_IMMUTABLE_ZERO )
             whiteCol++;
+
+        if(game_get_square(g,i,w)==S_ONE || game_get_square(g,i,w)== S_IMMUTABLE_ONE )
+            blackCol++;
     }
 
 
 
-    if (whiteLine>3 || whiteCol >3) //we check the parity of the squares if >3 mean that parity isnt respected
+    if (whiteLine>3 || whiteCol >3 || blackCol >3 || blackLine>3) //we check the parity of the squares if >3 mean that parity isnt respected
         return 1;
 
     // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL, THE PRINT DOES THIS IN THE GAME_TEXT
@@ -245,51 +259,28 @@ int game_has_error(cgame g, uint i, uint j){ //gab
    
     int primaryCase = game_get_number(g,i,j);
     
-    if(i*6+j>=34 || i*6+j>=1){
-        int superior = game_get_number(g,i,j+1);
-        int inferior = game_get_number(g,i,j-1);
-        if(superior==primaryCase && inferior==primaryCase) //checking the width 
+    if(primaryCase!=-1){ //mean that we ignore empty cases
+
+        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,DOWN,2)==primaryCase)
+            return 1;
+
+        if(game_get_next_number(g,i,j,RIGHT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,2)==primaryCase)
             return 1;
         
-    }
-    
-    if(i==5){
-        if(game_get_number(g,i-1,j)==primaryCase && game_get_number(g,i-2,j)==primaryCase) //checking the height in case of corner
+        if(game_get_next_number(g,i,j,UP,1)==primaryCase && game_get_next_number(g,i,j,UP,2)==primaryCase)
             return 1;
-        else
-            return 0;
-    }
-
-    if(i==0){
-        if(game_get_number(g,i+1,j)==primaryCase && game_get_number(g,i+2,j)==primaryCase) //checking the height in case of corner
+        
+        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,LEFT,2)==primaryCase)
             return 1;
-        else
-            return 0;
-    }
 
-    if(j==5){
-        if(game_get_number(g,i,j-1)==primaryCase && game_get_number(g,i,j-2)==primaryCase) //checking the height in case of corner
+        if(game_get_next_number(g,i,j,LEFT,1)==primaryCase && game_get_next_number(g,i,j,RIGHT,1)==primaryCase)
             return 1;
-        else
-            return 0;
-    }
-
-    if(j==0){
-        if(game_get_number(g,i,j+1)==primaryCase && game_get_number(g,i,j+2)==primaryCase) //checking the height in case of corner
+        
+        if(game_get_next_number(g,i,j,DOWN,1)==primaryCase && game_get_next_number(g,i,j,UP,1)==primaryCase)
             return 1;
-        else
-            return 0;
+
+
     }
-
-    if((i*6)+6+j<=35 || (i*6)-6+j>=0){
-        int superior = game_get_number(g,i+1,j);
-        int inferior = game_get_number(g,i-1,j);
-        if(superior==primaryCase && inferior==primaryCase) //checking the width 
-            return 1;
-    }
-
-
-    
 
 
     return 0; //0 mean that there is no error
@@ -338,7 +329,9 @@ bool game_is_over(cgame g){ //ilisa
 
     for(int i=0; i<DEFAULT_SIZE; i++){
         for(int j=0; j<DEFAULT_SIZE; j++){
-            if(game_has_error(g,i,j)){
+            if(game_get_square(g,i,j)==S_EMPTY)
+                return false;
+            if(game_has_error(g,i,j)!=0){
                 return false;
             }
         }

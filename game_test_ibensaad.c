@@ -23,7 +23,7 @@ bool test_default_solution(){
 
     //If the party is won, then game_default_solution work and it return true!
 
-   if(game_is_over(g)==false){
+   if(!game_is_over(g)){
         return false;
    }
    game_delete(g);
@@ -108,11 +108,16 @@ bool test_game_play_move(){
 bool test_game_is_over(){
 
     game g = game_default_solution();
-    game_print(g);
+    
 
-    game g_not_over = game_default_solution();
+    game g_not_over = game_default();
     game_set_square(g_not_over, 0, 4, S_ONE);
-    game_print(g_not_over);
+    
+
+    game g2 = game_default_solution();
+    game_set_square(g2,5,3,S_ZERO);
+
+
 
     if(game_is_over(g_not_over)){
         return false;
@@ -121,6 +126,9 @@ bool test_game_is_over(){
     if(!game_is_over(g)){
         return false;
     }
+
+    if(game_is_over(g2))
+        return false;
     
 
     game_delete(g);
