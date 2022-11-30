@@ -392,8 +392,8 @@ bool test_game_new_empty(){
             }
         }
     }
-    return true;
     game_delete(g);
+    return true;
 }
  
 // ISSUE 1 -> game_new()
