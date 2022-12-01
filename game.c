@@ -22,7 +22,15 @@ game game_new(square* squares) {  // robs
   }
 
   game new_game = malloc(sizeof(game));
-  new_game->ArrayOfSquare = squares;
+  square *arrayClone = malloc(DEFAULT_SIZE*DEFAULT_SIZE*sizeof(square));
+  
+  for(int i=0;i<(DEFAULT_SIZE*DEFAULT_SIZE);i++){
+
+      arrayClone[i]=squares[i];
+
+  }
+
+  new_game->ArrayOfSquare = arrayClone; //bug
   return new_game;
 }
 
