@@ -382,12 +382,17 @@ bool test_game_new_empty() {
 // ISSUE 1 -> game_new()
 bool test_game_new() {
   uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
-  square *square_array = calloc(nb_cases, sizeof(square));
+
+  square *square_array = malloc(nb_cases*sizeof(square));
+
+  for(int i=0;i<nb_cases;i++){
+    square_array[i]=S_EMPTY;
+  }
+  
   game g = game_new(square_array);
 
   game_print(g);
   game_delete(g);
-  free(square_array);
   return true;
 }
 
