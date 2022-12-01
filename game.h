@@ -50,7 +50,8 @@ typedef const struct game_s* cgame;
 
 /**
  * @brief Creates a new game with default size and initializes it.
- * @param squares an array describing the initial state of each square using row-major storage
+ * @param squares an array describing the initial state of each square using
+ *row-major storage
  * @pre @p squares must be an initialized array of default size squared.
  * @return the created game
  **/
