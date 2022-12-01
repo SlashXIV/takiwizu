@@ -42,7 +42,7 @@ game game_new_empty(void) {  // robs
 
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
-
+  free(squares_empty);
   return new_empty_game;
 }
 
