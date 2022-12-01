@@ -44,7 +44,10 @@ bool test_game_has_error(){
     game_set_square(g, 2, 2, S_ONE);
     game_set_square(g, 2, 3, S_ONE);
 
-    if (game_has_error(g, 2, 2) == 0 || game_has_error(g, 2, 3) == 0 || game_has_error(g, 5, 1) != 0) 
+    if (game_has_error(g, 2, 2) == 0)  
+        return false;
+    
+    if(game_has_error(g, 5, 1) != 0)
         return false;
     
     game_delete(g);

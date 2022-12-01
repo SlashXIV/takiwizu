@@ -132,6 +132,8 @@ bool test_game_is_over(){
     
 
     game_delete(g);
+    game_delete(g_not_over);
+    game_delete(g2);
     return true;
 }
 
