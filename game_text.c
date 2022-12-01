@@ -48,9 +48,6 @@ int main(void){
         // GAME PRINT
         printf("\n");
         game_print(g);
-
-        game_set_square(g,2,2,S_ZERO);
-        game_set_square(g,2,3,S_ZERO);
         
         // LIST ERROR ON EACH SQUARE
 
