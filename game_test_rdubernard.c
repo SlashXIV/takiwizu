@@ -383,12 +383,12 @@ bool test_game_new_empty() {
 bool test_game_new() {
   uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
 
-  square *square_array = malloc(nb_cases*sizeof(square));
+  square *square_array = malloc(nb_cases * sizeof(square));
 
-  for(int i=0;i<nb_cases;i++){
-    square_array[i]=S_EMPTY;
+  for (int i = 0; i < nb_cases; i++) {
+    square_array[i] = S_EMPTY;
   }
-  
+
   game g = game_new(square_array);
 
   game_print(g);
