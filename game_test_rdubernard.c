@@ -387,6 +387,7 @@ bool test_game_new() {
 
   game_print(g);
   game_delete(g);
+  free(square_array);
   return true;
 }
 
