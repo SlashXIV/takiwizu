@@ -389,7 +389,9 @@ bool test_game_new() {
     square_array[i] = S_EMPTY;
   }
 
+
   game g = game_new(square_array);
+  free(square_array);
 
   game_print(g);
   game_delete(g);
