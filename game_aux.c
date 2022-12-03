@@ -87,11 +87,9 @@ game game_default(void) {  // ilisa
   tab[34] = S_EMPTY;
   tab[35] = S_IMMUTABLE_ZERO;
 
-
-  game g_output = game_new(tab); // copie du tableau en interne
-  free(tab); // désormais inutile 
+  game g_output = game_new(tab);  // copie du tableau en interne
+  free(tab);                      // désormais inutile
   return g_output;
-
 }
 
 game game_default_solution(void) {  // ilisa
@@ -142,7 +140,7 @@ game game_default_solution(void) {  // ilisa
   tab[34] = S_ONE;
   tab[35] = S_IMMUTABLE_ZERO;
 
-  game g_output = game_new(tab); // copie du tableau en interne
-  free(tab); // désormais inutile 
+  game g_output = game_new(tab);  // copie du tableau en interne
+  free(tab);                      // désormais inutile
   return g_output;
 }
