@@ -125,6 +125,7 @@ bool test_game_get_number() {
 }
 
 bool test_game_get_next_number() {
+
   game g = game_default();
 
   if (game_get_next_number(g, 0, 1, DOWN, 2) != 0)
@@ -139,6 +140,24 @@ bool test_game_get_next_number() {
   game_play_move(g, 5, 1, S_ZERO);
 
   if (game_get_next_number(g, 4, 1, DOWN, 1) != 0) return false;
+
+  game g2 = game_default();
+
+  if(game_get_next_number(g, 5,5,RIGHT, 1) != -1){
+    return false;
+  }
+
+  if(game_get_next_number(g2,0,2,UP,1) != -1){
+    return false;
+  }
+
+  if(game_get_next_number(g2,5,2,DOWN,1) != 0){
+    return false;
+  }
+
+  if(game_get_next_number(g2,3,0,LEFT,1) != -1){
+    return false;
+  }
 
   game_delete(g);
   return true;
@@ -159,6 +178,24 @@ bool test_game_get_next_square() {
   game_play_move(g, 5, 1, S_ZERO);
 
   if (game_get_next_square(g, 4, 1, DOWN, 1) != S_ZERO) return false;
+
+  game g2 = game_default();
+
+  if(game_get_next_square(g2,5,5,RIGHT,1) != S_EMPTY){
+    return false;
+  }
+
+  if(game_get_next_square(g2,0,2,UP,1) != S_EMPTY){
+    return false;
+  }
+
+  if(game_get_next_square(g2,5,2,DOWN,1) != S_IMMUTABLE_ZERO){
+    return false;
+  }
+
+  if(game_get_next_square(g2,3,0,LEFT,1) != S_EMPTY){
+    return false;
+  }
 
   game_delete(g);
   return true;
