@@ -177,7 +177,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
   if (dir == RIGHT) j += dist;
 
   // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-  if (i < DEFAULT_SIZE || j < DEFAULT_SIZE)
+  if (i < DEFAULT_SIZE && j < DEFAULT_SIZE)
     return game_get_square(g, i, j);
   else
     return -1;
