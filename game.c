@@ -9,6 +9,9 @@
 
 struct game_s {
   square* ArrayOfSquare;
+  uint size;
+  uint width;
+  uint heigh;
 };
 
 // We have to implement the functions now:
@@ -22,13 +25,17 @@ game game_new(square* squares) {  // robs
   }
 
   game new_game = malloc(sizeof(game));
-  square* arrayClone = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
+  new_game->size = DEFAULT_SIZE * DEFAULT_SIZE;
+  new_game->width = DEFAULT_SIZE;
+  new_game->heigh = DEFAULT_SIZE;
 
-  for (int i = 0; i < (DEFAULT_SIZE * DEFAULT_SIZE); i++) {
+  square* arrayClone = malloc(new_game->size * sizeof(square));
+
+  for (int i = 0; i < new_game->size; i++) {
     arrayClone[i] = squares[i];
   }
 
-  new_game->ArrayOfSquare = arrayClone;  // bug
+  new_game->ArrayOfSquare = arrayClone;
   return new_game;
 }
 
@@ -41,6 +48,9 @@ game game_new_empty(void) {  // robs
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
+  new_empty_game->size = DEFAULT_SIZE * DEFAULT_SIZE;
+  new_empty_game->heigh = DEFAULT_SIZE;
+  new_empty_game->width = DEFAULT_SIZE;
   return new_empty_game;
 }
 
@@ -55,8 +65,8 @@ game game_copy(cgame g) {  // robs
   // sending back a new game with the actual state of squares of g
   game g2 = game_new_empty();
 
-  for (int i = 0; i < DEFAULT_SIZE; i++) {
-    for (int k = 0; k < DEFAULT_SIZE; k++) {
+  for (int i = 0; i < g2->width; i++) {
+    for (int k = 0; k < g2->heigh; k++) {
       game_set_square(g2, i, k, game_get_square(g, i, k));
     }
   }
@@ -72,8 +82,8 @@ bool game_equal(cgame g1, cgame g2) {  // robs
   }
 
   // traverse and compare every square of both games
-  for (int x = 0; x < DEFAULT_SIZE; x++) {
-    for (int y = 0; y < DEFAULT_SIZE; y++) {
+  for (int x = 0; x < g1->width; x++) {
+    for (int y = 0; y < g1->heigh; y++) {
       square g1_actual_square = game_get_square(g1, x, y);
       square g2_actual_square = game_get_square(g2, x, y);
       if (g1_actual_square != g2_actual_square) {
@@ -97,7 +107,7 @@ void game_set_square(game g, uint i, uint j, square s) {  // robs
             "ERROR on game_set_square(game g, uint i, uint j, square s) : "
             "invalid parameters; g pointing on nothing...");
     exit(EXIT_FAILURE);
-  } else if (i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+  } else if (i > g->heigh || j > g->width) {
     fprintf(stderr,
             "ERROR on game_set_square(game g, uint i, uint j, square s) : "
             "invalid parameters; i or j aren't under DEFAULT_SIZE (%d) ...",
@@ -112,7 +122,7 @@ void game_set_square(game g, uint i, uint j, square s) {  // robs
   }
 
   // CIBLE VERROUILÉE ...
-  uint index_to_set = (i * DEFAULT_SIZE) + j;
+  uint index_to_set = (i * g->width) + j;
 
   // FIRE (LET THAT F** SQUARE IN)
   g->ArrayOfSquare[index_to_set] = s;
@@ -124,16 +134,16 @@ square game_get_square(cgame g, uint i, uint j) {  // robs
             "ERROR on game_get_square(game g, uint i, uint j : invalid "
             "parameters; g pointing on nothing...\n");
     exit(EXIT_FAILURE);
-  } else if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
+  } else if (i >= g->heigh || j >= g->width) {
     fprintf(stderr,
             "ERROR on game_get_square(game g, uint i, uint j, : invalid "
             "parameters; i (%u) or j (%u) over DEFAULT_SIZE (%d) ...\n",
-            i, j, DEFAULT_SIZE);
+            i, j, g->heigh);
     exit(EXIT_FAILURE);
   }
 
   // CIBLE VERROUILLÉE ...
-  uint index_to_get = (i * DEFAULT_SIZE) + j;
+  uint index_to_get = (i * g->heigh) + j;
 
   // GET THAT SQUARE AND GIVE IT BACK
   return g->ArrayOfSquare[index_to_get];
@@ -141,7 +151,7 @@ square game_get_square(cgame g, uint i, uint j) {  // robs
 
 int game_get_number(cgame g, uint i, uint j) {  // gab
 
-  if (i < 0 || i >= DEFAULT_SIZE || j < 0 || j >= DEFAULT_SIZE || g == NULL) {
+  if (i >= g->heigh || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
@@ -168,7 +178,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
   }
 
   // CHECKING IF INITIAL COORDINATES ARE OVER GRID
-  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) return -1;
+  if (i >= g->heigh || j >= g->width) return -1;
 
   // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
   if (dir == UP) i -= dist;
@@ -177,7 +187,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
   if (dir == RIGHT) j += dist;
 
   // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-  if (i < DEFAULT_SIZE && j < DEFAULT_SIZE)
+  if (i < g->heigh && j < g->width)
     return game_get_square(g, i, j);
   else
     return -1;
@@ -189,7 +199,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (g == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || dist > 2) {
+  if (g == NULL || i >= g->heigh || j >= g->width || dist > 2) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     return -1;
   }
@@ -208,7 +218,7 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
 
 bool game_is_empty(cgame g, uint i, uint j) {  // gab
 
-  if (i < 0 || i > DEFAULT_SIZE || j < 0 || j > DEFAULT_SIZE || g == NULL) {
+  if (i > g->heigh || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
@@ -218,7 +228,7 @@ bool game_is_empty(cgame g, uint i, uint j) {  // gab
 
 bool game_is_immutable(cgame g, uint i, uint j) {  // gab
 
-  if (i < 0 || i >= DEFAULT_SIZE || j < 0 || j >= DEFAULT_SIZE || g == NULL) {
+  if (i >= g->heigh || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
@@ -235,7 +245,7 @@ bool game_is_immutable(cgame g, uint i, uint j) {  // gab
 
 int game_has_error(cgame g, uint i, uint j) {  // gab
 
-  if (i < 0 || i > DEFAULT_SIZE || j < 0 || j > DEFAULT_SIZE || g == NULL) {
+  if (i > g->heigh || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
@@ -313,7 +323,7 @@ bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
     exit(EXIT_FAILURE);
   }
 
-  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) return false;
+  if (i >= g->heigh || j >= g->width) return false;
 
   square cas = game_get_square(g, i, j);
 
@@ -326,7 +336,7 @@ bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
 
 void game_play_move(game g, uint i, uint j, square s) {  // ilisa
 
-  if (i < 0 || i >= DEFAULT_SIZE || j < 0 || j >= DEFAULT_SIZE || g == NULL ||
+  if (i >= g->heigh || j >= g->heigh || g == NULL ||
       game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
       game_get_square(g, i, j) == S_IMMUTABLE_ZERO || s == S_IMMUTABLE_ONE ||
       s == S_IMMUTABLE_ZERO) {
@@ -345,8 +355,8 @@ bool game_is_over(cgame g) {  // ilisa
     exit(EXIT_FAILURE);
   }
 
-  for (int i = 0; i < DEFAULT_SIZE; i++) {
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+  for (int i = 0; i < g->heigh; i++) {
+    for (int j = 0; j < g->width; j++) {
       if (game_get_square(g, i, j) == S_EMPTY) return false;
       if (game_has_error(g, i, j) != 0) {
         return false;
@@ -365,8 +375,8 @@ void game_restart(game g) {  // ilisa
     exit(EXIT_FAILURE);
   }
 
-  for (int i = 0; i < DEFAULT_SIZE; i++) {
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+  for (int i = 0; i < g->heigh; i++) {
+    for (int j = 0; j < g->width; j++) {
       if (game_get_square(g, i, j) == S_ONE) game_set_square(g, i, j, S_EMPTY);
 
       if (game_get_square(g, i, j) == S_ZERO) game_set_square(g, i, j, S_EMPTY);
