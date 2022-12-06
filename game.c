@@ -308,14 +308,18 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
 
 bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
 
-  if (i < 0 || i >= DEFAULT_SIZE || j < 0 || j >= DEFAULT_SIZE || g == NULL) {
+  if (g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
 
+  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) return false;
+
   square cas = game_get_square(g, i, j);
 
-  if (cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO) return false;
+  if (cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO ||
+      s == S_IMMUTABLE_ONE || s == S_IMMUTABLE_ZERO)
+    return false;
 
   return true;
 }
