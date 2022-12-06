@@ -161,12 +161,12 @@ int game_get_number(cgame g, uint i, uint j) {  // gab
 int game_get_next_square(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (i < 0 || i >= DEFAULT_SIZE || j < 0 || j >= DEFAULT_SIZE || g == NULL) {
+  if (g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
 
-  if (dist > 2) {
+  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || dist > 2) {
     return -1;
   }
 
@@ -197,12 +197,12 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || g == NULL ) {
+  if (g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
   }
 
-  if (dist > 2) {
+  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || dist > 2) {
     return -1;
   }
 
