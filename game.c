@@ -161,8 +161,8 @@ int game_get_number(cgame g, uint i, uint j) {  // gab
 int game_get_next_square(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (g == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || dist > 2) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
+  if (g == NULL || dist > 2) {
+    fprintf(stderr, "g is null, or  dist too far :/\n");
     return -1;
   }
 
@@ -183,6 +183,11 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 
   if (j + dist < DEFAULT_SIZE) {
     if (dir == RIGHT && j <= 5) j += dist;
+  }
+
+  // CHECKING IF NEW COORDINATES ARE INSIDE GRID
+  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
+    return -1;
   }
 
   if (interJ == j && interI == i) return -9999;
