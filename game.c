@@ -166,6 +166,10 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     exit(EXIT_FAILURE);
   }
 
+  if (dist > 2) {
+    return -1;
+  }
+
   int interI = i;
   int interJ = j;
 
@@ -193,9 +197,13 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || g == NULL || dist > 2) {
+  if (i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || g == NULL ) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
+  }
+
+  if (dist > 2) {
+    return -1;
   }
 
   if (game_get_next_square(g, i, j, dir, dist) == S_IMMUTABLE_ONE ||
