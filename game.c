@@ -9,9 +9,11 @@
 
 struct game_s {
   square* ArrayOfSquare;
-  uint size;
   uint width;
   uint heigh;
+  bool wrapping;
+  bool unique;
+
 };
 
 // We have to implement the functions now:
@@ -25,13 +27,14 @@ game game_new(square* squares) {  // robs
   }
 
   game new_game = malloc(sizeof(game));
-  new_game->size = DEFAULT_SIZE * DEFAULT_SIZE;
   new_game->width = DEFAULT_SIZE;
   new_game->heigh = DEFAULT_SIZE;
+  new_game->unique = false;
+  new_game->wrapping=false;
 
-  square* arrayClone = malloc(new_game->size * sizeof(square));
+  square* arrayClone = malloc((new_game->width*new_game->heigh) * sizeof(square));
 
-  for (int i = 0; i < new_game->size; i++) {
+  for (int i = 0; i < new_game->width * new_game->heigh; i++) {
     arrayClone[i] = squares[i];
   }
 
@@ -48,9 +51,10 @@ game game_new_empty(void) {  // robs
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
-  new_empty_game->size = DEFAULT_SIZE * DEFAULT_SIZE;
   new_empty_game->heigh = DEFAULT_SIZE;
   new_empty_game->width = DEFAULT_SIZE;
+  new_empty_game->unique = false;
+  new_empty_game->wrapping = false;
   return new_empty_game;
 }
 
