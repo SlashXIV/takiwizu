@@ -19,7 +19,6 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool unique){
 }
 
 
- 
 uint game_nb_rows(cgame g){
     return 1;
 }
