@@ -20,22 +20,22 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool unique){
 
 
 uint game_nb_rows(cgame g){
-    return 1;
+    return g->heigh;
 }
 
 
 
 uint game_nb_cols(cgame g){
-    return 1;
+    return g->width;
 }
 
 bool game_is_wrapping(cgame g){
-    return true;
+    return g->wrapping;
 }
 
 
 bool game_is_unique(cgame g){
-    return true;
+    return g->unique;
 }
 
 
