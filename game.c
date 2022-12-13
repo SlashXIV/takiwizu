@@ -26,7 +26,7 @@ game game_new(square* squares) {  // robs
     exit(EXIT_FAILURE);
   }
 
-  game new_game = malloc(sizeof(game));
+  game new_game = malloc(sizeof(struct game_s));// gros bug !!!
   new_game->width = DEFAULT_SIZE;
   new_game->heigh = DEFAULT_SIZE;
   new_game->unique = false;
