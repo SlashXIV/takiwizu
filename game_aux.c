@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "game.h"
+#include "game_struct.h"
 
 void game_print(cgame g) {  // ilisa
   // printing j coords

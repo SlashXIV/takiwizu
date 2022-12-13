@@ -5,6 +5,7 @@
 
 #include "game.h"
 #include "game_aux.h"
+#include "game_ext.h"
 
 void usage_gifrim(int argc) {
   fprintf(stderr,
@@ -179,8 +180,11 @@ bool test_game_get_next_square() {
 
   if (game_get_next_square(g, 4, 1, DOWN, 1) != S_ZERO) return false;
 
-  game g2 = game_default();
 
+
+
+  game g2 = game_new_empty_ext(6,6,true,true);
+  /*
   if(game_get_next_square(g2,5,5,RIGHT,1) != S_EMPTY){
     return false;
   }
@@ -196,8 +200,10 @@ bool test_game_get_next_square() {
   if(game_get_next_square(g2,3,0,LEFT,1) != S_EMPTY){
     return false;
   }
+  */
 
   game_delete(g);
+  game_delete(g2);
   return true;
 }
 

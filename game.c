@@ -6,15 +6,9 @@
 #include <string.h>
 
 #include "game_aux.h"
+#include "game_struct.h"
 
-struct game_s {
-  square* ArrayOfSquare;
-  uint width;
-  uint heigh;
-  bool wrapping;
-  bool unique;
 
-};
 
 // We have to implement the functions now:
 
@@ -26,7 +20,7 @@ game game_new(square* squares) {  // robs
     exit(EXIT_FAILURE);
   }
 
-  game new_game = malloc(sizeof(struct game_s));// gros bug !!!
+  game new_game = malloc(sizeof(struct game_s));
   new_game->width = DEFAULT_SIZE;
   new_game->heigh = DEFAULT_SIZE;
   new_game->unique = false;
@@ -181,24 +175,48 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     return -1;
   }
 
-  // CHECKING IF INITIAL COORDINATES ARE OVER GRID
-  if (i >= g->heigh || j >= g->width) return -1;
+  if(g->wrapping){
 
-  // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
-  if (dir == UP) i -= dist;
-  if (dir == DOWN) i += dist;
-  if (dir == LEFT) j -= dist;
-  if (dir == RIGHT) j += dist;
+    // CHECKING IF INITIAL COORDINATES ARE OVER GRID
+    if (i >= g->heigh || j >= g->width) return -1;
 
-  // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-  if (i < g->heigh && j < g->width)
+    // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
+    if (dir == UP) i -= dist;
+    if (dir == DOWN) i += dist;
+    if (dir == LEFT) j -= dist;
+    if (dir == RIGHT) j += dist;
+
+    // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
+    if (i < g->heigh && j < g->width)
+      return game_get_square(g, i, j);
+    else
+      return -1;
+  }
+
+  if(!(g->wrapping)){
+
+    // CHECKING IF INITIAL COORDINATES ARE OVER GRID
+    if (i >= g->heigh || j >= g->width) return -1;
+
+    // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
+    if (dir == UP) i -= dist;
+    if (dir == DOWN) i += dist;
+    if (dir == LEFT) j -= dist;
+    if (dir == RIGHT) j += dist;
+
+    // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
+
+
+    if (i < g->heigh)
+      return game_get_square(g, -1+dist, j);
+
+    if(j<g->width)
+      return game_get_square(g,i,-1+dist);
+
+    }
     return game_get_square(g, i, j);
-  else
-    return -1;
-
-  //
-  ;
 }
+
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
@@ -215,6 +233,8 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
   if (game_get_next_square(g, i, j, dir, dist) == S_IMMUTABLE_ZERO ||
       game_get_next_square(g, i, j, dir, dist) == S_ZERO)
     return 0;
+  
+
 
   else
     return -1;
