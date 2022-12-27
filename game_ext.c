@@ -71,12 +71,12 @@ uint game_nb_cols(cgame g){
 }
 
 bool game_is_wrapping(cgame g){
-    return true;
+    return g->wrapping;
 }
 
 
 bool game_is_unique(cgame g){
-    return true;
+    return g->unique;
 }
 
 

@@ -174,8 +174,9 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     fprintf(stderr, "g is null, or  dist too far :/\n");
     return -1;
   }
+  
 
-  if(g->wrapping){
+  if(g->wrapping==true){
 
     // CHECKING IF INITIAL COORDINATES ARE OVER GRID
     if (i >= g->heigh || j >= g->width) return -1;
@@ -187,13 +188,39 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     if (dir == RIGHT) j += dist;
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-    if (i < g->heigh && j < g->width)
-      return game_get_square(g, i, j);
-    else
-      return -1;
+    
+    
+    if (i > g->heigh){
+
+
+      i = i-g->heigh;
+    }
+
+
+
+ if (j > g->width){
+
+      
+      j = j-g->width;
+    }
+
+
+      if (i < 0){
+
+      i = i+g->heigh;
+    }
+
+ if (j < 0){
+
+      j = j+g->width;
+    }
   }
 
-  if(!(g->wrapping)){
+  if (i >= g->heigh || j >= g->width) return -1;
+
+  
+
+ if(g->wrapping==false){ 
 
     // CHECKING IF INITIAL COORDINATES ARE OVER GRID
     if (i >= g->heigh || j >= g->width) return -1;
@@ -206,14 +233,9 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
-
-    if (i < g->heigh)
-      return game_get_square(g, -1+dist, j);
-
-    if(j<g->width)
-      return game_get_square(g,i,-1+dist);
-
-    }
+    if (i >= g->heigh || j >= g->width) return -1;
+ }
+    
     return game_get_square(g, i, j);
 }
 
@@ -221,6 +243,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
+  
   if (g == NULL || i >= g->heigh || j >= g->width || dist > 2) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     return -1;
