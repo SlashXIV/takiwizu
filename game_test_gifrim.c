@@ -142,9 +142,12 @@ bool test_game_get_next_number() {
 
   if (game_get_next_number(g, 4, 1, DOWN, 1) != 0) return false;
 
-  game g2 = game_default();
 
-  if(game_get_next_number(g, 5,5,RIGHT, 1) != -1){
+  //a partir d'ici nous faisons les tests pour les nouvelles fonctionnalitées (wrapping, unique)
+  game g2 = game_new_empty_ext(5,5,true,true);
+
+
+  if(game_get_next_number(g2, 5,5,RIGHT, 1) != -1){
     return false;
   }
 
@@ -161,6 +164,7 @@ bool test_game_get_next_number() {
   }
 
   game_delete(g);
+  game_delete(g2);
   return true;
 }
 
@@ -182,9 +186,9 @@ bool test_game_get_next_square() {
 
 
 
-
+  //a partir d'ici nous faisons les tests avec les nouvelles fonctionnalitées de wrapping, unique
   game g2 = game_new_empty_ext(6,6,true,true);
-  /*
+  
   if(game_get_next_square(g2,5,5,RIGHT,1) != S_EMPTY){
     return false;
   }
@@ -200,7 +204,7 @@ bool test_game_get_next_square() {
   if(game_get_next_square(g2,3,0,LEFT,1) != S_EMPTY){
     return false;
   }
-  */
+  
 
   game_delete(g);
   game_delete(g2);

@@ -67,7 +67,7 @@ uint game_nb_rows(cgame g){
 
 uint game_nb_cols(cgame g){
 
-    return 1;
+    return g->width;
 }
 
 bool game_is_wrapping(cgame g){
