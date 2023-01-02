@@ -8,8 +8,6 @@
 #include "game_aux.h"
 #include "game_struct.h"
 
-
-
 // We have to implement the functions now:
 
 game game_new(square* squares) {  // robs
@@ -24,9 +22,10 @@ game game_new(square* squares) {  // robs
   new_game->width = DEFAULT_SIZE;
   new_game->heigh = DEFAULT_SIZE;
   new_game->unique = false;
-  new_game->wrapping=false;
+  new_game->wrapping = false;
 
-  square* arrayClone = malloc((new_game->width*new_game->heigh) * sizeof(square));
+  square* arrayClone =
+      malloc((new_game->width * new_game->heigh) * sizeof(square));
 
   for (int i = 0; i < new_game->width * new_game->heigh; i++) {
     arrayClone[i] = squares[i];
@@ -174,10 +173,8 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     fprintf(stderr, "g is null, or  dist too far :/\n");
     return -1;
   }
-  
 
-  if(g->wrapping==true){
-
+  if (g->wrapping == true) {
     // CHECKING IF INITIAL COORDINATES ARE OVER GRID
     if (i >= g->heigh || j >= g->width) return -1;
 
@@ -191,42 +188,29 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     if (dir == RIGHT) j += dist;
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-    
-    
-    if (i >= g->heigh){
 
-
-      i = i-g->heigh;
+    if (i >= g->heigh) {
+      i = i - g->heigh;
     }
 
-
-
- if (j >= g->width){
-
-
-      j = j-g->width;
+    if (j >= g->width) {
+      j = j - g->width;
     }
 
-
-      if (ii< 0){
-
-      ii = ii+g->heigh;
+    if (ii < 0) {
+      ii = ii + g->heigh;
       i = ii;
     }
 
- if (jj < 0){
-
-      jj = jj+g->width;
+    if (jj < 0) {
+      jj = jj + g->width;
       j = jj;
     }
   }
 
   if (i >= g->heigh || j >= g->width) return -1;
 
-  
-
- if(g->wrapping==false){ 
-
+  if (g->wrapping == false) {
     // CHECKING IF INITIAL COORDINATES ARE OVER GRID
     if (i >= g->heigh || j >= g->width) return -1;
 
@@ -239,16 +223,14 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
     if (i >= g->heigh || j >= g->width) return -1;
- }
-    
-    return game_get_square(g, i, j);
-}
+  }
 
+  return game_get_square(g, i, j);
+}
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  
   if (g == NULL || i >= g->heigh || j >= g->width || dist > 2) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     return -1;
@@ -363,87 +345,64 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
       return 1;
   }
 
-  if(g->unique){
-
-
+  if (g->unique) {
     bool width = true;
     bool heigh = true;
-    for(int x = 0;x<g->heigh;x++){
-      if(game_get_square(g,x,j) == S_EMPTY) heigh=false;
+    for (int x = 0; x < g->heigh; x++) {
+      if (game_get_square(g, x, j) == S_EMPTY) heigh = false;
     }
 
-    for(int y=0;y<g->width;y++){
-      if(game_get_square(g,i,y)== S_EMPTY) width =false;
+    for (int y = 0; y < g->width; y++) {
+      if (game_get_square(g, i, y) == S_EMPTY) width = false;
     }
 
-    //lets check the collumns first
+    // lets check the collumns first
 
-    if(heigh){
-    int cpt;
-    uint array[g->heigh];
-    for(uint x = 0; x<g->heigh;x++){
-      array[x] = game_get_number(g,i,x);
-    }
-    
-
-    for(int y=0;y<g->width;y++){
-      cpt = 0 ;//re-initialized to 0 for each loop
-      for(int x=0;x<g->heigh;x++){
-
-        if(y==i)
-          break;
-
-        if(array[x]!= game_get_number(g,y,x))
-          break;
-        
-        cpt++;
-
-
-      }
-      if(cpt==g->heigh){
-        return -1;
+    if (heigh) {
+      int cpt;
+      uint array[g->heigh];
+      for (uint x = 0; x < g->heigh; x++) {
+        array[x] = game_get_number(g, i, x);
       }
 
+      for (int y = 0; y < g->width; y++) {
+        cpt = 0;  // re-initialized to 0 for each loop
+        for (int x = 0; x < g->heigh; x++) {
+          if (y == i) break;
 
-    }
-    }
+          if (array[x] != game_get_number(g, y, x)) break;
 
-
-    //now the rows
-
-    if(width){
-    int cpt1;
-    uint array1[g->width];
-    for(uint x = 0; x<g->width;x++){
-      array1[x] = game_get_number(g,x,j);
-    }
-    
-
-    for(int x=0;x<g->heigh;x++){
-      cpt1 = 0 ;//re-initialized to 0 for each loop
-      for(int y=0;y<g->width;y++){
-
-        if(y==j)
-          break;
-
-        if(array1[y]!= game_get_number(g,y,x))
-          break;
-        
-        cpt1++;
-
-
+          cpt++;
+        }
+        if (cpt == g->heigh) {
+          return -1;
+        }
       }
-      if(cpt1==g->width){
-        return -1;
+    }
+
+    // now the rows
+
+    if (width) {
+      int cpt1;
+      uint array1[g->width];
+      for (uint x = 0; x < g->width; x++) {
+        array1[x] = game_get_number(g, x, j);
       }
 
+      for (int x = 0; x < g->heigh; x++) {
+        cpt1 = 0;  // re-initialized to 0 for each loop
+        for (int y = 0; y < g->width; y++) {
+          if (y == j) break;
 
+          if (array1[y] != game_get_number(g, y, x)) break;
+
+          cpt1++;
+        }
+        if (cpt1 == g->width) {
+          return -1;
+        }
+      }
     }
-
-  
-
-  }
-
   }
 
   return 0;  // 0 mean that there is no error
