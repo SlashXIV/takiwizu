@@ -363,8 +363,46 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
       return 1;
   }
 
+  if(g->unique){
+
+    for(int i=0; i<g->heigh-1; i++){
+
+      square col = game_get_square(g,0,i);
+      int cpt=1;
+
+      for(int j=i+1; j<g->heigh; j++){
+
+        square otherCol = game_get_square(g,0,j);
+
+        if(col != S_EMPTY){
+          if(col == otherCol){
+            for(int lengthCol = 0; lengthCol<g->heigh; lengthCol++){
+
+              square col = game_get_square(g,lengthCol,i);
+              square otherCol = game_get_square(g,lengthCol,j);
+
+              if(col == otherCol){
+                cpt++;
+              }
+
+            }
+            if(cpt >= g->heigh){
+              return -1;
+            }
+
+            else{
+              cpt=1;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
   return 0;  // 0 mean that there is no error
 }
+
 
 bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
 

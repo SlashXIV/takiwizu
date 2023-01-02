@@ -40,7 +40,41 @@ bool test_game_has_error() {
 
   if (game_has_error(g, 5, 1) != 0) return false;
 
+  game g1 = game_new_empty_ext(6,6,false,true);
+
+  game_set_square(g1,0,5,S_ONE);
+
+  game_set_square(g1,1,5,S_ZERO);
+
+  game_set_square(g1,2,5,S_ONE);
+
+  game_set_square(g1,3,5,S_ONE);
+
+  game_set_square(g1,4,5,S_ZERO);
+
+  game_set_square(g1,5,5,S_ZERO);
+
+
+  game_set_square(g1,0,5,S_ONE);
+
+  game_set_square(g1,1,5,S_ZERO);
+
+  game_set_square(g1,2,5,S_ONE);
+
+  game_set_square(g1,3,5,S_ONE);
+
+  game_set_square(g1,4,5,S_ZERO);
+
+  game_set_square(g1,5,5,S_ZERO);
+
+  if(game_has_error(g1,2,5)==0){
+    return false;
+  }
+
+
+
   game_delete(g);
+  game_delete(g1);
   return true;
 }
 
