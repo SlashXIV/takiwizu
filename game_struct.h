@@ -2,9 +2,7 @@
 #define __GAME_STRUCT_H__
 #include "game.h"
 
-
-//Structure of the game:
-
+// Structure of the game:
 
 struct game_s {
   square* ArrayOfSquare;
@@ -12,14 +10,6 @@ struct game_s {
   uint heigh;
   bool wrapping;
   bool unique;
-
 };
 
-
-
 #endif
-
-
-
-
-
