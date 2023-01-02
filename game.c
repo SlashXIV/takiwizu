@@ -181,16 +181,19 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     // CHECKING IF INITIAL COORDINATES ARE OVER GRID
     if (i >= g->heigh || j >= g->width) return -1;
 
+    int ii = i;
+    int jj = j;
+
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
-    if (dir == UP) i -= dist;
+    if (dir == UP) ii -= dist;
     if (dir == DOWN) i += dist;
-    if (dir == LEFT) j -= dist;
+    if (dir == LEFT) jj -= dist;
     if (dir == RIGHT) j += dist;
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
     
     
-    if (i > g->heigh){
+    if (i >= g->heigh){
 
 
       i = i-g->heigh;
@@ -198,21 +201,23 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 
 
 
- if (j > g->width){
+ if (j >= g->width){
 
-      
+
       j = j-g->width;
     }
 
 
-      if (i < 0){
+      if (ii< 0){
 
-      i = i+g->heigh;
+      ii = ii+g->heigh;
+      i = ii;
     }
 
- if (j < 0){
+ if (jj < 0){
 
-      j = j+g->width;
+      jj = jj+g->width;
+      j = jj;
     }
   }
 
@@ -256,8 +261,6 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
   if (game_get_next_square(g, i, j, dir, dist) == S_IMMUTABLE_ZERO ||
       game_get_next_square(g, i, j, dir, dist) == S_ZERO)
     return 0;
-  
-
 
   else
     return -1;
