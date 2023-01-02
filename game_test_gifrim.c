@@ -40,41 +40,45 @@ bool test_game_has_error() {
 
   if (game_has_error(g, 5, 1) != 0) return false;
 
-  game g1 = game_new_empty_ext(6,6,false,true);
+  game g1 = game_new_empty_ext(6,6,false, true);
 
   game_set_square(g1,0,5,S_ONE);
-
   game_set_square(g1,1,5,S_ZERO);
-
   game_set_square(g1,2,5,S_ONE);
-
   game_set_square(g1,3,5,S_ONE);
-
   game_set_square(g1,4,5,S_ZERO);
-
   game_set_square(g1,5,5,S_ZERO);
 
+  game_set_square(g1,0,0,S_ONE);
+  game_set_square(g1,1,0,S_ZERO);
+  game_set_square(g1,2,0,S_ONE);
+  game_set_square(g1,3,0,S_ONE);
+  game_set_square(g1,4,0,S_ZERO);
+  game_set_square(g1,5,0,S_ZERO);
 
-  game_set_square(g1,0,5,S_ONE);
+  if(game_has_error(g1,2,5)==0) return false;
 
-  game_set_square(g1,1,5,S_ZERO);
+/*  game g2 = game_new_empty_ext(6,6,false, true);
 
-  game_set_square(g1,2,5,S_ONE);
+  game_set_square(g2,0,0,S_ONE);
+  game_set_square(g2,0,1,S_ZERO);
+  game_set_square(g2,0,2,S_ONE);
+  game_set_square(g2,0,3,S_ONE);
+  game_set_square(g2,0,4,S_ZERO);
+  game_set_square(g2,0,5,S_ZERO);
 
-  game_set_square(g1,3,5,S_ONE);
+  game_set_square(g2,3,0,S_ONE);
+  game_set_square(g2,3,1,S_ZERO);
+  game_set_square(g2,3,2,S_ONE);
+  game_set_square(g2,3,3,S_ONE);
+  game_set_square(g2,3,4,S_ZERO);
+  game_set_square(g2,3,5,S_ZERO);
 
-  game_set_square(g1,4,5,S_ZERO);
-
-  game_set_square(g1,5,5,S_ZERO);
-
-  if(game_has_error(g1,2,5)==0){
-    return false;
-  }
-
-
+  if(game_has_error(g2,0,3)==0) return false;*/
 
   game_delete(g);
   game_delete(g1);
+  //game_delete(g2);
   return true;
 }
 

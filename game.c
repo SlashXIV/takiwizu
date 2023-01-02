@@ -365,44 +365,88 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
 
   if(g->unique){
 
-    for(int i=0; i<g->heigh-1; i++){
 
-      square col = game_get_square(g,0,i);
-      int cpt=1;
-
-      for(int j=i+1; j<g->heigh; j++){
-
-        square otherCol = game_get_square(g,0,j);
-
-        if(col != S_EMPTY){
-          if(col == otherCol){
-            for(int lengthCol = 0; lengthCol<g->heigh; lengthCol++){
-
-              square col = game_get_square(g,lengthCol,i);
-              square otherCol = game_get_square(g,lengthCol,j);
-
-              if(col == otherCol){
-                cpt++;
-              }
-
-            }
-            if(cpt >= g->heigh){
-              return -1;
-            }
-
-            else{
-              cpt=1;
-            }
-          }
-        }
-      }
+    bool width = true;
+    bool heigh = true;
+    for(int x = 0;x<g->heigh;x++){
+      if(game_get_square(g,x,j) == S_EMPTY) heigh=false;
     }
 
-  }
+    for(int y=0;y<g->width;y++){
+      if(game_get_square(g,i,y)== S_EMPTY) width =false;
+    }
+
+    //lets check the collumns first
+
+    if(heigh){
+    int cpt;
+    uint array[g->heigh];
+    for(uint x = 0; x<g->heigh;x++){
+      array[x] = game_get_number(g,i,x);
+    }
+    
+
+    for(int y=0;y<g->width;y++){
+      cpt = 0 ;//re-initialized to 0 for each loop
+      for(int x=0;x<g->heigh;x++){
+
+        if(y==i)
+          break;
+
+        if(array[x]!= game_get_number(g,y,x))
+          break;
+        
+        cpt++;
+
+
+      }
+      if(cpt==g->heigh){
+        return -1;
+      }
+
+
+    }
+    }
+
+
+    //now the rows
+
+    if(width){
+    int cpt1;
+    uint array1[g->width];
+    for(uint x = 0; x<g->width;x++){
+      array1[x] = game_get_number(g,x,j);
+    }
+    
+
+    for(int x=0;x<g->heigh;x++){
+      cpt1 = 0 ;//re-initialized to 0 for each loop
+      for(int y=0;y<g->width;y++){
+
+        if(y==j)
+          break;
+
+        if(array1[y]!= game_get_number(g,y,x))
+          break;
+        
+        cpt1++;
+
+
+      }
+      if(cpt1==g->width){
+        return -1;
+      }
+
+
+    }
+
+  
+
+
+  }}
 
   return 0;  // 0 mean that there is no error
 }
-
 
 bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
 
