@@ -59,15 +59,24 @@ game game_copy(cgame g) {  // robs
     exit(EXIT_FAILURE);
   }
 
-  // sending back a new game with the actual state of squares of g
-  game g2 = game_new_empty();
+  // CREATE EMPTY CLONE
+  game g_clone = game_new_empty();
 
-  for (int i = 0; i < g2->width; i++) {
-    for (int k = 0; k < g2->heigh; k++) {
-      game_set_square(g2, i, k, game_get_square(g, i, k));
+  // GRID COPY
+  for (int i = 0; i < g_clone->width; i++) {
+    for (int k = 0; k < g_clone->heigh; k++) {
+      game_set_square(g_clone, i, k, game_get_square(g, i, k));
     }
   }
-  return g2;
+
+  // GAME SETTINGS COPY
+  g_clone->heigh = g->heigh;
+  g_clone->width = g->width;
+  g_clone->unique = g->unique;
+  g_clone->wrapping = g->wrapping;
+
+  // HISTORY COPY ISN'T INCLUDED
+  return g_clone;
 }
 
 bool game_equal(cgame g1, cgame g2) {  // robs
