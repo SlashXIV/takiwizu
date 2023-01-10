@@ -318,6 +318,29 @@ bool test_game_is_unique() {
   return true;
 }
 
+bool test_game_nb_cols() {
+  game g1 = game_new_empty_ext(4, 4, true, true);
+
+  game g2 = game_new_empty_ext(7, 7, true, true);
+
+  game g3 = game_new_empty_ext(10, 10, false, true);
+
+  if (game_nb_cols(g1) != 4)
+    return false;
+
+  else if (game_nb_cols(g2) == 8)
+    return false;
+
+  else if (game_nb_cols(g3) != 10)
+    return false;
+
+  game_delete(g1);
+  game_delete(g2);
+  game_delete(g3);
+
+  return true;
+}
+
 int main(int argc, char *argv[]) {
   bool ok = test_dummy();
 
@@ -371,6 +394,8 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp(argv[1], "game_is_unique")) {
     ok = test_game_is_unique();
+  } else if (!strcmp(argv[1], "game_nb_cols")) {
+    ok = test_game_nb_cols();
   }
 
   else {
