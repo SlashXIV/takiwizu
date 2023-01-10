@@ -284,6 +284,30 @@ bool test_game_restart() {
   return true;
 }
 
+
+bool test_game_is_wrapping(){
+
+  game g1 =game_new_empty_ext(6,6,true,true);
+
+  game g2 = game_new_empty_ext(6,6,false,true);
+
+
+
+  if(game_is_wrapping(g2))
+    return false;
+
+  else if(!game_is_wrapping(g1))
+    return false;
+  
+  game_delete(g1);
+  game_delete(g2);
+
+  return true;
+  
+  }
+
+
+
 int main(int argc, char *argv[]) {
   bool ok = test_dummy();
 
@@ -329,6 +353,10 @@ int main(int argc, char *argv[]) {
 
   } else if (!strcmp(argv[1], "game_restart")) {
     ok = test_game_restart();
+  }
+
+  else if (!strcmp(argv[1], "game_is_wrapping")) {
+    ok = test_game_is_wrapping();
   }
 
   else {
