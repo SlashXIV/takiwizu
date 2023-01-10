@@ -27,8 +27,10 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
     exit(EXIT_FAILURE);
   }
 
-  if (nb_cols % 2 != 0 || nb_rows % 2 != 0 ){
-    fprintf(stderr, "ERROR -> game_new_ext(uint nb_rows, uint nb_cols) : invalid parameters, nb_rows and nb_cols should be both even");
+  if (nb_cols % 2 != 0 || nb_rows % 2 != 0) {
+    fprintf(stderr,
+            "ERROR -> game_new_ext(uint nb_rows, uint nb_cols) : invalid "
+            "parameters, nb_rows and nb_cols should be both even");
     exit(EXIT_FAILURE);
   }
 

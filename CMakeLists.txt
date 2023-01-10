@@ -33,6 +33,8 @@ add_test(test_gifrim_game_get_next_number ./game_test_gifrim game_get_next_numbe
 add_test(test_gifrim_game_get_next_square ./game_test_gifrim game_get_next_square)
 add_test(test_gifrim_game_restart ./game_test_gifrim game_restart)
 add_test(test_gifrim_game_is_wrapping ./game_test_gifrim game_is_wrapping)
+add_test(test_gifrim_game_is_unique ./game_test_gifrim game_is_unique)
+
 
 # -> dummy test (ibensaad)
 target_link_libraries(game_test_ibensaad game)
