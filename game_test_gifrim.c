@@ -328,7 +328,7 @@ bool test_game_nb_cols() {
   if (game_nb_cols(g1) != 4)
     return false;
 
-  else if (game_nb_cols(g2) == 8)
+  else if (game_nb_cols(g2) != 7)
     return false;
 
   else if (game_nb_cols(g3) != 10)
