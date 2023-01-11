@@ -5,6 +5,7 @@
 
 #include "game.h"
 #include "game_aux.h"
+#include "game_ext.h"
 
 #define ASSERT(expr)                                                          \
   do {                                                                        \
@@ -397,6 +398,27 @@ bool test_game_new() {
   return true;
 }
 
+
+bool test_game_nb_rows() {
+  // GAMEs CREATION
+  game g_default = game_default();
+  game g_ext = game_new_empty_ext(4, 6, true, true);
+
+  // Tester la fonction game_nb_rows(g)
+  if (game_nb_rows(g_default) != 6) return false;
+  
+  if (game_nb_rows(g_ext) != 4) return false;
+
+  // GAMEs DELETION
+  game_delete(g_default);
+  game_delete(g_ext);
+
+  return true;
+}
+
+
+
+
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE
 int main(int argc, char *argv[]) {
@@ -447,6 +469,10 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_new_empty", argv[1])) {
     ok = test_game_new_empty();
+  }
+
+  else if (!strcmp("game_nb_rows", argv[1])) {
+    ok = test_game_nb_rows();
   }
 
   else {

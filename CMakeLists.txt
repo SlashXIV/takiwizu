@@ -58,4 +58,5 @@ add_test(test_rdubernard_game_equal ./game_test_rdubernard game_equal)
 add_test(test_rdubernard_game_copy ./game_test_rdubernard game_copy)
 add_test(test_rdubernard_game_new ./game_test_rdubernard game_new)
 add_test(test_rdubernard_game_new_empty ./game_test_rdubernard game_new_empty)
+add_test(test_rdubernard_game_nb_rows ./game_test_rdubernard game_nb_rows)
 
