@@ -360,9 +360,20 @@ bool test_game_copy() {
     return false;
   }
 
+  // UNIQUE
   if (game_is_unique(g_default_clone) != game_is_unique(g_default_primal))
     return false;
+
+  // WRAPPING
   if (game_is_wrapping(g_default_clone) != game_is_wrapping(g_default_primal))
+    return false;
+
+  // COLS
+  if (game_nb_cols(g_default_clone) != game_nb_cols(g_default_primal))
+    return false;
+
+  // ROWS
+  if (game_nb_rows(g_default_clone) != game_nb_rows(g_default_primal))
     return false;
 
   game_delete(g_default_clone);
