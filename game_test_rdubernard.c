@@ -414,6 +414,22 @@ bool test_game_nb_rows() {
 
   return true;
 }
+bool test_game_nb_cols() {
+  // GAMEs CREATION
+  game g_default = game_default();
+  game g_ext = game_new_empty_ext(16, 24, true, true);
+
+  // Tester la fonction game_nb_cols(g)
+  if (game_nb_cols(g_default) != 6) return false;
+
+  if (game_nb_cols(g_ext) != 24) return false;
+
+  // GAMEs DELETION
+  game_delete(g_default);
+  game_delete(g_ext);
+
+  return true;
+}
 
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE
@@ -469,6 +485,9 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_nb_rows", argv[1])) {
     ok = test_game_nb_rows();
+  }
+  else if (!strcmp("game_nb_cols", argv[1])) {
+    ok = test_game_nb_cols();
   }
 
   else {
