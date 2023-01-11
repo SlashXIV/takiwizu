@@ -485,8 +485,7 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_nb_rows", argv[1])) {
     ok = test_game_nb_rows();
-  }
-  else if (!strcmp("game_nb_cols", argv[1])) {
+  } else if (!strcmp("game_nb_cols", argv[1])) {
     ok = test_game_nb_cols();
   }
 
