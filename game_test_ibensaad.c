@@ -123,6 +123,42 @@ bool test_game_is_over() {
   return true;
 }
 
+bool test_game_nb_cols() {
+  game g1 = game_new_empty_ext(4, 4, true, true);
+
+  game g2 = game_new_empty_ext(7, 7, true, true);
+
+  game g3 = game_new_empty_ext(10, 10, false, true);
+
+  if (game_nb_cols(g1) != 4)
+    return false;
+
+  else if (game_nb_cols(g2) != 7)
+    return false;
+
+  else if (game_nb_cols(g3) != 10)
+    return false;
+
+  game_delete(g1);
+  game_delete(g2);
+  game_delete(g3);
+
+  return true;
+}
+
+bool test_game_new_ext() {
+  square *arrayClone = malloc((4 * 6) * sizeof(square));
+
+  game g1 = game_new_ext(4, 6, arrayClone, true, true);
+
+  if (game_nb_cols(g1) == 6) return false;
+
+  if (game_nb_rows(g1) == 4) return false;
+
+  game_delete(g1);
+  return true;
+}
+
 int main(int argc, char *argv[]) {
   if (argc == 1 || argc > 2) {
     usage(argv[0]);
@@ -170,6 +206,10 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp(argv[1], "is_over")) {
     okey = test_game_is_over();
+  } else if (!strcmp(argv[1], "game_nb_cols")) {
+    okey = test_game_nb_cols();
+  } else if (!strcmp(argv[1], "game_new_ext")) {
+    okey = test_game_new_ext();
   }
 
   else {

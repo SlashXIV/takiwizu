@@ -34,8 +34,7 @@ add_test(test_gifrim_game_get_next_square ./game_test_gifrim game_get_next_squar
 add_test(test_gifrim_game_restart ./game_test_gifrim game_restart)
 add_test(test_gifrim_game_is_wrapping ./game_test_gifrim game_is_wrapping)
 add_test(test_gifrim_game_is_unique ./game_test_gifrim game_is_unique)
-add_test(test_gifrim_game_nb_cols ./game_test_gifrim game_nb_cols)
-add_test(test_gifrim_game_new_ext ./game_test_gifrim game_new_ext)
+
 
 
 
@@ -47,6 +46,8 @@ add_test(test_ibensaad_default ./game_test_ibensaad default)
 add_test(test_ibensaad_print ./game_test_ibensaad print)
 add_test(test_ibensaad_play_move ./game_test_ibensaad play_move)
 add_test(test_ibensaad_is_over ./game_test_ibensaad is_over)
+add_test(test_ibensaad_game_nb_cols ./game_test_ibensaad game_nb_cols)
+add_test(test_ibensaad_game_new_ext ./game_test_ibensaad game_new_ext)
 
 # <====== GAME TESTS rdubernard ======>
 target_link_libraries(game_test_rdubernard game)
