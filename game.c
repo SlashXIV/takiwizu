@@ -63,8 +63,8 @@ game game_copy(cgame g) {  // robs
   game g_clone = game_new_empty();
 
   // GRID COPY
-  for (int i = 0; i < g_clone->width; i++) {
-    for (int k = 0; k < g_clone->heigh; k++) {
+  for (int i = 0; i < g_clone->heigh; i++) {
+    for (int k = 0; k < g_clone->width; k++) {
       game_set_square(g_clone, i, k, game_get_square(g, i, k));
     }
   }
