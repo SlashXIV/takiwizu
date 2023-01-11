@@ -5,6 +5,7 @@
 
 #include "game.h"
 #include "game_aux.h"
+#include "game_ext.h"
 
 void usage(char *command) {
   fprintf(stderr, "%s\n", command);
