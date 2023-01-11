@@ -398,7 +398,6 @@ bool test_game_new() {
   return true;
 }
 
-
 bool test_game_nb_rows() {
   // GAMEs CREATION
   game g_default = game_default();
@@ -406,7 +405,7 @@ bool test_game_nb_rows() {
 
   // Tester la fonction game_nb_rows(g)
   if (game_nb_rows(g_default) != 6) return false;
-  
+
   if (game_nb_rows(g_ext) != 4) return false;
 
   // GAMEs DELETION
@@ -415,9 +414,6 @@ bool test_game_nb_rows() {
 
   return true;
 }
-
-
-
 
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE

@@ -61,8 +61,8 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping,
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
-  new_empty_game->heigh = nb_cols;
-  new_empty_game->width = nb_rows;
+  new_empty_game->heigh = nb_rows;
+  new_empty_game->width = nb_cols;
   new_empty_game->unique = unique;
   new_empty_game->wrapping = wrapping;
   return new_empty_game;
