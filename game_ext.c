@@ -35,15 +35,15 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
   }
 
   game new_game = malloc(sizeof(struct game_s));
-  new_game->heigh = nb_rows;
+  new_game->height = nb_rows;
   new_game->width = nb_cols;
   new_game->unique = unique;
   new_game->wrapping = wrapping;
 
   square* arrayClone =
-      malloc((new_game->width * new_game->heigh) * sizeof(square));
+      malloc((new_game->width * new_game->height) * sizeof(square));
 
-  for (int i = 0; i < new_game->width * new_game->heigh; i++) {
+  for (int i = 0; i < new_game->width * new_game->height; i++) {
     arrayClone[i] = squares[i];
   }
 
@@ -61,14 +61,14 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping,
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
-  new_empty_game->heigh = nb_rows;
+  new_empty_game->height = nb_rows;
   new_empty_game->width = nb_cols;
   new_empty_game->unique = unique;
   new_empty_game->wrapping = wrapping;
   return new_empty_game;
 }
 
-uint game_nb_rows(cgame g) { return g->heigh; }
+uint game_nb_rows(cgame g) { return g->height; }
 
 uint game_nb_cols(cgame g) { return g->width; }
 

@@ -93,7 +93,7 @@ game game_default(void) {  // ilisa
   g_output->wrapping = false;
   g_output->unique = false;
   g_output->width = DEFAULT_SIZE;
-  g_output->heigh = DEFAULT_SIZE;
+  g_output->height = DEFAULT_SIZE;
   return g_output;
 }
 

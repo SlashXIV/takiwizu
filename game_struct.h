@@ -7,7 +7,7 @@
 struct game_s {
   square* ArrayOfSquare;
   uint width;
-  uint heigh;
+  uint height;
   bool wrapping;
   bool unique;
 };
