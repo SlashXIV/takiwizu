@@ -280,6 +280,7 @@ bool test_game_equal() {
 
 // ISSUE 3 -> game_copy()
 bool test_game_copy() {
+  // GAME DEFAULT V1
   game g_default_primal = game_default();
   game g_default_clone = game_copy(g_default_primal);
 
@@ -358,6 +359,11 @@ bool test_game_copy() {
     printf("THERE IS AN ERROR : GAME NOT EQUAL OR VALUES DON4 T MATCHES");
     return false;
   }
+
+  if (game_is_unique(g_default_clone) != game_is_unique(g_default_primal))
+    return false;
+  if (game_is_wrapping(g_default_clone) != game_is_wrapping(g_default_primal))
+    return false;
 
   game_delete(g_default_clone);
   game_delete(g_default_primal);

@@ -1,6 +1,6 @@
 # [======= SETUP =======]
 cmake_minimum_required(VERSION 2.6)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(tazuku-06A)
 link_directories(${CMAKE_SOURCE_DIR}) # EQUIVALENT "LDFLAGS = -L ./"
 set(CMAKE_C_FLAGS "-std=c99 -Wall -g")
