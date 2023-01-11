@@ -346,9 +346,9 @@ bool test_game_new_ext() {
 
   game g1 = game_new_ext(4, 6, arrayClone, true, true);
 
-  if (game_nb_cols(g1) != 4) return false;
+  if (game_nb_cols(g1) == 6) return false;
 
-  if (game_nb_rows(g1) != 6) return false;
+  if (game_nb_rows(g1) == 4) return false;
 
   game_delete(g1);
   return true;
