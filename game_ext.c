@@ -35,8 +35,8 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
   }
 
   game new_game = malloc(sizeof(struct game_s));
-  new_game->width = nb_rows;
-  new_game->heigh = nb_cols;
+  new_game->heigh = nb_rows;
+  new_game->width = nb_cols;
   new_game->unique = unique;
   new_game->wrapping = wrapping;
 

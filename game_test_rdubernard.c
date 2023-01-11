@@ -385,7 +385,8 @@ bool test_game_copy() {
   // game g_ext_clone = game_copy(g_ext_primal);
 
   // // UNIQUE
-  // if (game_is_unique(g_ext_clone) != game_is_unique(g_ext_primal)) return false;
+  // if (game_is_unique(g_ext_clone) != game_is_unique(g_ext_primal)) return
+  // false;
 
   // // WRAPPING
   // if (game_is_wrapping(g_ext_clone) != game_is_wrapping(g_ext_primal))
@@ -469,6 +470,21 @@ bool test_game_nb_cols() {
   return true;
 }
 
+bool test_game_new_ext() {  // inversion nb rows et nb cols
+  // square creation
+  square *grid = calloc((6 * 4), sizeof(square));
+
+  // GAME CREATION
+  game g = game_new_ext(6, 4, grid, true, true);
+
+  // vérification inversion
+  if (game_nb_rows(g) == 4) return false;
+  if (game_nb_cols(g) == 6) return false;
+
+  game_delete(g);
+  return true;
+}
+
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE
 int main(int argc, char *argv[]) {
@@ -523,8 +539,14 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_nb_rows", argv[1])) {
     ok = test_game_nb_rows();
-  } else if (!strcmp("game_nb_cols", argv[1])) {
+  }
+
+  else if (!strcmp("game_nb_cols", argv[1])) {
     ok = test_game_nb_cols();
+  }
+
+  else if (!strcmp("game_new_ext", argv[1])) {
+    ok = test_game_new_ext();
   }
 
   else {
