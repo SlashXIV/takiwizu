@@ -341,7 +341,20 @@ bool test_game_nb_cols() {
   return true;
 }
 
-int main(int argc, char *argv[]) {
+bool test_game_new_ext() {
+  square* arrayClone = malloc((4 * 6) * sizeof(square));
+
+  game g1 = game_new_ext(4, 6, arrayClone, true, true);
+
+  if (game_nb_cols(g1) != 4) return false;
+
+  if (game_nb_rows(g1) != 6) return false;
+
+  game_delete(g1);
+  return true;
+}
+
+int main(int argc, char* argv[]) {
   bool ok = test_dummy();
 
   if (argc == 1 || argc > 2) {
@@ -396,6 +409,8 @@ int main(int argc, char *argv[]) {
     ok = test_game_is_unique();
   } else if (!strcmp(argv[1], "game_nb_cols")) {
     ok = test_game_nb_cols();
+  } else if (!strcmp(argv[1], "game_new_ext")) {
+    ok = test_game_new_ext();
   }
 
   else {
