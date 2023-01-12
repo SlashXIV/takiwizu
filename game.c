@@ -355,7 +355,6 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
   }
 
   if (g->unique) {
-
     bool test_cols = true;
     bool test_rows = true;
 
@@ -372,71 +371,70 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
     if (test_rows) {
       uint cpt_equal_case;
 
-      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES AUTRES LIGNES
+      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
+      // AUTRES LIGNES
       square compare_line[g->width];
       for (uint case_index = 0; case_index < g->width; case_index++) {
         compare_line[case_index] = game_get_square(g, i, case_index);
       }
 
-      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES : 
-      for (int y = 0; y < g->height; y++) { 
+      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
+      for (int y = 0; y < g->height; y++) {
         // re-initialized cpt to 0 for each loop
-        cpt_equal_case = 0;  
+        cpt_equal_case = 0;
 
-        // LES COMPARAISONS 
+        // LES COMPARAISONS
         for (int x = 0; x < g->width; x++) {
-
           // IGNORE ITSELF
-          if (y == i) break; 
+          if (y == i) break;
 
           // ONE DIFFERENCE IS ENOUGH TO COMPARE THE NEXT LINE
           if (compare_line[x] != game_get_square(g, y, x)) break;
 
           cpt_equal_case++;
         }
-        
+
         // TWO LINES ARE IDENTICALS
         if (cpt_equal_case == g->height) {
           return -1;
         }
       }
     }
-    
+
     // GET HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE
     if (test_cols) {
       uint cpt_equal_case;
 
-      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES AUTRES LIGNES
+      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
+      // AUTRES LIGNES
       square compare_line[g->width];
       for (uint case_index = 0; case_index < g->width; case_index++) {
         compare_line[case_index] = game_get_square(g, i, case_index);
       }
 
-      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES : 
-      for (int y = 0; y < g->height; y++) { 
+      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
+      for (int y = 0; y < g->height; y++) {
         // re-initialized cpt to 0 for each loop
-        cpt_equal_case = 0;  
+        cpt_equal_case = 0;
 
-        // LES COMPARAISONS 
+        // LES COMPARAISONS
         for (int x = 0; x < g->width; x++) {
-
           // IGNORE ITSELF
-          if (y == i) break; 
+          if (y == i) break;
 
           if (compare_line[x] != game_get_square(g, y, x)) break;
 
           cpt_equal_case++;
         }
-        
+
         if (cpt_equal_case == g->height) {
           return -1;
         }
       }
     }
+  }
 
-    // now the rows
-
-
+  // now the rows
 
   return 0;  // 0 mean that there is no error
 }

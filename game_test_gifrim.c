@@ -42,7 +42,6 @@ bool test_game_has_error() {
 
   game g1 = game_new_empty_ext(6, 6, false, true);
 
-
   // UNIQUE TEST (identical lines)
   game_set_square(g1, 0, 5, S_ONE);
   game_set_square(g1, 1, 5, S_ZERO);
@@ -50,7 +49,6 @@ bool test_game_has_error() {
   game_set_square(g1, 3, 5, S_ONE);
   game_set_square(g1, 4, 5, S_ZERO);
   game_set_square(g1, 5, 5, S_ZERO);
-
 
   game_set_square(g1, 0, 0, S_ONE);
   game_set_square(g1, 1, 0, S_ZERO);
@@ -60,8 +58,7 @@ bool test_game_has_error() {
   game_set_square(g1, 5, 0, S_ZERO);
 
   game_print(g1);
-  // WRAPPING TEST 
-
+  // WRAPPING TEST
 
   if (game_has_error(g1, 2, 5) == 0) return false;
 

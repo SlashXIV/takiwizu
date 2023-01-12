@@ -6,17 +6,29 @@
 #include <string.h>
 
 #include "game.h"
+#include "game_ext.h"
 #include "game_struct.h"
 
 void game_print(cgame g) {  // ilisa
   // printing j coords
-  printf("   012345\n");
-  printf("   ------\n");
+
+  printf("   ");
+  for (int x = 0; x < game_nb_cols(g); x++) {
+    printf("%d", x);
+  }
+  printf("\n");
+
+  printf("   ");
+
+  for (int x = 0; x < game_nb_cols(g); x++) {
+    printf("%c", '_');
+  }
+  printf("\n");
 
   // printing grid and i coords
-  for (uint i = 0; i < 6; i++) {
+  for (uint i = 0; i < game_nb_rows(g); i++) {
     printf("%u |", i);
-    for (uint j = 0; j < DEFAULT_SIZE; j++) {
+    for (uint j = 0; j < game_nb_cols(g); j++) {
       square actual_square = game_get_square(g, i, j);
       switch (actual_square) {
         case (S_IMMUTABLE_ONE):
@@ -42,7 +54,12 @@ void game_print(cgame g) {  // ilisa
     }
     printf("|\n");
   }
-  printf("   ------\n");
+  printf("   ");
+
+  for (int x = 0; x < game_nb_cols(g); x++) {
+    printf("%c", '-');
+  }
+  printf("\n");
 }
 
 game game_default(void) {  // ilisa
