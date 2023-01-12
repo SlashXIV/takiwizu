@@ -3,6 +3,9 @@
 
 #include "game.h"
 #include "game_aux.h"
+#include "game_struct.h"
+#include "queue.h"
+#include "game_ext.h"
 
 void play_on_square(game g, int i, int j, int move) {
   char pion;
@@ -36,6 +39,8 @@ void display_help() {
   printf("- press 'e' <i> <j>' to empty square (i,j)\n");
   printf("- press 'r' to restart\n");
   printf("- press 'q' to quit\n");
+  printf("- press 'z' to undo\n");
+  printf("- press 'r' to redo\n");
 }
 
 int main(void) {
@@ -81,6 +86,25 @@ int main(void) {
         printf("\naction : quit\nwhat a shame, you gave up ;-;\n");
         game_delete(g);
         return EXIT_SUCCESS;
+        break;
+
+      case 'z':
+        if (queue_is_empty(g->undo)){
+          printf("\nimpossible : nothing in undo\n");
+        }
+        
+
+        printf("\naction : undo\n");
+        game_undo(g);
+        break;
+        
+      case 'y' :
+        if (queue_is_empty(g->redo)){
+          printf("\nimpossible : nothing in redo\n");
+        }
+
+        printf("\naction : redo\n");
+        game_redo(g);
         break;
 
       // PLAY
