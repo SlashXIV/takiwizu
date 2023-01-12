@@ -1,26 +1,32 @@
 {
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
-        "name": "(gdb) Launch",
-        "type": "cppdbg",
-        "request": "launch",
-        // Resolved by CMake Tools:
-        "program": "${command:cmake.launchTargetPath}",
-        "args": ["init_free"], // Add arguments if necessary
-        "stopAtEntry": true,
-        "cwd": "${workspaceFolder}",
-        "environment": [{
-            // add the directory where our target was built to the PATHs
-            // it gets resolved by CMake Tools:
-            "name": "PATH",
-            "value": "${env:PATH}:${command:cmake.getLaunchTargetDirectory}"
-        }, ],
-        "console": "externalTerminal",
-        "MIMode": "gdb",
-        "setupCommands": [{
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-        }]
-    }]
+    "configurations": [
+        {
+            "name": "(gdb) Launch Test",                        // Nom de la configuration
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/game_text",    // Chemin du programme à lancer
+            "args": [],                                         // Arguments à passer au programme
+            "stopAtEntry": false,                                // Arrêter au début du programme
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavour to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
 }
