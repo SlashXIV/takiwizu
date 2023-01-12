@@ -23,6 +23,8 @@ game game_new(square* squares) {  // robs
   new_game->height = DEFAULT_SIZE;
   new_game->unique = false;
   new_game->wrapping = false;
+  new_game->undo = queue_new();
+  new_game->redo = queue_new();
 
   square* arrayClone =
       malloc((new_game->width * new_game->height) * sizeof(square));
@@ -48,6 +50,9 @@ game game_new_empty(void) {  // robs
   new_empty_game->width = DEFAULT_SIZE;
   new_empty_game->unique = false;
   new_empty_game->wrapping = false;
+  new_empty_game->undo = queue_new();
+  new_empty_game->redo = queue_new();
+
   return new_empty_game;
 }
 
@@ -104,6 +109,8 @@ bool game_equal(cgame g1, cgame g2) {  // robs
 
 void game_delete(game g) {  // robs
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
+  if (g->undo != NULL) free(g->undo);
+  if (g->redo != NULL) free(g->redo);
   free(g);
 }
 

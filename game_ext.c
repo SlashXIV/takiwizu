@@ -39,6 +39,8 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
   new_game->width = nb_cols;
   new_game->unique = unique;
   new_game->wrapping = wrapping;
+  new_game->undo = queue_new();
+  new_game->redo = queue_new();
 
   square* arrayClone =
       malloc((new_game->width * new_game->height) * sizeof(square));
@@ -65,6 +67,9 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping,
   new_empty_game->width = nb_cols;
   new_empty_game->unique = unique;
   new_empty_game->wrapping = wrapping;
+  new_empty_game->undo = queue_new();
+  new_empty_game->redo = queue_new();
+
   return new_empty_game;
 }
 
