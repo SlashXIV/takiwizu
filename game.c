@@ -468,7 +468,7 @@ bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
   return true;
 }
 
-void game_play_move(game g, uint i, uint j, square s) {  // ilisa
+void game_play_move(game g, uint i, uint j, square s) {  
 
   if (i >= g->height || j >= g->height || g == NULL ||
       game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
@@ -478,6 +478,8 @@ void game_play_move(game g, uint i, uint j, square s) {  // ilisa
     exit(EXIT_FAILURE);
   }
 
+  game_set_square(g, i, j, s);
+
   //We create an array for store the current move
   int *move = malloc(sizeof(int)*MOVE_SIZE); 
   move[MOVE_SQUARE_INDEX] = s; //store square
@@ -485,11 +487,11 @@ void game_play_move(game g, uint i, uint j, square s) {  // ilisa
   move[MOVE_J_INDEX] = j; //store j
 
   queue_push_head(g->undo,move);
+  queue_clear_full(g->redo,free);
 
-  game_set_square(g, i, j, s);
 }
 
-bool game_is_over(cgame g) {  // ilisa
+bool game_is_over(cgame g) {  
 
   // We test if our pointer g is NULL, if it is the case we exit the programm.
 
