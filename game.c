@@ -478,6 +478,14 @@ void game_play_move(game g, uint i, uint j, square s) {  // ilisa
     exit(EXIT_FAILURE);
   }
 
+  //We create an array for store the current move
+  int *move = malloc(sizeof(int)*MOVE_SIZE); 
+  move[0] = s; //store square
+  move[1] = i; //store i
+  move[2] = j; //store j
+
+  queue_push_head(g->undo,move);
+
   game_set_square(g, i, j, s);
 }
 
