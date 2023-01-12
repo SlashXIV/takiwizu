@@ -93,7 +93,7 @@ void game_undo(game g) {
   int * last_move = queue_peek_head(g->undo);
 
   // CANCEL MOVE
-  game_set_square(g, S_EMPTY, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX]);
+  game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX], S_EMPTY);
 
   // NOW GOES INTO REDO
   queue_pop_head(g->undo);
@@ -107,11 +107,15 @@ void game_redo(game g) {
     exit(EXIT_FAILURE);
   }
 
+
+  
   //We get the last move canceled from undo:
   int *get_last_move = queue_peek_head(g->undo);
 
   //We re set the canceled move in the game:
-  game_set_square(g,get_last_move[MOVE_I_INDEX],get_last_move[MOVE_J_INDEX],get_last_move[MOVE_SQUARE_INDEX]);
+  game_set_square(g, get_last_move[MOVE_I_INDEX], get_last_move[MOVE_J_INDEX], get_last_move[MOVE_SQUARE_INDEX]);
+
+
 
   //We clear the undo queue:
   queue_clear_full(g->undo,free);

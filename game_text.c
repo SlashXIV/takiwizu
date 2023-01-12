@@ -49,7 +49,18 @@ int main(void) {
   while (!game_is_over(g)) {
     // GAME PRINT
     printf("\n");
+
+
+    // SANDBOX
+    game_play_move(g, 3, 5, S_ONE);
     game_print(g);
+
+    game_undo(g);
+    game_print(g);
+
+    game_redo(g);
+    game_print(g);
+
 
     // LIST ERROR ON EACH SQUARE
 
