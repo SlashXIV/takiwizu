@@ -3,9 +3,9 @@
 
 #include "game.h"
 #include "game_aux.h"
+#include "game_ext.h"
 #include "game_struct.h"
 #include "queue.h"
-#include "game_ext.h"
 
 void play_on_square(game g, int i, int j, int move) {
   char pion;
@@ -50,17 +50,15 @@ int main(void) {
     // GAME PRINT
     printf("\n");
 
-
     // SANDBOX
-    game_play_move(g, 3, 5, S_ONE);
-    game_print(g);
+    // game_play_move(g, 3, 5, S_ONE);
+    // game_print(g);
 
-    game_undo(g);
-    game_print(g);
+    // game_undo(g);
+    // game_print(g);
 
-    game_redo(g);
+    // game_redo(g);
     game_print(g);
-
 
     // LIST ERROR ON EACH SQUARE
 
@@ -100,21 +98,22 @@ int main(void) {
         break;
 
       case 'z':
-        if (queue_is_empty(g->undo)){
+        printf("\naction : undo\n");
+
+        if (queue_is_empty(g->undo)) {
           printf("\nimpossible : nothing in undo\n");
         }
-        
 
-        printf("\naction : undo\n");
         game_undo(g);
         break;
-        
-      case 'y' :
-        if (queue_is_empty(g->redo)){
+
+      case 'y':
+        printf("\naction : redo\n");
+
+        if (queue_is_empty(g->redo)) {
           printf("\nimpossible : nothing in redo\n");
         }
 
-        printf("\naction : redo\n");
         game_redo(g);
         break;
 

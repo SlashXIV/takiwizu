@@ -81,16 +81,18 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 
 bool game_is_unique(cgame g) { return g->unique; }
 
-
 void game_undo(game g) {
-
   if (g == NULL) {
     fprintf(stderr, "game undefined");
     exit(EXIT_FAILURE);
   }
-  
+
+  if (queue_is_empty(g->undo)) {
+    return;
+  }
+
   // GET THE LAST MOVE
-  int * last_move = queue_peek_head(g->undo);
+  int* last_move = queue_peek_head(g->undo);
 
   // CANCEL MOVE
   game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX], S_EMPTY);
@@ -101,23 +103,22 @@ void game_undo(game g) {
 }
 
 void game_redo(game g) {
-
   if (g == NULL) {
     fprintf(stderr, "game undefined");
     exit(EXIT_FAILURE);
   }
 
+  if (queue_is_empty(g->redo)) {
+    return;
+  }
 
-  
-  //We get the last move canceled from undo:
-  int *get_last_move = queue_peek_head(g->undo);
+  // We get the last move canceled from undo:
+  int* get_last_move = queue_peek_head(g->redo);
 
-  //We re set the canceled move in the game:
-  game_set_square(g, get_last_move[MOVE_I_INDEX], get_last_move[MOVE_J_INDEX], get_last_move[MOVE_SQUARE_INDEX]);
+  // We re set the canceled move in the game:
+  game_set_square(g, get_last_move[MOVE_I_INDEX], get_last_move[MOVE_J_INDEX],
+                  get_last_move[MOVE_SQUARE_INDEX]);
 
-
-
-  //We clear the undo queue:
-  queue_clear_full(g->undo,free);
-
+  queue_push_head(g->undo, get_last_move);
+  queue_pop_head(g->redo);
 }
