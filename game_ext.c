@@ -81,6 +81,24 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 
 bool game_is_unique(cgame g) { return g->unique; }
 
-void game_undo(game g) {}
+void game_undo(game g) {
+  if (g == NULL) {
+    fprintf(stderr, "game undefined");
+    exit(EXIT_FAILURE);
+  }
+  
+  // GET THE LAST MOVE
+  int * last_move = queue_peek_head(g->undo);
 
-void game_redo(game g) {}
+  // CANCEL MOVE
+  game_set_square(g, S_EMPTY, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX]);
+
+  // NOW GOES INTO REDO
+  queue_pop_head(g->undo);
+  queue_push_head(g->redo, last_move);
+}
+
+void game_redo(game g) {
+  
+
+}

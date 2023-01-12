@@ -480,9 +480,9 @@ void game_play_move(game g, uint i, uint j, square s) {  // ilisa
 
   //We create an array for store the current move
   int *move = malloc(sizeof(int)*MOVE_SIZE); 
-  move[0] = s; //store square
-  move[1] = i; //store i
-  move[2] = j; //store j
+  move[MOVE_SQUARE_INDEX] = s; //store square
+  move[MOVE_I_INDEX] = i; //store i
+  move[MOVE_J_INDEX] = j; //store j
 
   queue_push_head(g->undo,move);
 
@@ -524,4 +524,9 @@ void game_restart(game g) {  // ilisa
       if (game_get_square(g, i, j) == S_ZERO) game_set_square(g, i, j, S_EMPTY);
     }
   }
+  
+  // clear all history
+  queue_clear_full(g->undo,free);
+  queue_clear_full(g->redo,free);
+
 }

@@ -26,6 +26,13 @@ typedef unsigned int uint;
 #define MOVE_SIZE 3 
 
 /**
+ * @brief Size of the default move array.
+ **/
+#define MOVE_SQUARE_INDEX 0
+#define MOVE_I_INDEX 1
+#define MOVE_J_INDEX 2
+
+/**
  * @brief The different squares used in the game.
  **/
 typedef enum {
