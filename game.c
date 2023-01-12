@@ -7,6 +7,7 @@
 
 #include "game_aux.h"
 #include "game_struct.h"
+#include "queue.h"
 
 // We have to implement the functions now:
 
@@ -486,8 +487,8 @@ void game_play_move(game g, uint i, uint j, square s) {
   move[MOVE_I_INDEX] = i; //store i
   move[MOVE_J_INDEX] = j; //store j
 
-  queue_push_head(g->undo,move);
-  queue_clear_full(g->redo,free);
+  queue_push_head(g->undo, move);
+  queue_clear_full(g->redo, free);
 
 }
 
