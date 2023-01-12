@@ -6,6 +6,8 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_struct.h"
+#include "queue.h"
 
 void usage(char *command) {
   fprintf(stderr, "%s\n", command);
@@ -90,6 +92,10 @@ bool test_game_play_move() {
   // We test if in a precise place in the game a square is added:
 
   game_play_move(g, 2, 0, S_ONE);
+  game_play_move(g, 3, 5, S_ONE);
+
+  if (queue_peek_tail(g->undo) == NULL) return false;
+  
 
   if (game_get_square(g, 2, 0) != S_ONE) {
     return false;
