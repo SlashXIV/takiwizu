@@ -355,16 +355,21 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
   }
 
   if (g->unique) {
+    printf("=> TEST UNIQUE\n");
+
     bool test_cols = true;
     bool test_rows = true;
 
-    for (int x = 0; x < g->height; x++) {
-      if (game_get_square(g, x, j) == S_EMPTY) test_rows = false;
+    for (int x = 0; x < g->width; x++) {
+      if (game_get_square(g, i, x) == S_EMPTY) test_rows = false;
     }
 
-    for (int y = 0; y < g->width; y++) {
-      if (game_get_square(g, i, y) == S_EMPTY) test_cols = false;
+    for (int y = 0; y < g->height; y++) {
+      if (game_get_square(g, y, j) == S_EMPTY) test_cols = false;
     }
+
+    printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n", test_cols,
+           test_rows);
 
     // lets check the collumns first
 
@@ -401,33 +406,32 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
       }
     }
 
-    // GET HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE
     if (test_cols) {
       uint cpt_equal_case;
 
       // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
       // AUTRES LIGNES
-      square compare_line[g->width];
-      for (uint case_index = 0; case_index < g->width; case_index++) {
+      square compare_line[g->height];
+      for (uint case_index = 0; case_index < g->height; case_index++) {
         compare_line[case_index] = game_get_square(g, i, case_index);
       }
 
       // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
-      for (int y = 0; y < g->height; y++) {
+      for (int x = 0; x < g->width; x++) {
         // re-initialized cpt to 0 for each loop
         cpt_equal_case = 0;
 
         // LES COMPARAISONS
-        for (int x = 0; x < g->width; x++) {
+        for (int y = 0; y < g->height; y++) {
           // IGNORE ITSELF
-          if (y == i) break;
+          if (x == i) break;
 
-          if (compare_line[x] != game_get_square(g, y, x)) break;
+          if (compare_line[y] != game_get_square(g, x, y)) break;
 
           cpt_equal_case++;
         }
 
-        if (cpt_equal_case == g->height) {
+        if (cpt_equal_case == g->width) {
           return -1;
         }
       }
