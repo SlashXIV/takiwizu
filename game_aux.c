@@ -111,6 +111,8 @@ game game_default(void) {  // ilisa
   g_output->unique = false;
   g_output->width = DEFAULT_SIZE;
   g_output->height = DEFAULT_SIZE;
+  g_output->undo = queue_new();
+  g_output->redo = queue_new();
   return g_output;
 }
 

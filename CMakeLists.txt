@@ -60,4 +60,6 @@ add_test(test_rdubernard_game_new_empty ./game_test_rdubernard game_new_empty)
 add_test(test_rdubernard_game_nb_rows ./game_test_rdubernard game_nb_rows)
 add_test(test_rdubernard_game_nb_cols ./game_test_rdubernard game_nb_cols)
 add_test(test_rdubernard_game_new_ext ./game_test_rdubernard game_new_ext)
+add_test(test_rdubernard_game_undo ./game_test_rdubernard game_undo)
+add_test(test_rdubernard_game_redo ./game_test_rdubernard game_redo)
 
