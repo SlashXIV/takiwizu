@@ -95,7 +95,6 @@ bool test_game_play_move() {
   game_play_move(g, 3, 5, S_ONE);
 
   if (queue_peek_tail(g->undo) == NULL) return false;
-  
 
   if (game_get_square(g, 2, 0) != S_ONE) {
     return false;

@@ -529,7 +529,7 @@ void game_restart(game g) {  // ilisa
   }
   
   // clear all history
-  queue_clear_full(g->undo,free);
-  queue_clear_full(g->redo,free);
+  queue_clear_full(g->undo, free);
+  queue_clear_full(g->redo, free);
 
 }
