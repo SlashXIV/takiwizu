@@ -269,7 +269,6 @@ bool test_game_restart() {
   game_set_square(g1, 4, 2, S_ZERO);
   game_set_square(g1, 2, 2, S_IMMUTABLE_ZERO);
 
-
   // We restart the game g1:
 
   game_restart(g1);
@@ -284,14 +283,14 @@ bool test_game_restart() {
     return false;
 
   game_delete(g1);
-  
-  game g2= game_new_empty_ext(8,8,true,true);
-  
+
+  game g2 = game_new_empty_ext(8, 8, true, true);
+
   game_restart(g2);
 
-  if(!game_is_wrapping(g2)) return false;
+  if (!game_is_wrapping(g2)) return false;
 
-  if(!game_is_unique(g2)) return false;
+  if (!game_is_unique(g2)) return false;
 
   game_delete(g2);
 
