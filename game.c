@@ -34,7 +34,6 @@ game game_new(square* squares) {  // robs
     arrayClone[i] = squares[i];
   }
 
-  
   new_game->ArrayOfSquare = arrayClone;
   return new_game;
 }
@@ -48,7 +47,7 @@ game game_new_empty(void) {  // robs
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
-  
+
   return new_empty_game;
 }
 
@@ -105,8 +104,8 @@ bool game_equal(cgame g1, cgame g2) {  // robs
 
 void game_delete(game g) {  // robs
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
-  if (g->undo != NULL) queue_free_full(g->undo,free);
-  if (g->redo != NULL) queue_free_full(g->redo,free);
+  if (g->undo != NULL) queue_free_full(g->undo, free);
+  if (g->redo != NULL) queue_free_full(g->redo, free);
   free(g);
 }
 
