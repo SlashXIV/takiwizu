@@ -46,6 +46,9 @@ add_test(test_ibensaad_default ./game_test_ibensaad default)
 add_test(test_ibensaad_print ./game_test_ibensaad print)
 add_test(test_ibensaad_play_move ./game_test_ibensaad play_move)
 add_test(test_ibensaad_is_over ./game_test_ibensaad is_over)
+add_test(test_ibensaad_game_undo ./game_test_ibensaad game_undo)
+add_test(test_ibensaad_game_redo ./game_test_ibensaad game_redo)
+
 
 # <====== GAME TESTS rdubernard ======>
 target_link_libraries(game_test_rdubernard game)
@@ -60,6 +63,3 @@ add_test(test_rdubernard_game_new_empty ./game_test_rdubernard game_new_empty)
 add_test(test_rdubernard_game_nb_rows ./game_test_rdubernard game_nb_rows)
 add_test(test_rdubernard_game_nb_cols ./game_test_rdubernard game_nb_cols)
 add_test(test_rdubernard_game_new_ext ./game_test_rdubernard game_new_ext)
-add_test(test_rdubernard_game_undo ./game_test_rdubernard game_undo)
-add_test(test_rdubernard_game_redo ./game_test_rdubernard game_redo)
-

@@ -487,45 +487,9 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   return true;
 }
 
-bool test_game_undo() {
-  game g = game_default();
 
-  game_play_move(g, 0, 0, S_ONE);
-  game_play_move(g, 3, 5, S_ZERO);
 
-  int * last_move = queue_peek_head(g->undo);
 
-  if (last_move[MOVE_SQUARE_INDEX] != S_ZERO || last_move[MOVE_I_INDEX] != 3 || last_move[MOVE_J_INDEX] != 5) 
-    return false;
-  
-  game_undo(g);
-  game_undo(g);
-
-  if (game_get_square(g, 3, 5) != S_EMPTY || game_get_square(g, 0, 0) != S_EMPTY) 
-    return false;
-
-  return true;
-}
-
-bool test_game_redo() {
-  game g = game_default();
-
-  game_play_move(g, 0, 0, S_ONE);
-  game_play_move(g, 3, 5, S_ZERO);
-
-  game_undo(g);
-  game_undo(g);
-  
-  game_redo(g);
-  game_redo(g);
-
-  if (game_get_square(g, 0, 0) != S_ONE) return false;
-  if (game_get_square(g, 3, 5) != S_ZERO) return false;
-
-  game_delete(g);
-
-  return true;
-}
 
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE
@@ -591,14 +555,7 @@ int main(int argc, char *argv[]) {
     ok = test_game_new_ext();
   }
   
-  else if (!strcmp("game_undo", argv[1])) {
-    ok = test_game_undo();
-  }
 
-
-  else if (!strcmp("game_redo", argv[1])) {
-    ok = test_game_redo();
-  }
 
 
 
