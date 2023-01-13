@@ -204,7 +204,7 @@ bool test_game_redo() {
 }
 
 bool test_game_play_moveV2() {
-  game g = game_default();
+  game g = game_new_empty_ext(6, 8, true, true);
 
   game_play_move(g, 0, 0, S_ONE);
   game_play_move(g, 3, 5, S_ZERO);
