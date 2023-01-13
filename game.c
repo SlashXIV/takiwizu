@@ -492,7 +492,7 @@ void game_restart(game g) {
   // clear all history
   queue_free_full(g->undo, free);
   queue_free_full(g->redo, free);
-  
+
   g->undo = queue_new();
   g->redo = queue_new();
 }
