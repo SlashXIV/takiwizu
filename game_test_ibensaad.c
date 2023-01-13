@@ -195,6 +195,9 @@ bool test_game_redo() {
   game_redo(g);
   game_redo(g);
 
+  if (queue_peek_head(g->undo) == NULL) return false;
+  if (queue_peek_tail(g->undo) == NULL) return false;
+
   if (game_get_square(g, 0, 0) != S_ONE) return false;
   if (game_get_square(g, 3, 5) != S_ZERO) return false;
 
