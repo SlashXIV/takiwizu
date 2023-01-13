@@ -215,12 +215,15 @@ bool test_game_play_moveV2() {
       last_move[MOVE_J_INDEX] != 5)
     return false;
 
+  free(last_move);
+
   last_move = queue_pop_head(g->undo);
 
   if (last_move[MOVE_SQUARE_INDEX] != S_ONE || last_move[MOVE_I_INDEX] != 0 ||
       last_move[MOVE_J_INDEX] != 0)
     return false;
 
+  free(last_move);
   game_delete(g);
   return true;
 }
