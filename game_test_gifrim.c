@@ -6,6 +6,8 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_struct.h"
+#include "queue.h"
 
 void usage_gifrim(int argc) {
   fprintf(stderr,
@@ -285,12 +287,11 @@ bool test_game_restart() {
   game_delete(g1);
 
   game g2 = game_new_empty_ext(8, 8, true, true);
+  game_play_move(g2, 0, 0, S_ZERO);
 
   game_restart(g2);
 
-  if (!game_is_wrapping(g2)) return false;
-
-  if (!game_is_unique(g2)) return false;
+  if (!queue_is_empty(g2->undo)) return false;
 
   game_delete(g2);
 
