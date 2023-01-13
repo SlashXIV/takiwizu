@@ -48,6 +48,7 @@ add_test(test_ibensaad_play_move ./game_test_ibensaad play_move)
 add_test(test_ibensaad_is_over ./game_test_ibensaad is_over)
 add_test(test_ibensaad_game_undo ./game_test_ibensaad game_undo)
 add_test(test_ibensaad_game_redo ./game_test_ibensaad game_redo)
+add_test(test_ibensaad_game_play_moveV2 ./game_test_ibensaad play_moveV2)
 
 
 # <====== GAME TESTS rdubernard ======>
