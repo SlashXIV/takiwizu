@@ -45,25 +45,24 @@ void display_help() {
 
 int main(void) {
   // GAME START
-  game g = game_default();
+  game g = game_new_empty_ext(4, 6, true, true);
+
   while (!game_is_over(g)) {
     // GAME PRINT
     printf("\n");
 
-    // SANDBOX
-    // game_play_move(g, 3, 5, S_ONE);
-    // game_print(g);
+    // SANDBOX  
+    game_play_move(g, S_ZERO, 3, 0);
+    game_play_move(g, S_ZERO, 2, 0);
+    game_play_move(g, S_ONE, 1, 0);
+    game_play_move(g, S_ONE, 0, 0); // erreur
 
-    // game_undo(g);
-    // game_print(g);
-
-    // game_redo(g);
     game_print(g);
 
     // LIST ERROR ON EACH SQUARE
 
-    for (uint i = 0; i < DEFAULT_SIZE; i++) {
-      for (uint j = 0; j < DEFAULT_SIZE; j++) {
+    for (uint i = 0; i < g->height; i++) {
+      for (uint j = 0; j < g->width; j++) {
         if (game_has_error(g, i, j)) {
           printf("Error at square (%d, %d)\n", i, j);
         }

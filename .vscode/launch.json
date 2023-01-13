@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/game_text",    // Chemin du programme à lancer
             "args": [],                                         // Arguments à passer au programme
-            "stopAtEntry": false,                                // Arrêter au début du programme
+            "stopAtEntry": true,                                // Arrêter au début du programme
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,

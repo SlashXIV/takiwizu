@@ -145,13 +145,13 @@ square game_get_square(cgame g, uint i, uint j) {  // robs
   } else if (i >= g->height || j >= g->width) {
     fprintf(stderr,
             "ERROR on game_get_square(game g, uint i, uint j, : invalid "
-            "parameters; i (%u) or j (%u) over DEFAULT_SIZE (%d) ...\n",
-            i, j, g->height);
+            "parameters; i (%u) or j (%u)\n",
+            i, j);
     exit(EXIT_FAILURE);
   }
 
   // CIBLE VERROUILLÉE ...
-  uint index_to_get = (i * g->height) + j;
+  uint index_to_get = (i * g->width) + j;
 
   // GET THAT SQUARE AND GIVE IT BACK
   return g->ArrayOfSquare[index_to_get];
@@ -184,46 +184,41 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     fprintf(stderr, "g is null, or  dist too far :/\n");
     return -1;
   }
+  // CHECKING IF INITIAL COORDINATES ARE OVER GRID
+  if (i >= g->height || j >= g->width) return -1;
 
-  if (g->wrapping == true) {
-    // CHECKING IF INITIAL COORDINATES ARE OVER GRID
-    if (i >= g->height || j >= g->width) return -1;
+  int ii = i;
+  int jj = j;
 
-    int ii = i;
-    int jj = j;
-
+  if (g->wrapping) {
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
     if (dir == UP) ii -= dist;
-    if (dir == DOWN) i += dist;
+    if (dir == DOWN) ii += dist;
     if (dir == LEFT) jj -= dist;
-    if (dir == RIGHT) j += dist;
+    if (dir == RIGHT) jj += dist;
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
-    if (i >= g->height) {
-      i = i - g->height;
+    if (ii >= (int) g->height) {
+      ii = ii - g->height;
     }
 
-    if (j >= g->width) {
-      j = j - g->width;
+    if (jj >= (int) g->width) {
+      jj = jj - g->width;
     }
 
     if (ii < 0) {
       ii = ii + g->height;
-      i = ii;
     }
 
     if (jj < 0) {
       jj = jj + g->width;
-      j = jj;
     }
-  }
-
-  if (i >= g->height || j >= g->width) return -1;
-
-  if (g->wrapping == false) {
-    // CHECKING IF INITIAL COORDINATES ARE OVER GRID
-    if (i >= g->height || j >= g->width) return -1;
+    i=ii;
+    j=jj;
+    return game_get_square(g, i, j);
+  
+  } else {
 
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
     if (dir == UP) i -= dist;
@@ -234,9 +229,9 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
     if (i >= g->height || j >= g->width) return -1;
+    return game_get_square(g, i, j);
   }
 
-  return game_get_square(g, i, j);
 }
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
@@ -330,7 +325,7 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
     int blackCol = 0;
     int blackLine = 0;
 
-    for (int h = 0; h < DEFAULT_SIZE; h++) {
+    for (int h = 0; h < g->height; h++) {
       if (game_get_square(g, h, j) == S_ZERO ||
           game_get_square(g, h, j) == S_IMMUTABLE_ZERO)
         whiteLine++;
@@ -340,7 +335,7 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
         blackLine++;
     }
 
-    for (int w = 0; w < DEFAULT_SIZE; w++) {
+    for (int w = 0; w < g->width; w++) {
       if (game_get_square(g, i, w) == S_ZERO ||
           game_get_square(g, i, w) == S_IMMUTABLE_ZERO)
         whiteCol++;
@@ -357,7 +352,7 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
   }
 
   if (g->unique) {
-    printf("=> TEST UNIQUE\n");
+    // printf("=> TEST UNIQUE\n");
 
     bool test_cols = true;
     bool test_rows = true;
@@ -370,8 +365,7 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
       if (game_get_square(g, y, j) == S_EMPTY) test_cols = false;
     }
 
-    printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n", test_cols,
-           test_rows);
+    // printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n", test_cols,test_rows);
 
     // lets check the collumns first
 
@@ -464,7 +458,7 @@ bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
 }
 
 void game_play_move(game g, uint i, uint j, square s) {
-  if (i >= g->height || j >= g->height || g == NULL ||
+  if (i >= g->height || j >= g->width || g == NULL ||
       game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
       game_get_square(g, i, j) == S_IMMUTABLE_ZERO || s == S_IMMUTABLE_ONE ||
       s == S_IMMUTABLE_ZERO) {
