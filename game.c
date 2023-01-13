@@ -11,7 +11,7 @@
 
 // We have to implement the functions now:
 
-game game_new(square* squares) {  // robs
+game game_new(square* squares) {  
   if (squares == NULL) {
     fprintf(stderr,
             "ERROR -> game_new(square * squares) : invalid  squares parameter; "
@@ -38,7 +38,7 @@ game game_new(square* squares) {  // robs
   return new_game;
 }
 
-game game_new_empty(void) {  // robs
+game game_new_empty(void) {  
   uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
 
   // automatically generate an empty square array with calloc (0 <=> S_EMPTY)
@@ -51,7 +51,7 @@ game game_new_empty(void) {  // robs
   return new_empty_game;
 }
 
-game game_copy(cgame g) {  // robs
+game game_copy(cgame g) {  
   if (g == NULL) {
     fprintf(stderr,
             "ERROR -> game_copy(cgame g) : invalid g parameter; pointing on "
@@ -79,7 +79,7 @@ game game_copy(cgame g) {  // robs
   return g_clone;
 }
 
-bool game_equal(cgame g1, cgame g2) {  // robs
+bool game_equal(cgame g1, cgame g2) {  
   if (g1 == NULL || g2 == NULL) {
     fprintf(stderr,
             "ERROR -> game_equal(cgame g1, cgame g2 : one of the two games are "
@@ -102,14 +102,14 @@ bool game_equal(cgame g1, cgame g2) {  // robs
   return true;
 }
 
-void game_delete(game g) {  // robs
+void game_delete(game g) {  
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
   if (g->undo != NULL) queue_free_full(g->undo, free);
   if (g->redo != NULL) queue_free_full(g->redo, free);
   free(g);
 }
 
-void game_set_square(game g, uint i, uint j, square s) {  // robs
+void game_set_square(game g, uint i, uint j, square s) {  
   if (g == NULL) {
     fprintf(stderr,
             "ERROR on game_set_square(game g, uint i, uint j, square s) : "
@@ -136,7 +136,7 @@ void game_set_square(game g, uint i, uint j, square s) {  // robs
   g->ArrayOfSquare[index_to_set] = s;
 }
 
-square game_get_square(cgame g, uint i, uint j) {  // robs
+square game_get_square(cgame g, uint i, uint j) {  
   if (g == NULL) {
     fprintf(stderr,
             "ERROR on game_get_square(game g, uint i, uint j : invalid "
@@ -157,7 +157,7 @@ square game_get_square(cgame g, uint i, uint j) {  // robs
   return g->ArrayOfSquare[index_to_get];
 }
 
-int game_get_number(cgame g, uint i, uint j) {  // gab
+int game_get_number(cgame g, uint i, uint j) {  
 
   if (i >= g->height || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
@@ -177,7 +177,7 @@ int game_get_number(cgame g, uint i, uint j) {  // gab
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir,
-                         uint dist) {  // gab
+                         uint dist) {  
 
   // CHECKING GAME AND DIST
   if (g == NULL || dist > 2) {
@@ -254,7 +254,7 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
     return -1;
 }
 
-bool game_is_empty(cgame g, uint i, uint j) {  // gab
+bool game_is_empty(cgame g, uint i, uint j) {  
 
   if (i > g->height || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
@@ -264,7 +264,7 @@ bool game_is_empty(cgame g, uint i, uint j) {  // gab
   return game_get_square(g, i, j) == S_EMPTY;
 }
 
-bool game_is_immutable(cgame g, uint i, uint j) {  // gab
+bool game_is_immutable(cgame g, uint i, uint j) {  
 
   if (i >= g->height || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
@@ -281,7 +281,7 @@ bool game_is_immutable(cgame g, uint i, uint j) {  // gab
     return false;
 }
 
-int game_has_error(cgame g, uint i, uint j) {  // gab
+int game_has_error(cgame g, uint i, uint j) {  
 
   if (i > g->height || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
@@ -439,7 +439,7 @@ int game_has_error(cgame g, uint i, uint j) {  // gab
   return 0;  // 0 mean that there is no error
 }
 
-bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
+bool game_check_move(cgame g, uint i, uint j, square s) { 
 
   if (g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
@@ -499,7 +499,7 @@ bool game_is_over(cgame g) {
   return true;
 }
 
-void game_restart(game g) {  // ilisa
+void game_restart(game g) { 
 
   if (g == NULL) {
     exit(EXIT_FAILURE);
@@ -514,6 +514,8 @@ void game_restart(game g) {  // ilisa
   }
 
   // clear all history
-  queue_clear_full(g->undo, free);
-  queue_clear_full(g->redo, free);
+  queue_free_full(g->undo, free);
+  queue_free_full(g->redo, free);
+  g->undo = queue_new();
+  g->redo = queue_new();
 }

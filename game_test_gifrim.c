@@ -283,6 +283,17 @@ bool test_game_restart() {
     return false;
 
   game_delete(g1);
+
+  game g2 = game_new_empty_ext(8, 8, true, true);
+
+  game_restart(g2);
+
+  if (!game_is_wrapping(g2)) return false;
+
+  if (!game_is_unique(g2)) return false;
+
+  game_delete(g2);
+
   return true;
 }
 
