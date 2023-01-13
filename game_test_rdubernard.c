@@ -507,7 +507,7 @@ bool test_is_over_unique_wrapping() {
   game_set_square(g1, 2, 2, S_ONE);
   game_set_square(g1, 2, 3, S_ZERO);
   game_set_square(g1, 2, 4, S_ZERO);
-  game_set_square(g1, 2, 5, S_ZERO);
+  game_set_square(g1, 2, 5, S_ONE);
 
   game_set_square(g1, 3, 0, S_ONE);
   game_set_square(g1, 3, 1, S_ZERO);
@@ -517,7 +517,7 @@ bool test_is_over_unique_wrapping() {
   game_set_square(g1, 3, 5, S_ZERO);
 
   game_print(g1);
-  if (game_is_over(g1)) return false;
+  if (!game_is_over(g1)) return false;
 
   game_delete(g1);
   return true;
@@ -615,8 +615,7 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_new_ext", argv[1])) {
     ok = test_game_new_ext();
-  }
-  else if (!strcmp("is_over_unique_wrapping", argv[1])) {
+  } else if (!strcmp("is_over_unique_wrapping", argv[1])) {
     ok = test_is_over_unique_wrapping();
   }
 
