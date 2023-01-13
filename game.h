@@ -23,7 +23,7 @@ typedef unsigned int uint;
 /**
  * @brief Size of the default move array.
  **/
-#define MOVE_SIZE 3 
+#define MOVE_SIZE 3
 
 /**
  * @brief Size of the default move array.

@@ -469,8 +469,7 @@ bool game_check_move(cgame g, uint i, uint j, square s) {  // gab
   return true;
 }
 
-void game_play_move(game g, uint i, uint j, square s) {  
-
+void game_play_move(game g, uint i, uint j, square s) {
   if (i >= g->height || j >= g->height || g == NULL ||
       game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
       game_get_square(g, i, j) == S_IMMUTABLE_ZERO || s == S_IMMUTABLE_ONE ||
@@ -481,19 +480,17 @@ void game_play_move(game g, uint i, uint j, square s) {
 
   game_set_square(g, i, j, s);
 
-  //We create an array for store the current move
-  int *move = malloc(sizeof(int)*MOVE_SIZE); 
-  move[MOVE_SQUARE_INDEX] = s; //store square
-  move[MOVE_I_INDEX] = i; //store i
-  move[MOVE_J_INDEX] = j; //store j
+  // We create an array for store the current move
+  int* move = malloc(sizeof(int) * MOVE_SIZE);
+  move[MOVE_SQUARE_INDEX] = s;  // store square
+  move[MOVE_I_INDEX] = i;       // store i
+  move[MOVE_J_INDEX] = j;       // store j
 
   queue_push_head(g->undo, move);
   queue_clear_full(g->redo, free);
-
 }
 
-bool game_is_over(cgame g) {  
-
+bool game_is_over(cgame g) {
   // We test if our pointer g is NULL, if it is the case we exit the programm.
 
   if (g == NULL) {
@@ -527,9 +524,8 @@ void game_restart(game g) {  // ilisa
       if (game_get_square(g, i, j) == S_ZERO) game_set_square(g, i, j, S_EMPTY);
     }
   }
-  
+
   // clear all history
   queue_clear_full(g->undo, free);
   queue_clear_full(g->redo, free);
-
 }

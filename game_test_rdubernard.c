@@ -487,10 +487,6 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   return true;
 }
 
-
-
-
-
 /* [====== MAIN ROUTINE ======] */
 // MAIN ROUTINE
 int main(int argc, char *argv[]) {
@@ -554,10 +550,6 @@ int main(int argc, char *argv[]) {
   else if (!strcmp("game_new_ext", argv[1])) {
     ok = test_game_new_ext();
   }
-  
-
-
-
 
   else {
     // INVALID : "?"
