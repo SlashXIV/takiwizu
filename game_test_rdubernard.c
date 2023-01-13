@@ -509,9 +509,9 @@ bool test_is_over_unique() {
   g->ArrayOfSquare[14] = S_ZERO;
   g->ArrayOfSquare[15] = S_ONE;
 
-  game_print(g);
-
+  // game is not over because of unique;
   bool game_over = game_is_over(g);
+  game_print(g);
   game_delete(g);
 
   if (game_over) return false;
