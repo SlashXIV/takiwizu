@@ -485,7 +485,7 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   return true;
 }
 
-bool test_is_over_unique() {
+bool test_game_is_over() {
   game g = game_new_empty_ext(4, 4, true, true);
 
   // create finished game when unique is disabled (or here it's enabled)
@@ -581,8 +581,6 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_new_ext", argv[1])) {
     ok = test_game_new_ext();
-  } else if (!strcmp("is_over_unique", argv[1])) {
-    ok = test_is_over_unique();
   }
 
   else {
