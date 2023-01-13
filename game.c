@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "game_aux.h"
+#include "game_ext.h"
 #include "game_struct.h"
 #include "queue.h"
 
@@ -59,24 +60,8 @@ game game_copy(cgame g) {
     exit(EXIT_FAILURE);
   }
 
-  // CREATE EMPTY CLONE
-  game g_clone = game_new_empty();
-
-  // GRID COPY
-  for (int i = 0; i < g_clone->height; i++) {
-    for (int k = 0; k < g_clone->width; k++) {
-      game_set_square(g_clone, i, k, game_get_square(g, i, k));
-    }
-  }
-
-  // GAME SETTINGS COPY
-  g_clone->height = g->height;
-  g_clone->width = g->width;
-  g_clone->unique = g->unique;
-  g_clone->wrapping = g->wrapping;
-
-  // HISTORY COPY ISN'T INCLUDED
-  return g_clone;
+  return game_new_ext(g->height, g->width, g->ArrayOfSquare, g->wrapping,
+                      g->unique);
 }
 
 bool game_equal(cgame g1, cgame g2) {
