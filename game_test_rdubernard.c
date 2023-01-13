@@ -485,72 +485,38 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   return true;
 }
 
-bool test_is_over_unique_wrapping() {
-  game g1 = game_new_empty_ext(4, 6, true, true);
+bool test_is_over_unique() {
+  game g = game_new_empty_ext(4, 4, true, true);
 
-  game_set_square(g1, 0, 0, S_ONE);
-  game_set_square(g1, 0, 1, S_ZERO);
-  game_set_square(g1, 0, 2, S_ZERO);
-  game_set_square(g1, 0, 3, S_ONE);
-  game_set_square(g1, 0, 4, S_ZERO);
-  game_set_square(g1, 0, 5, S_ONE);
+  // create finished game when unique is disabled (or here it's enabled)
+  g->ArrayOfSquare[0] = S_ONE;
+  g->ArrayOfSquare[1] = S_ZERO;
+  g->ArrayOfSquare[2] = S_ONE;
+  g->ArrayOfSquare[3] = S_ZERO;
 
-  game_set_square(g1, 1, 0, S_ZERO);
-  game_set_square(g1, 1, 1, S_ONE);
-  game_set_square(g1, 1, 2, S_ZERO);
-  game_set_square(g1, 1, 3, S_ONE);
-  game_set_square(g1, 1, 4, S_ONE);
-  game_set_square(g1, 1, 5, S_ZERO);
+  g->ArrayOfSquare[4] = S_ZERO;
+  g->ArrayOfSquare[5] = S_ONE;
+  g->ArrayOfSquare[6] = S_ZERO;
+  g->ArrayOfSquare[7] = S_ONE;
 
-  game_set_square(g1, 2, 0, S_ZERO);
-  game_set_square(g1, 2, 1, S_ONE);
-  game_set_square(g1, 2, 2, S_ONE);
-  game_set_square(g1, 2, 3, S_ZERO);
-  game_set_square(g1, 2, 4, S_ZERO);
-  game_set_square(g1, 2, 5, S_ONE);
+  g->ArrayOfSquare[8] = S_ONE;
+  g->ArrayOfSquare[9] = S_ZERO;
+  g->ArrayOfSquare[10] = S_ONE;
+  g->ArrayOfSquare[11] = S_ZERO;
 
-  game_set_square(g1, 3, 0, S_ONE);
-  game_set_square(g1, 3, 1, S_ZERO);
-  game_set_square(g1, 3, 2, S_ONE);
-  game_set_square(g1, 3, 3, S_ZERO);
-  game_set_square(g1, 3, 4, S_ONE);
-  game_set_square(g1, 3, 5, S_ZERO);
+  g->ArrayOfSquare[12] = S_ZERO;
+  g->ArrayOfSquare[13] = S_ONE;
+  g->ArrayOfSquare[14] = S_ZERO;
+  g->ArrayOfSquare[15] = S_ONE;
 
-  game_print(g1);
-  if (!game_is_over(g1)) return false;
+  game_print(g);
 
-  game_delete(g1);
+  bool game_over = game_is_over(g);
+  game_delete(g);
+
+  if (game_over) return false;
+
   return true;
-
-  // game g = game_new_empty_ext(4, 6, true, false);
-
-  // game_set_square(g, 0, 0, S_ZERO);
-  // game_set_square(g, 0, 1, S_ZERO);
-  // game_set_square(g, 0, 2, S_ONE);
-  // game_set_square(g, 0, 3, S_ONE);
-  // game_set_square(g, 0, 4, S_ZERO);
-  // game_set_square(g, 0, 5, S_ONE);
-
-  // game_set_square(g, 1, 0, S_ONE);
-  // game_set_square(g, 1, 1, S_ONE);
-  // game_set_square(g, 1, 2, S_ZERO);
-  // game_set_square(g, 1, 3, S_ZERO);
-  // game_set_square(g, 1, 4, S_ONE);
-  // game_set_square(g, 1, 5, S_ZERO);
-
-  // game_set_square(g, 2, 0, S_ONE);
-  // game_set_square(g, 2, 1, S_ONE);
-  // game_set_square(g, 2, 2, S_ZERO);
-  // game_set_square(g, 2, 3, S_ZERO);
-  // game_set_square(g, 2, 4, S_ONE);
-  // game_set_square(g, 2, 5, S_ZERO);
-
-  // game_set_square(g, 3, 0, S_ZERO);
-  // game_set_square(g, 3, 1, S_ZERO);
-  // game_set_square(g, 3, 2, S_ONE);
-  // game_set_square(g, 3, 3, S_ONE);
-  // game_set_square(g, 3, 4, S_ZERO);
-  // game_set_square(g, 3, 5, S_ONE);
 }
 
 /* [====== MAIN ROUTINE ======] */
@@ -615,8 +581,8 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_new_ext", argv[1])) {
     ok = test_game_new_ext();
-  } else if (!strcmp("is_over_unique_wrapping", argv[1])) {
-    ok = test_is_over_unique_wrapping();
+  } else if (!strcmp("is_over_unique", argv[1])) {
+    ok = test_is_over_unique();
   }
 
   else {

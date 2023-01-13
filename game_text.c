@@ -45,7 +45,7 @@ void display_help() {
 
 int main(void) {
   // GAME START
-  game g = game_new_empty_ext(4, 6, true, true);
+  game g = game_new_empty_ext(4, 4, true, false);
 
   while (!game_is_over(g)) {
     // GAME PRINT
@@ -134,8 +134,6 @@ int main(void) {
           // EMPTY
           case 'e':
             play_on_square(g, i, j, S_EMPTY);
-            break;
-
             break;
         }
     }
