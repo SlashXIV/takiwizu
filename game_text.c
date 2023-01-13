@@ -51,11 +51,7 @@ int main(void) {
     // GAME PRINT
     printf("\n");
 
-    // SANDBOX  
-    game_play_move(g, S_ZERO, 3, 0);
-    game_play_move(g, S_ZERO, 2, 0);
-    game_play_move(g, S_ONE, 1, 0);
-    game_play_move(g, S_ONE, 0, 0); // erreur
+    // SANDBOX
 
     game_print(g);
 

@@ -11,7 +11,7 @@
 
 // We have to implement the functions now:
 
-game game_new(square* squares) {  
+game game_new(square* squares) {
   if (squares == NULL) {
     fprintf(stderr,
             "ERROR -> game_new(square * squares) : invalid  squares parameter; "
@@ -38,7 +38,7 @@ game game_new(square* squares) {
   return new_game;
 }
 
-game game_new_empty(void) {  
+game game_new_empty(void) {
   uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
 
   // automatically generate an empty square array with calloc (0 <=> S_EMPTY)
@@ -51,7 +51,7 @@ game game_new_empty(void) {
   return new_empty_game;
 }
 
-game game_copy(cgame g) {  
+game game_copy(cgame g) {
   if (g == NULL) {
     fprintf(stderr,
             "ERROR -> game_copy(cgame g) : invalid g parameter; pointing on "
@@ -79,7 +79,7 @@ game game_copy(cgame g) {
   return g_clone;
 }
 
-bool game_equal(cgame g1, cgame g2) {  
+bool game_equal(cgame g1, cgame g2) {
   if (g1 == NULL || g2 == NULL) {
     fprintf(stderr,
             "ERROR -> game_equal(cgame g1, cgame g2 : one of the two games are "
@@ -102,14 +102,14 @@ bool game_equal(cgame g1, cgame g2) {
   return true;
 }
 
-void game_delete(game g) {  
+void game_delete(game g) {
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
   if (g->undo != NULL) queue_free_full(g->undo, free);
   if (g->redo != NULL) queue_free_full(g->redo, free);
   free(g);
 }
 
-void game_set_square(game g, uint i, uint j, square s) {  
+void game_set_square(game g, uint i, uint j, square s) {
   if (g == NULL) {
     fprintf(stderr,
             "ERROR on game_set_square(game g, uint i, uint j, square s) : "
@@ -136,7 +136,7 @@ void game_set_square(game g, uint i, uint j, square s) {
   g->ArrayOfSquare[index_to_set] = s;
 }
 
-square game_get_square(cgame g, uint i, uint j) {  
+square game_get_square(cgame g, uint i, uint j) {
   if (g == NULL) {
     fprintf(stderr,
             "ERROR on game_get_square(game g, uint i, uint j : invalid "
@@ -157,8 +157,7 @@ square game_get_square(cgame g, uint i, uint j) {
   return g->ArrayOfSquare[index_to_get];
 }
 
-int game_get_number(cgame g, uint i, uint j) {  
-
+int game_get_number(cgame g, uint i, uint j) {
   if (i >= g->height || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
@@ -176,9 +175,7 @@ int game_get_number(cgame g, uint i, uint j) {
     return -1;
 }
 
-int game_get_next_square(cgame g, uint i, uint j, direction dir,
-                         uint dist) {  
-
+int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
   // CHECKING GAME AND DIST
   if (g == NULL || dist > 2) {
     fprintf(stderr, "g is null, or  dist too far :/\n");
@@ -199,11 +196,11 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
 
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
-    if (ii >= (int) g->height) {
+    if (ii >= (int)g->height) {
       ii = ii - g->height;
     }
 
-    if (jj >= (int) g->width) {
+    if (jj >= (int)g->width) {
       jj = jj - g->width;
     }
 
@@ -214,12 +211,11 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     if (jj < 0) {
       jj = jj + g->width;
     }
-    i=ii;
-    j=jj;
+    i = ii;
+    j = jj;
     return game_get_square(g, i, j);
-  
-  } else {
 
+  } else {
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
     if (dir == UP) i -= dist;
     if (dir == DOWN) i += dist;
@@ -231,7 +227,6 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir,
     if (i >= g->height || j >= g->width) return -1;
     return game_get_square(g, i, j);
   }
-
 }
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
@@ -254,8 +249,7 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
     return -1;
 }
 
-bool game_is_empty(cgame g, uint i, uint j) {  
-
+bool game_is_empty(cgame g, uint i, uint j) {
   if (i > g->height || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
@@ -264,8 +258,7 @@ bool game_is_empty(cgame g, uint i, uint j) {
   return game_get_square(g, i, j) == S_EMPTY;
 }
 
-bool game_is_immutable(cgame g, uint i, uint j) {  
-
+bool game_is_immutable(cgame g, uint i, uint j) {
   if (i >= g->height || j >= g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
@@ -281,8 +274,7 @@ bool game_is_immutable(cgame g, uint i, uint j) {
     return false;
 }
 
-int game_has_error(cgame g, uint i, uint j) {  
-
+int game_has_error(cgame g, uint i, uint j) {
   if (i > g->height || j > g->width || g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
@@ -365,7 +357,8 @@ int game_has_error(cgame g, uint i, uint j) {
       if (game_get_square(g, y, j) == S_EMPTY) test_cols = false;
     }
 
-    // printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n", test_cols,test_rows);
+    // printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n",
+    // test_cols,test_rows);
 
     // lets check the collumns first
 
@@ -396,7 +389,7 @@ int game_has_error(cgame g, uint i, uint j) {
         }
 
         // TWO LINES ARE IDENTICALS
-        if (cpt_equal_case == g->height) {
+        if (cpt_equal_case == g->width) {
           return -1;
         }
       }
@@ -409,7 +402,7 @@ int game_has_error(cgame g, uint i, uint j) {
       // AUTRES LIGNES
       square compare_line[g->height];
       for (uint case_index = 0; case_index < g->height; case_index++) {
-        compare_line[case_index] = game_get_square(g, i, case_index);
+        compare_line[case_index] = game_get_square(g, case_index, j);
       }
 
       // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
@@ -420,14 +413,14 @@ int game_has_error(cgame g, uint i, uint j) {
         // LES COMPARAISONS
         for (int y = 0; y < g->height; y++) {
           // IGNORE ITSELF
-          if (x == i) break;
+          if (x == j) break;
 
-          if (compare_line[y] != game_get_square(g, x, y)) break;
+          if (compare_line[y] != game_get_square(g, y, x)) break;
 
           cpt_equal_case++;
         }
 
-        if (cpt_equal_case == g->width) {
+        if (cpt_equal_case == g->height) {
           return -1;
         }
       }
@@ -439,8 +432,7 @@ int game_has_error(cgame g, uint i, uint j) {
   return 0;  // 0 mean that there is no error
 }
 
-bool game_check_move(cgame g, uint i, uint j, square s) { 
-
+bool game_check_move(cgame g, uint i, uint j, square s) {
   if (g == NULL) {
     fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
     exit(EXIT_FAILURE);
@@ -499,8 +491,7 @@ bool game_is_over(cgame g) {
   return true;
 }
 
-void game_restart(game g) { 
-
+void game_restart(game g) {
   if (g == NULL) {
     exit(EXIT_FAILURE);
   }
