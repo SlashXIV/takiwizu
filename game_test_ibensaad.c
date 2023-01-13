@@ -171,7 +171,6 @@ bool test_game_undo() {
   game_play_move(g, 0, 0, S_ONE);
   game_play_move(g, 3, 5, S_ZERO);
 
-
   game_undo(g);
   game_undo(g);
 
@@ -204,7 +203,7 @@ bool test_game_redo() {
   return true;
 }
 
-bool test_game_play_moveV2(){
+bool test_game_play_moveV2() {
   game g = game_default();
 
   game_play_move(g, 0, 0, S_ONE);
@@ -218,7 +217,6 @@ bool test_game_play_moveV2(){
 
   return true;
 }
-
 
 int main(int argc, char *argv[]) {
   if (argc == 1 || argc > 2) {
@@ -279,8 +277,7 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_redo", argv[1])) {
     okey = test_game_redo();
-  }
-  else if (!strcmp("play_moveV2", argv[1])) {
+  } else if (!strcmp("play_moveV2", argv[1])) {
     okey = test_game_play_moveV2();
   }
 
