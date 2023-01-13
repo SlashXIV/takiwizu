@@ -184,6 +184,8 @@ bool test_game_undo() {
       game_get_square(g, 0, 0) != S_EMPTY)
     return false;
 
+  game_delete(g);
+
   return true;
 }
 

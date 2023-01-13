@@ -110,8 +110,8 @@ bool game_equal(cgame g1, cgame g2) {  // robs
 
 void game_delete(game g) {  // robs
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
-  if (g->undo != NULL) free(g->undo);
-  if (g->redo != NULL) free(g->redo);
+  if (g->undo != NULL) queue_free_full(g->undo,free);
+  if (g->redo != NULL) queue_free_full(g->redo,free);
   free(g);
 }
 
