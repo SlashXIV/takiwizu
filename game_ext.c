@@ -61,14 +61,9 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping,
   square* squares_empty = calloc(nb_cases, sizeof(square));
 
   // using game_new with our empty squares ==> creation of empty game
-  game new_empty_game = game_new(squares_empty);
+  game new_empty_game = game_new_ext(nb_rows,nb_cols,squares_empty,wrapping,unique);
   free(squares_empty);
-  new_empty_game->height = nb_rows;
-  new_empty_game->width = nb_cols;
-  new_empty_game->unique = unique;
-  new_empty_game->wrapping = wrapping;
-  new_empty_game->undo = queue_new();
-  new_empty_game->redo = queue_new();
+ 
 
   return new_empty_game;
 }

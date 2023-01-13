@@ -107,12 +107,7 @@ game game_default(void) {  // ilisa
 
   game g_output = game_new(tab);  // copie du tableau en interne
   free(tab);                      // désormais inutile
-  g_output->wrapping = false;
-  g_output->unique = false;
-  g_output->width = DEFAULT_SIZE;
-  g_output->height = DEFAULT_SIZE;
-  g_output->undo = queue_new();
-  g_output->redo = queue_new();
+
   return g_output;
 }
 

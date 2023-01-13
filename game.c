@@ -34,6 +34,7 @@ game game_new(square* squares) {  // robs
     arrayClone[i] = squares[i];
   }
 
+  
   new_game->ArrayOfSquare = arrayClone;
   return new_game;
 }
@@ -47,13 +48,7 @@ game game_new_empty(void) {  // robs
   // using game_new with our empty squares ==> creation of empty game
   game new_empty_game = game_new(squares_empty);
   free(squares_empty);
-  new_empty_game->height = DEFAULT_SIZE;
-  new_empty_game->width = DEFAULT_SIZE;
-  new_empty_game->unique = false;
-  new_empty_game->wrapping = false;
-  new_empty_game->undo = queue_new();
-  new_empty_game->redo = queue_new();
-
+  
   return new_empty_game;
 }
 

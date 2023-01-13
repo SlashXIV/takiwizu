@@ -484,6 +484,7 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   if (game_nb_cols(g) == 6) return false;
 
   game_delete(g);
+  free(grid);
   return true;
 }
 
