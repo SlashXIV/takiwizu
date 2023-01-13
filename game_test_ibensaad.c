@@ -209,12 +209,19 @@ bool test_game_play_moveV2() {
   game_play_move(g, 0, 0, S_ONE);
   game_play_move(g, 3, 5, S_ZERO);
 
-  int *last_move = queue_peek_head(g->undo);
+  int *last_move = queue_pop_head(g->undo);
 
   if (last_move[MOVE_SQUARE_INDEX] != S_ZERO || last_move[MOVE_I_INDEX] != 3 ||
       last_move[MOVE_J_INDEX] != 5)
     return false;
 
+  last_move = queue_pop_head(g->undo);
+
+  if (last_move[MOVE_SQUARE_INDEX] != S_ONE || last_move[MOVE_I_INDEX] != 0 ||
+      last_move[MOVE_J_INDEX] != 0)
+    return false;
+
+  game_delete(g);
   return true;
 }
 
