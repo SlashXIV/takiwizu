@@ -524,27 +524,27 @@ bool test_game_is_over_wrapping() {
   game g = game_new_empty_ext(4, 4, true, true);
 
   // create finished game when unique is disabled (BUT here it's enabled)
-  g->ArrayOfSquare[0] = S_ZERO;
-  g->ArrayOfSquare[1] = S_ZERO;
-  g->ArrayOfSquare[2] = S_ONE;
-  g->ArrayOfSquare[3] = S_ONE;
+  game_set_square(g, 0, 0 , S_ZERO);
+  game_set_square(g, 0, 1 , S_ZERO);
+  game_set_square(g, 0, 2 , S_ONE);
+  game_set_square(g, 0, 3 , S_ONE);
 
-  g->ArrayOfSquare[4] = S_ZERO;
-  g->ArrayOfSquare[5] = S_ONE;
-  g->ArrayOfSquare[6] = S_ZERO;
-  g->ArrayOfSquare[7] = S_ONE;
+  game_set_square(g, 1, 0, S_ZERO);
+  game_set_square(g, 1, 1, S_ONE);
+  game_set_square(g, 1, 2, S_ZERO);
+  game_set_square(g, 1, 3, S_ONE);
 
-  g->ArrayOfSquare[8] = S_ONE;
-  g->ArrayOfSquare[9] = S_ZERO;
-  g->ArrayOfSquare[10] = S_ONE;
-  g->ArrayOfSquare[11] = S_ZERO;
+  game_set_square(g, 2, 0, S_ONE);
+  game_set_square(g, 2, 1, S_ZERO);
+  game_set_square(g, 2, 2, S_ONE);
+  game_set_square(g, 2, 3, S_ZERO);
 
-  g->ArrayOfSquare[12] = S_ZERO;
-  g->ArrayOfSquare[13] = S_ONE;
-  g->ArrayOfSquare[14] = S_ZERO;
-  g->ArrayOfSquare[15] = S_ONE;
+  game_set_square(g, 3, 0, S_ZERO);
+  game_set_square(g, 3, 1, S_ONE);
+  game_set_square(g, 3, 2, S_ZERO);
+  game_set_square(g, 3, 3, S_ONE);
 
-  // game should not be over because of unique;
+  // game should not be over because of wrapping;
   bool game_over = game_is_over(g);
   game_print(g);
   game_delete(g);
