@@ -333,6 +333,7 @@ bool test_game_is_unique() {
 }
 
 bool testv2_has_error_unique() {
+  // testing on i
   game g = game_new_empty_ext(4, 8, false, true);
 
   game_set_square(g, 0, 0, S_ONE);
@@ -347,7 +348,23 @@ bool testv2_has_error_unique() {
 
   if (game_has_error(g, 1, 0) == 0) return false;
 
+  // testing on j
+  game g2 = game_new_empty_ext(6, 4, false, true);
+
+  game_set_square(g2, 0, 0, S_ONE);
+  game_set_square(g2, 0, 1, S_ONE);
+  game_set_square(g2, 0, 2, S_ZERO);
+  game_set_square(g2, 0, 3, S_ZERO);
+
+  game_set_square(g2, 2, 0, S_ONE);
+  game_set_square(g2, 2, 1, S_ONE);
+  game_set_square(g2, 2, 2, S_ZERO);
+  game_set_square(g2, 2, 3, S_ZERO);
+
+  if (game_has_error(g2, 2, 3) == 0) return false;
+
   game_delete(g);
+  game_delete(g2);
   return true;
 }
 
