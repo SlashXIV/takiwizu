@@ -364,22 +364,30 @@ bool testv2_has_error_unique() {
   if (game_has_error(g2, 2, 3) == 0) return false;
 
   // i try this time the unique option but with wrapping on
-  game g3 = game_new_empty_ext(6, 4, true, true);
+  game g3 = game_new_empty_ext(4, 4, true, true);
 
   game_set_square(g3, 0, 0, S_ONE);
-  game_set_square(g3, 0, 1, S_ONE);
+  game_set_square(g3, 0, 1, S_ZERO);
   game_set_square(g3, 0, 2, S_ZERO);
-  game_set_square(g3, 0, 3, S_ZERO);
+  game_set_square(g3, 0, 3, S_ONE);
 
-  game_set_square(g3, 2, 0, S_ONE);
-  game_set_square(g3, 2, 1, S_ONE);
-  game_set_square(g3, 2, 2, S_ZERO);
+  game_set_square(g3, 1, 0, S_ZERO);
+  game_set_square(g3, 2, 0, S_ZERO);
+
+  game_set_square(g3, 3, 1, S_ZERO);
+  game_set_square(g3, 3, 2, S_ZERO);
+
+  game_set_square(g3, 1, 3, S_ZERO);
   game_set_square(g3, 2, 3, S_ZERO);
+  game_set_square(g3, 3, 0, S_ONE);
+  game_set_square(g3, 3, 3, S_ONE);
 
-  if (game_has_error(g3, 2, 3) == 0) return false;
+  if (game_has_error(g3, 0, 1) == 0) return false;
+  if (game_has_error(g3, 1, 0) == 0) return false;
 
   game_print(g);
   game_print(g2);
+  game_print(g3);
   game_delete(g);
   game_delete(g2);
   game_delete(g3);
