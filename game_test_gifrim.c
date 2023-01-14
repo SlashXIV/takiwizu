@@ -424,6 +424,22 @@ bool testv2_undo_redo_some() {
   if (game_get_square(g, 0, 3) != S_ZERO) return false;
   if (game_get_square(g, 2, 2) != S_ONE) return false;
 
+  game_play_move(g, 0, 2, S_ONE);
+  game_play_move(g, 0, 2, S_ZERO);
+  game_play_move(g, 0, 2, S_ONE);
+
+  game_undo(g);
+
+  game_undo(g);
+
+  game_redo(g);
+
+  if (game_get_square(g, 0, 2) != S_ZERO) return false;
+
+  game_redo(g);
+
+  if (game_get_square(g, 0, 2) != S_ONE) return false;
+
   game_delete(g);
   return true;
 }
