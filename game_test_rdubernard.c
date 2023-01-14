@@ -485,10 +485,10 @@ bool test_game_new_ext() {  // inversion nb rows et nb cols
   return true;
 }
 
-bool test_game_is_over() {
+bool test_game_is_over_unique() {
   game g = game_new_empty_ext(4, 4, true, true);
 
-  // create finished game when unique is disabled (or here it's enabled)
+  // create finished game when unique is disabled (BUT here it's enabled)
   g->ArrayOfSquare[0] = S_ONE;
   g->ArrayOfSquare[1] = S_ZERO;
   g->ArrayOfSquare[2] = S_ONE;
@@ -509,7 +509,41 @@ bool test_game_is_over() {
   g->ArrayOfSquare[14] = S_ZERO;
   g->ArrayOfSquare[15] = S_ONE;
 
-  // game is not over because of unique;
+  // game should not be over because of unique;
+  bool game_over = game_is_over(g);
+  // game_print(g);
+  game_delete(g);
+
+  if (game_over) return false;
+
+  return true;
+}
+
+bool test_game_is_over_wrapping() {
+  game g = game_new_empty_ext(4, 4, true, true);
+
+  // create finished game when unique is disabled (BUT here it's enabled)
+  g->ArrayOfSquare[0] = S_ZERO;
+  g->ArrayOfSquare[1] = S_ZERO;
+  g->ArrayOfSquare[2] = S_ONE;
+  g->ArrayOfSquare[3] = S_ONE;
+
+  g->ArrayOfSquare[4] = S_ZERO;
+  g->ArrayOfSquare[5] = S_ONE;
+  g->ArrayOfSquare[6] = S_ZERO;
+  g->ArrayOfSquare[7] = S_ONE;
+
+  g->ArrayOfSquare[8] = S_ONE;
+  g->ArrayOfSquare[9] = S_ZERO;
+  g->ArrayOfSquare[10] = S_ONE;
+  g->ArrayOfSquare[11] = S_ZERO;
+
+  g->ArrayOfSquare[12] = S_ZERO;
+  g->ArrayOfSquare[13] = S_ONE;
+  g->ArrayOfSquare[14] = S_ZERO;
+  g->ArrayOfSquare[15] = S_ONE;
+
+  // game should not be over because of unique;
   bool game_over = game_is_over(g);
   game_print(g);
   game_delete(g);
@@ -583,8 +617,12 @@ int main(int argc, char *argv[]) {
     ok = test_game_new_ext();
   }
 
-  else if (!strcmp("game_is_over", argv[1])) {
-    ok = test_game_is_over();
+  else if (!strcmp("game_is_over_unique", argv[1])) {
+    ok = test_game_is_over_unique();
+  }
+
+  else if (!strcmp("game_is_over_wrapping", argv[1])) {
+    ok = test_game_is_over_wrapping();
   }
 
   else {

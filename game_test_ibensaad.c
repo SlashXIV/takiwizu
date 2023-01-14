@@ -220,13 +220,14 @@ bool test_game_play_moveV2() {
 
   free(last_move);
 
-  last_move = queue_pop_head(g->undo);
+  int *another_move = queue_pop_head(g->undo);
 
-  if (last_move[MOVE_SQUARE_INDEX] != S_ONE || last_move[MOVE_I_INDEX] != 0 ||
-      last_move[MOVE_J_INDEX] != 0)
+  if (another_move[MOVE_SQUARE_INDEX] != S_ONE ||
+      another_move[MOVE_I_INDEX] != 0 || another_move[MOVE_J_INDEX] != 0)
     return false;
 
-  free(last_move);
+  free(another_move);
+
   game_delete(g);
   return true;
 }
@@ -245,7 +246,7 @@ int main(int argc, char *argv[]) {
 
   }
 
-  // Test game_default_solution:
+  // Test game_default_solution:strcmpstrcmp
 
   else if (!strcmp(argv[1], "default_solution")) {
     okey = test_default_solution();
@@ -290,6 +291,7 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_redo", argv[1])) {
     okey = test_game_redo();
+
   } else if (!strcmp("play_moveV2", argv[1])) {
     okey = test_game_play_moveV2();
   }
