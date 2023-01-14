@@ -583,6 +583,10 @@ int main(int argc, char *argv[]) {
     ok = test_game_new_ext();
   }
 
+  else if (!strcmp("game_is_over", argv[1])) {
+    ok = test_game_is_over();
+  }
+
   else {
     // INVALID : "?"
     fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);

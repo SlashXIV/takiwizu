@@ -34,7 +34,6 @@ add_test(test_gifrim_game_get_next_square ./game_test_gifrim game_get_next_squar
 add_test(test_gifrim_game_restart ./game_test_gifrim game_restart)
 add_test(test_gifrim_game_is_wrapping ./game_test_gifrim game_is_wrapping)
 add_test(test_gifrim_game_is_unique ./game_test_gifrim game_is_unique)
-add_test(test_gifrim_game_is_over  ./game_test_gifrim game_is_over)
 
 
 
@@ -65,3 +64,4 @@ add_test(test_rdubernard_game_new_empty ./game_test_rdubernard game_new_empty)
 add_test(test_rdubernard_game_nb_rows ./game_test_rdubernard game_nb_rows)
 add_test(test_rdubernard_game_nb_cols ./game_test_rdubernard game_nb_cols)
 add_test(test_rdubernard_game_new_ext ./game_test_rdubernard game_new_ext)
+add_test(test_rdubernard_game_is_over  ./game_test_rdubernard game_is_over)
