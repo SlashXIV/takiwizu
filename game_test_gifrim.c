@@ -395,6 +395,22 @@ bool testv2_has_error_unique() {
   return true;
 }
 
+bool testv2_undo_redo_some() {
+  game g = game_new_empty_ext(4, 4, true, true);
+
+  game_play_move(g, 1, 1, S_ONE);
+
+  game_undo(g);
+
+  if (game_get_square(g, 1, 1) == S_ONE) return false;
+
+  game_redo(g);
+
+  if (game_get_square(g, 1, 1) != S_ONE) return false;
+
+  game_delete(g);
+  return true;
+}
 int main(int argc, char* argv[]) {
   bool ok = test_dummy();
 
@@ -450,6 +466,8 @@ int main(int argc, char* argv[]) {
     ok = test_game_is_unique();
   } else if (!strcmp(argv[1], "game_has_error_unique")) {
     ok = testv2_has_error_unique();
+  } else if (!strcmp(argv[1], "undo_redo_some")) {
+    ok = testv2_undo_redo_some();
   } else {
     fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
     exit(EXIT_FAILURE);
