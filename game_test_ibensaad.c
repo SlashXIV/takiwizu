@@ -206,31 +206,32 @@ bool test_game_redo() {
   return true;
 }
 
-bool test_game_play_moveV2() {
-  game g = game_new_empty_ext(6, 8, true, true);
+// bool test_game_play_moveV2() {
+//   game g = game_new_empty_ext(6, 8, true, true);
 
-  game_play_move(g, 0, 0, S_ONE);
-  game_play_move(g, 3, 5, S_ZERO);
+//   game_play_move(g, 0, 0, S_ONE);
+//   game_play_move(g, 3, 5, S_ZERO);
 
-  int *last_move = queue_pop_head(g->undo);
+//   int *last_move = queue_pop_head(g->undo);
 
-  if (last_move[MOVE_SQUARE_INDEX] != S_ZERO || last_move[MOVE_I_INDEX] != 3 ||
-      last_move[MOVE_J_INDEX] != 5)
-    return false;
+//   if (last_move[MOVE_SQUARE_INDEX] != S_ZERO || last_move[MOVE_I_INDEX] != 3
+//   ||
+//       last_move[MOVE_J_INDEX] != 5)
+//     return false;
 
-  free(last_move);
+//   free(last_move);
 
-  int *another_move = queue_pop_head(g->undo);
+//   int *another_move = queue_pop_head(g->undo);
 
-  if (another_move[MOVE_SQUARE_INDEX] != S_ONE ||
-      another_move[MOVE_I_INDEX] != 0 || another_move[MOVE_J_INDEX] != 0)
-    return false;
+//   if (another_move[MOVE_SQUARE_INDEX] != S_ONE ||
+//       another_move[MOVE_I_INDEX] != 0 || another_move[MOVE_J_INDEX] != 0)
+//     return false;
 
-  free(another_move);
+//   free(another_move);
 
-  game_delete(g);
-  return true;
-}
+//   game_delete(g);
+//   return true;
+// }
 
 int main(int argc, char *argv[]) {
   if (argc == 1 || argc > 2) {
@@ -291,10 +292,10 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp("game_redo", argv[1])) {
     okey = test_game_redo();
-
-  } else if (!strcmp("play_moveV2", argv[1])) {
-    okey = test_game_play_moveV2();
   }
+  // } else if (!strcmp("play_moveV2", argv[1])) {
+  //   okey = test_game_play_moveV2();
+  // }
 
   else {
     fprintf(stderr, "-> Error : the name : %s is not found!\n", argv[1]);

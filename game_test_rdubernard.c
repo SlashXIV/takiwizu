@@ -304,8 +304,8 @@ bool test_game_copy() {
   unsigned int cpt_white = 0;
 
   // counting each square type on default config
-  for (int x = 0; x < DEFAULT_SIZE; x++) {
-    for (int y = 0; y < DEFAULT_SIZE; y++) {
+  for (int x = 0; x < game_nb_cols(g_default_primal); x++) {
+    for (int y = 0; y < game_nb_rows(g_default_primal); y++) {
       square actual_square = game_get_square(g_default_clone, x, y);
 
       switch (actual_square) {
