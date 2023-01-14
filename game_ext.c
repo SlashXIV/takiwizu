@@ -77,10 +77,11 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 bool game_is_unique(cgame g) { return g->unique; }
 
 void game_undo(game g) {
-
-  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la pile undo)
+  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
+  // pile undo)
   // - place un empty là ou le move a été joué
-  // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la pile undo
+  // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la
+  // pile undo
 
   if (g == NULL) {
     fprintf(stderr, "game undefined");
@@ -92,7 +93,7 @@ void game_undo(game g) {
   }
 
   // GET THE LAST MOVE
-  int * last_move = queue_pop_head(g->undo);
+  int* last_move = queue_pop_head(g->undo);
 
   // CANCEL MOVE
   game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX], S_EMPTY);

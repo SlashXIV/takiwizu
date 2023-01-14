@@ -332,6 +332,25 @@ bool test_game_is_unique() {
   return true;
 }
 
+bool testv2_has_error_unique() {
+  game g = game_new_empty_ext(4, 8, false, true);
+
+  game_set_square(g, 0, 0, S_ONE);
+  game_set_square(g, 1, 0, S_ONE);
+  game_set_square(g, 2, 0, S_ZERO);
+  game_set_square(g, 3, 0, S_ZERO);
+
+  game_set_square(g, 0, 3, S_ONE);
+  game_set_square(g, 1, 3, S_ONE);
+  game_set_square(g, 2, 3, S_ZERO);
+  game_set_square(g, 3, 3, S_ZERO);
+
+  if (game_has_error(g, 1, 0) == 0) return false;
+
+  game_delete(g);
+  return true;
+}
+
 int main(int argc, char* argv[]) {
   bool ok = test_dummy();
 
@@ -385,9 +404,9 @@ int main(int argc, char* argv[]) {
 
   else if (!strcmp(argv[1], "game_is_unique")) {
     ok = test_game_is_unique();
-  }
-
-  else {
+  } else if (!strcmp(argv[1], "game_has_error_unique")) {
+    ok = testv2_has_error_unique();
+  } else {
     fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
     exit(EXIT_FAILURE);
   }
