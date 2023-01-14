@@ -548,7 +548,7 @@ bool test_game_is_over_wrapping() {
   game_print(g);
   game_delete(g);
 
-  if (game_over) return false;
+  if (!game_over) return false;
 
   return true;
 }
