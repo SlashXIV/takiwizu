@@ -524,10 +524,10 @@ bool test_game_is_over_wrapping() {
   game g = game_new_empty_ext(4, 4, true, true);
 
   // create finished game when unique is disabled (BUT here it's enabled)
-  game_set_square(g, 0, 0 , S_ZERO);
-  game_set_square(g, 0, 1 , S_ZERO);
-  game_set_square(g, 0, 2 , S_ONE);
-  game_set_square(g, 0, 3 , S_ONE);
+  game_set_square(g, 0, 0, S_ZERO);
+  game_set_square(g, 0, 1, S_ZERO);
+  game_set_square(g, 0, 2, S_ONE);
+  game_set_square(g, 0, 3, S_ONE);
 
   game_set_square(g, 1, 0, S_ZERO);
   game_set_square(g, 1, 1, S_ONE);
