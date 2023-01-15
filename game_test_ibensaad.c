@@ -22,7 +22,7 @@ bool test_default_solution() {
   game g = game_default_solution();
 
   // If the party is won, then game_default_solution work and it return true!
-
+  game_print(g);
   if (!game_is_over(g)) {
     return false;
   }

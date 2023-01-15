@@ -32,6 +32,14 @@ typedef unsigned int uint;
 #define MOVE_I_INDEX 1
 #define MOVE_J_INDEX 2
 
+#define NEIGHBOURS_DIRS 4
+#define CONSIDERED_NEIGHBOURS 2
+#define GAME_HAS_ERROR 1
+#define GAME_HAS_NO_ERROR 0
+
+#define ROWS_TESTING 1
+#define COLS_TESTING 0
+
 /**
  * @brief The different squares used in the game.
  **/

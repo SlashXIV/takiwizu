@@ -346,6 +346,8 @@ bool testv2_has_error_unique() {
   game_set_square(g, 2, 3, S_ZERO);
   game_set_square(g, 3, 3, S_ZERO);
 
+  game_print(g);
+
   if (game_has_error(g, 1, 0) == 0) return false;
 
   // testing on j

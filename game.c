@@ -42,11 +42,179 @@ bool identical_game_dimension(cgame g1, cgame g2) {
           (game_nb_rows(g1) == game_nb_rows(g2)));
 }
 
-// returns true if the square is a one (immutable or not)
-bool is_one(square s) { return (s == S_IMMUTABLE_ONE || s == S_ONE); }
+// returns true if the square is a one (immutable or not), false otherwise
+bool one_square(square s) { return (s == S_IMMUTABLE_ONE || s == S_ONE); }
 
-// returns true if the square is a zero (immutable or not)
-bool is_zero(square s) { return (s == S_IMMUTABLE_ZERO || s == S_ZERO); }
+// returns true if the square is a zero (immutable or not), false otherwise
+bool zero_square(square s) { return (s == S_IMMUTABLE_ZERO || s == S_ZERO); }
+
+// returns true if empty square, false otherwise
+bool empty_square(square s) { return (s == S_EMPTY); }
+
+// returns true if IMMUTABLE square, false otherwise
+bool immutable_square(square s) {
+  return (s == S_IMMUTABLE_ONE || s == S_IMMUTABLE_ZERO);
+}
+
+// returns true if there is 3 consecutives equal squares in the game, false
+// otherwise
+bool three_identical_consecutives_squares_on_pos(cgame g, uint i, uint j) {
+  int n = game_get_number(g, i, j);
+
+  if (n == -1) return false;  // mean that we ignore empty cases
+
+  int n_l = game_get_next_number(g, i, j, LEFT, 1);
+  int n_u = game_get_next_number(g, i, j, UP, 1);
+  int n_r = game_get_next_number(g, i, j, RIGHT, 1);
+  int n_d = game_get_next_number(g, i, j, DOWN, 1);
+
+  if (n_l == n && n_r == n) return true;
+  if (n_u == n && n_d == n) return true;
+
+  int n_ll = game_get_next_number(g, i, j, LEFT, 2);
+  int n_uu = game_get_next_number(g, i, j, UP, 2);
+  int n_rr = game_get_next_number(g, i, j, RIGHT, 2);
+  int n_dd = game_get_next_number(g, i, j, DOWN, 2);
+
+  int left_neighbours[2] = {n_l, n_ll};
+  int up_neighbours[2] = {n_u, n_uu};
+  int right_neighbours[2] = {n_r, n_rr};
+  int down_neighbours[2] = {n_d, n_dd};
+
+  int* neighbours_directions[4] = {left_neighbours, up_neighbours,
+                                   right_neighbours, down_neighbours};
+  uint dist = 0;
+  for (uint dir = 0; dir < NEIGHBOURS_DIRS; dir++) {
+    if (neighbours_directions[dir][dist] == -1 ||
+        neighbours_directions[dir][dist + 1] == -1)
+      continue;
+
+    if (n != neighbours_directions[dir][dist]) continue;
+
+    if (neighbours_directions[dir][dist] ==
+        neighbours_directions[dir][dist + 1])
+      return true;
+  }
+
+  return false;
+}
+
+bool parity_lines(cgame g, uint i, uint j) {
+  uint cpt_zero_col = 0;
+  uint cpt_zero_row = 0;
+  uint cpt_one_col = 0;
+  uint cpt_one_row = 0;
+
+  for (int h = 0; h < game_nb_rows(g); h++) {
+    switch (game_get_number(g, h, j)) {
+      case 0:
+        cpt_zero_col++;
+        break;
+
+      case 1:
+        cpt_one_col++;
+        break;
+
+      default:
+        return true;
+    }
+  }
+
+  for (int w = 0; w < game_nb_rows(g); w++) {
+    switch (game_get_number(g, i, w)) {
+      case 0:
+        cpt_zero_row++;
+        break;
+
+      case 1:
+        cpt_one_row++;
+        break;
+
+      default:  // -1, empty
+        return true;
+    }
+  }
+
+  if (cpt_zero_col == cpt_one_col && cpt_zero_row == cpt_one_row) return true;
+
+  return false;
+}
+
+bool unicity_disrespected(cgame g, uint i, uint j) {
+  bool test_cols = true;
+  bool test_rows = true;
+
+  for (int x = 0; x < game_nb_cols(g); x++) {
+    if (game_get_square(g, i, x) == S_EMPTY) test_rows = false;
+  }
+
+  for (int y = 0; y < game_nb_rows(g); y++) {
+    if (game_get_square(g, y, j) == S_EMPTY) test_cols = false;
+  }
+
+  if (test_rows) {
+    uint cpt_equal_case;
+
+    // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
+    // AUTRES LIGNES
+    square compare_line[game_nb_cols(g)];
+    for (uint case_index = 0; case_index < game_nb_cols(g); case_index++) {
+      compare_line[case_index] = game_get_square(g, i, case_index);
+    }
+
+    // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
+    for (int y = 0; y < game_nb_rows(g); y++) {
+      // re-initialized cpt to 0 for each loop
+      cpt_equal_case = 0;
+
+      // LES COMPARAISONS
+      for (int x = 0; x < game_nb_cols(g); x++) {
+        // IGNORE ITSELF
+        if (y == i) break;
+
+        // ONE DIFFERENCE IS ENOUGH TO COMPARE THE NEXT LINE
+        if (compare_line[x] != game_get_square(g, y, x)) break;
+
+        cpt_equal_case++;
+      }
+
+      // TWO LINES ARE IDENTICALS
+      if (cpt_equal_case == game_nb_cols(g)) {
+        return true;
+      }
+    }
+  }
+
+  if (test_cols) {
+    uint cpt_equal_case;
+
+    // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
+    // AUTRES LIGNES
+    square compare_line[game_nb_rows(g)];
+    for (uint case_index = 0; case_index < game_nb_rows(g); case_index++) {
+      compare_line[case_index] = game_get_square(g, case_index, j);
+    }
+
+    // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
+    for (int x = 0; x < game_nb_cols(g); x++) {
+      // re-initialized cpt to 0 for each loop
+      cpt_equal_case = 0;
+
+      // LES COMPARAISONS
+      for (int y = 0; y < game_nb_rows(g); y++) {
+        // IGNORE ITSELF
+        if (x == j) break;
+
+        if (compare_line[y] != game_get_square(g, y, x)) break;
+
+        cpt_equal_case++;
+      }
+
+      if (cpt_equal_case == game_nb_rows(g)) return true;
+    }
+  }
+  return false;
+}
 
 // [===== GAME FONCTIONS =====]
 game game_new(square* squares) {
@@ -152,9 +320,9 @@ int game_get_number(cgame g, uint i, uint j) {
 
   square s = game_get_square(g, i, j);
 
-  if (is_one(s))
+  if (one_square(s))
     return 1;
-  else if (is_zero(s))
+  else if (zero_square(s))
     return 0;
   else
     return -1;
@@ -220,195 +388,49 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
 
   square s = game_get_next_square(g, i, j, dir, dist);
 
-  if (is_one(s))
+  if (one_square(s))
     return 1;
-  else if (is_zero(s))
+  else if (zero_square(s))
     return 0;
   else
     return -1;
 }
 
 bool game_is_empty(cgame g, uint i, uint j) {
-  if (i > g->height || j > g->width || g == NULL) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    exit(EXIT_FAILURE);
-  }
+  assert(g != NULL, "game_empty_square(cgame g) : g is pointing on nothing");
+  assert(i < game_nb_rows(g), "game_empty_square(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_empty_square(uint j) : j over grid");
 
-  return game_get_square(g, i, j) == S_EMPTY;
+  return empty_square(game_get_square(g, i, j));
 }
 
 bool game_is_immutable(cgame g, uint i, uint j) {
-  if (i >= g->height || j >= g->width || g == NULL) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    exit(EXIT_FAILURE);
-  }
+  assert(g != NULL,
+         "game_immutable_square(cgame g) : g is pointing on nothing");
+  assert(i < game_nb_rows(g), "game_immutable_square(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_immutable_square(uint j) : j over grid");
 
-  if (game_get_square(g, i, j) == S_IMMUTABLE_ONE)
-    return true;
-
-  else if (game_get_square(g, i, j) == S_IMMUTABLE_ZERO)
-    return true;
-
-  else
-    return false;
+  return immutable_square(game_get_square(g, i, j));
 }
 
 int game_has_error(cgame g, uint i, uint j) {
-  if (i > g->height || j > g->width || g == NULL) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    exit(EXIT_FAILURE);
+  assert(g != NULL, "game_has_error(cgame g) : g is pointing on nothing");
+  assert(i < game_nb_rows(g), "game_has_error(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_has_error(uint j) : j over grid");
+
+  if (three_identical_consecutives_squares_on_pos(g, i, j)) {
+    return GAME_HAS_ERROR;
   }
 
-  // THE FUNCTION SHOULD ONLY RETURN AN ERROR AND DO NOT PRINT ANYTHING AT ALL,
-  // THE PRINT DOES THIS IN THE GAME_TEXT DO NOT HAVE 3 CONSECUTIVE CAD three in
-  // a row => WWW BBB, W BBB
-
-  int primaryCase = game_get_number(g, i, j);
-
-  if (primaryCase != -1) {  // mean that we ignore empty cases
-
-    if (game_get_next_number(g, i, j, DOWN, 1) == primaryCase &&
-        game_get_next_number(g, i, j, DOWN, 2) == primaryCase)
-      return 1;
-
-    if (game_get_next_number(g, i, j, RIGHT, 1) == primaryCase &&
-        game_get_next_number(g, i, j, RIGHT, 2) == primaryCase)
-      return 1;
-
-    if (game_get_next_number(g, i, j, UP, 1) == primaryCase &&
-        game_get_next_number(g, i, j, UP, 2) == primaryCase)
-      return 1;
-
-    if (game_get_next_number(g, i, j, LEFT, 1) == primaryCase &&
-        game_get_next_number(g, i, j, LEFT, 2) == primaryCase)
-      return 1;
-
-    if (game_get_next_number(g, i, j, LEFT, 1) == primaryCase &&
-        game_get_next_number(g, i, j, RIGHT, 1) == primaryCase)
-      return 1;
-
-    if (game_get_next_number(g, i, j, DOWN, 1) == primaryCase &&
-        game_get_next_number(g, i, j, UP, 1) == primaryCase)
-      return 1;
-
-    int whiteCol = 0;
-    int whiteLine = 0;
-    int blackCol = 0;
-    int blackLine = 0;
-
-    for (int h = 0; h < g->height; h++) {
-      if (game_get_square(g, h, j) == S_ZERO ||
-          game_get_square(g, h, j) == S_IMMUTABLE_ZERO)
-        whiteLine++;
-
-      if (game_get_square(g, h, j) == S_ONE ||
-          game_get_square(g, h, j) == S_IMMUTABLE_ONE)
-        blackLine++;
-    }
-
-    for (int w = 0; w < g->width; w++) {
-      if (game_get_square(g, i, w) == S_ZERO ||
-          game_get_square(g, i, w) == S_IMMUTABLE_ZERO)
-        whiteCol++;
-
-      if (game_get_square(g, i, w) == S_ONE ||
-          game_get_square(g, i, w) == S_IMMUTABLE_ONE)
-        blackCol++;
-    }
-
-    if (whiteLine > 3 || whiteCol > 3 || blackCol > 3 ||
-        blackLine > 3)  // we check the parity of the squares if >3 mean that
-                        // parity isnt respected
-      return 1;
+  if (!parity_lines(g, i, j)) {
+    return GAME_HAS_ERROR;
   }
 
-  if (g->unique) {
-    // printf("=> TEST UNIQUE\n");
-
-    bool test_cols = true;
-    bool test_rows = true;
-
-    for (int x = 0; x < g->width; x++) {
-      if (game_get_square(g, i, x) == S_EMPTY) test_rows = false;
-    }
-
-    for (int y = 0; y < g->height; y++) {
-      if (game_get_square(g, y, j) == S_EMPTY) test_cols = false;
-    }
-
-    // printf("=> DOINE : \n\ttest_cols = %d\n\ttest_rows = %d\n",
-    // test_cols,test_rows);
-
-    // lets check the collumns first
-
-    if (test_rows) {
-      uint cpt_equal_case;
-
-      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
-      // AUTRES LIGNES
-      square compare_line[g->width];
-      for (uint case_index = 0; case_index < g->width; case_index++) {
-        compare_line[case_index] = game_get_square(g, i, case_index);
-      }
-
-      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
-      for (int y = 0; y < g->height; y++) {
-        // re-initialized cpt to 0 for each loop
-        cpt_equal_case = 0;
-
-        // LES COMPARAISONS
-        for (int x = 0; x < g->width; x++) {
-          // IGNORE ITSELF
-          if (y == i) break;
-
-          // ONE DIFFERENCE IS ENOUGH TO COMPARE THE NEXT LINE
-          if (compare_line[x] != game_get_square(g, y, x)) break;
-
-          cpt_equal_case++;
-        }
-
-        // TWO LINES ARE IDENTICALS
-        if (cpt_equal_case == g->width) {
-          return -1;
-        }
-      }
-    }
-
-    if (test_cols) {
-      uint cpt_equal_case;
-
-      // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
-      // AUTRES LIGNES
-      square compare_line[g->height];
-      for (uint case_index = 0; case_index < g->height; case_index++) {
-        compare_line[case_index] = game_get_square(g, case_index, j);
-      }
-
-      // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
-      for (int x = 0; x < g->width; x++) {
-        // re-initialized cpt to 0 for each loop
-        cpt_equal_case = 0;
-
-        // LES COMPARAISONS
-        for (int y = 0; y < g->height; y++) {
-          // IGNORE ITSELF
-          if (x == j) break;
-
-          if (compare_line[y] != game_get_square(g, y, x)) break;
-
-          cpt_equal_case++;
-        }
-
-        if (cpt_equal_case == g->height) {
-          return -1;
-        }
-      }
-    }
+  if (game_is_unique(g) && unicity_disrespected(g, i, j)) {
+    return GAME_HAS_ERROR;
   }
 
-  // now the rows
-
-  return 0;  // 0 mean that there is no error
+  return GAME_HAS_NO_ERROR;
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s) {
@@ -465,8 +487,8 @@ bool game_is_over(cgame g) {
     }
   }
 
-  // In case we haven't returned false, all the rules are satisied and we return
-  // true ---> the game is won.
+  // In case we haven't returned false, all the rules are satisied and we
+  // return true ---> the game is won.
   return true;
 }
 

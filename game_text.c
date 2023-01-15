@@ -45,13 +45,13 @@ void display_help() {
 
 int main(void) {
   // GAME START
-  game g = game_new_empty_ext(4, 4, true, false);
+  game g = game_new_empty_ext(4, 8, false, true);
+
+  // SANDBOX
 
   while (!game_is_over(g)) {
     // GAME PRINT
     printf("\n");
-
-    // SANDBOX
 
     game_print(g);
 
