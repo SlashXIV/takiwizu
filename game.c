@@ -459,13 +459,13 @@ void game_play_move(game g, uint i, uint j, square s) {
     exit(EXIT_FAILURE);
   }
 
-  game_set_square(g, i, j, s);
-
   // We create an array for store the current move
   int* move = malloc(sizeof(int) * MOVE_SIZE);
-  move[MOVE_SQUARE_INDEX] = s;  // store square
+  move[MOVE_SQUARE_INDEX] = game_get_square(g, i, j);  // store square
   move[MOVE_I_INDEX] = i;       // store i
   move[MOVE_J_INDEX] = j;       // store j
+
+  game_set_square(g, i, j, s);
 
   queue_push_head(g->last_moves, move);
   queue_clear_full(g->cancelled_moves, free);

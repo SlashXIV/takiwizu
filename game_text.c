@@ -48,7 +48,7 @@ int main(void) {
   game g = game_new_empty_ext(4, 8, false, true);
 
   // SANDBOX
-
+  
   while (!game_is_over(g)) {
     // GAME PRINT
     printf("\n");

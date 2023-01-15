@@ -90,20 +90,22 @@ void game_undo(game g) {
     exit(EXIT_FAILURE);
   }
 
-  queue_push_head(g->cancelled_moves, queue_pop_head(g->last_moves));
+  if (queue_is_empty(g->last_moves)) return;
 
-  if (queue_length(g->last_moves) > 1) {
-    int* pre_move = queue_peek_head(g->last_moves);
-    game_set_square(g, pre_move[MOVE_I_INDEX], pre_move[MOVE_J_INDEX],
-                    pre_move[MOVE_SQUARE_INDEX]);
-    free(pre_move);
-  } else {
-    int* move_location = queue_peek_head(g->cancelled_moves);
-    game_set_square(g, move_location[MOVE_I_INDEX], move_location[MOVE_J_INDEX],
-                    S_EMPTY);
+  int* m = queue_pop_head(g->last_moves);
 
-    free(move_location);
+  square save = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);
+
+  for (int i = 0; i < 3; i++) {
+    printf("%d ", m[i]);
   }
+  printf("\n");
+
+  game_set_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX], m[MOVE_SQUARE_INDEX]);
+
+  m[MOVE_SQUARE_INDEX] = save;
+
+  queue_push_head(g->cancelled_moves, m);
 }
 
 void game_redo(game g) {
@@ -112,17 +114,21 @@ void game_redo(game g) {
     exit(EXIT_FAILURE);
   }
 
+  // z -> y -> z (le undo après un redo bug)
+
   if (queue_is_empty(g->cancelled_moves)) {
     return;
   }
 
   // We get the last move canceled from cancelled_moves:
-  int* last_cancelled_move = queue_pop_head(g->cancelled_moves);
+  int* m = queue_pop_head(g->cancelled_moves);
+  square saved = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);
 
   // We re set the canceled move in the game:
-  game_set_square(g, last_cancelled_move[MOVE_I_INDEX],
-                  last_cancelled_move[MOVE_J_INDEX],
-                  last_cancelled_move[MOVE_SQUARE_INDEX]);
+  game_set_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX],
+                      m[MOVE_SQUARE_INDEX]);
 
-  queue_push_head(g->last_moves, last_cancelled_move);
+  m[MOVE_SQUARE_INDEX] = saved;
+
+  queue_push_head(g->last_moves, m);
 }
