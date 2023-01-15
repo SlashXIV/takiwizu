@@ -105,7 +105,7 @@ bool parity_lines(cgame g, uint i, uint j) {
   uint cpt_one_col = 0;
   uint cpt_one_row = 0;
 
-  for (int h = 0; h < game_nb_cols(g); h++) {
+  for (int h = 0; h < game_nb_rows(g); h++) {
     switch (game_get_number(g, h, j)) {
       case 0:
         cpt_zero_col++;
@@ -120,7 +120,7 @@ bool parity_lines(cgame g, uint i, uint j) {
     }
   }
 
-  for (int w = 0; w < game_nb_rows(g); w++) {
+  for (int w = 0; w < game_nb_cols(g); w++) {
     switch (game_get_number(g, i, w)) {
       case 0:
         cpt_zero_row++;
