@@ -94,10 +94,10 @@ bool test_game_play_move() {
   game_play_move(g, 2, 0, S_ONE);
   game_play_move(g, 3, 5, S_ONE);
 
-  if (queue_peek_tail(g->cancelled_moves) == NULL) return false;
+  if (queue_peek_tail(g->last_moves) == NULL) return false;
 
   if (game_get_square(g, 2, 0) != S_ONE) {
-    return false;
+    return false; 
   }
 
   game_delete(g);
@@ -195,8 +195,8 @@ bool test_game_redo() {
   game_redo(g);
   game_redo(g);
 
-  if (queue_peek_head(g->cancelled_moves) == NULL) return false;
-  if (queue_peek_tail(g->cancelled_moves) == NULL) return false;
+  if (queue_peek_head(g->last_moves) == NULL) return false;
+  if (queue_peek_tail(g->last_moves) == NULL) return false;
 
   if (game_get_square(g, 0, 0) != S_ONE) return false;
   if (game_get_square(g, 3, 5) != S_ZERO) return false;
