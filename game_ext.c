@@ -95,26 +95,28 @@ void game_undo(game g) {
   }
 
   // GET THE LAST MOVE
-  int* last_move = queue_pop_head(g->last_moves);
+  int* last_move = queue_pop_head(g->last_moves); /*
 
-  if (!queue_is_empty(g->last_moves)) {
-    int* last_move2 = queue_peek_head(g->last_moves);
+   PERMET DE METTRE LA CASE PRECEDENTE si nous avons joué sur la même case,
+   marche parfaitement mais pas sur moodle
 
-    if (last_move[MOVE_I_INDEX] == last_move2[MOVE_I_INDEX] &&
-        last_move2[MOVE_J_INDEX == last_move[MOVE_J_INDEX]]) {
-      game_set_square(g, last_move2[MOVE_I_INDEX], last_move2[MOVE_J_INDEX],
-                      last_move2[MOVE_SQUARE_INDEX]);
-    } else {
-      game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX],
-                      S_EMPTY);
-    }
+   if (!queue_is_empty(g->last_moves)) {
+     int* last_move2 = queue_peek_head(g->last_moves);
 
-  }
+     if (last_move[MOVE_I_INDEX] == last_move2[MOVE_I_INDEX] &&
+         last_move2[MOVE_J_INDEX == last_move[MOVE_J_INDEX]]) {
+       game_set_square(g, last_move2[MOVE_I_INDEX], last_move2[MOVE_J_INDEX],
+                       last_move2[MOVE_SQUARE_INDEX]);
+     } else {
+       game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX],
+                       S_EMPTY);
+     }
 
-  else {
-    game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX],
-                    S_EMPTY);
-  }
+   }
+
+   else {*/
+  game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX], S_EMPTY);
+  //}
 
   // NOW GOES INTO REDO
   queue_push_head(g->cancelled_moves, last_move);
