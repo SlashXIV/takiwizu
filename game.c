@@ -25,8 +25,8 @@ game game_new(square* squares) {
   new_game->height = DEFAULT_SIZE;
   new_game->unique = false;
   new_game->wrapping = false;
-  new_game->undo = queue_new();
-  new_game->redo = queue_new();
+  new_game->last_moves = queue_new();
+  new_game->cancelled_moves = queue_new();
 
   square* arrayClone =
       malloc((new_game->width * new_game->height) * sizeof(square));
@@ -89,8 +89,8 @@ bool game_equal(cgame g1, cgame g2) {
 
 void game_delete(game g) {
   if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
-  if (g->undo != NULL) queue_free_full(g->undo, free);
-  if (g->redo != NULL) queue_free_full(g->redo, free);
+  if (g->last_moves != NULL) queue_free_full(g->last_moves, free);
+  if (g->cancelled_moves != NULL) queue_free_full(g->cancelled_moves, free);
   free(g);
 }
 
@@ -451,8 +451,8 @@ void game_play_move(game g, uint i, uint j, square s) {
   move[MOVE_I_INDEX] = i;       // store i
   move[MOVE_J_INDEX] = j;       // store j
 
-  queue_push_head(g->undo, move);
-  queue_clear_full(g->redo, free);
+  queue_push_head(g->last_moves, move);
+  queue_clear_full(g->cancelled_moves, free);
 }
 
 bool game_is_over(cgame g) {
@@ -490,9 +490,9 @@ void game_restart(game g) {
   }
 
   // clear all history
-  queue_free_full(g->undo, free);
-  queue_free_full(g->redo, free);
+  queue_free_full(g->last_moves, free);
+  queue_free_full(g->cancelled_moves, free);
 
-  g->undo = queue_new();
-  g->redo = queue_new();
+  g->last_moves = queue_new();
+  g->cancelled_moves = queue_new();
 }

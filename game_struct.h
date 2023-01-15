@@ -11,8 +11,8 @@ struct game_s {
   uint height;
   bool wrapping;
   bool unique;
-  queue* undo;
-  queue* redo;
+  queue* last_moves;
+  queue* cancelled_moves;
 };
 
 #endif

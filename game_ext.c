@@ -39,8 +39,8 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
   new_game->width = nb_cols;
   new_game->unique = unique;
   new_game->wrapping = wrapping;
-  new_game->undo = queue_new();
-  new_game->redo = queue_new();
+  new_game->last_moves = queue_new();
+  new_game->cancelled_moves = queue_new();
 
   square* arrayClone =
       malloc((new_game->width * new_game->height) * sizeof(square));
@@ -77,28 +77,29 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 bool game_is_unique(cgame g) { return g->unique; }
 
 void game_undo(game g) {
-
-  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la pile undo)
+  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
+  // pile undo)
   // - place un empty là ou le move a été joué
-  // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la pile undo
+  // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la
+  // pile undo
 
   if (g == NULL) {
     fprintf(stderr, "game undefined");
     exit(EXIT_FAILURE);
   }
 
-  if (queue_is_empty(g->undo)) {
+  if (queue_is_empty(g->last_moves)) {
     return;
   }
 
   // GET THE LAST MOVE
-  int * last_move = queue_pop_head(g->undo);
+  int* last_move = queue_pop_head(g->last_moves);
 
   // CANCEL MOVE
   game_set_square(g, last_move[MOVE_I_INDEX], last_move[MOVE_J_INDEX], S_EMPTY);
 
   // NOW GOES INTO REDO
-  queue_push_head(g->redo, last_move);
+  queue_push_head(g->cancelled_moves, last_move);
 }
 
 void game_redo(game g) {
@@ -107,17 +108,16 @@ void game_redo(game g) {
     exit(EXIT_FAILURE);
   }
 
-  if (queue_is_empty(g->redo)) {
+  if (queue_is_empty(g->cancelled_moves)) {
     return;
   }
 
-  // We get the last move canceled from undo:
-  int* get_last_move = queue_peek_head(g->redo);
+  // We get the last move canceled from cancelled_moves:
+  int* last_cancelled_move = queue_pop_head(g->cancelled_moves);
 
   // We re set the canceled move in the game:
-  game_set_square(g, get_last_move[MOVE_I_INDEX], get_last_move[MOVE_J_INDEX],
-                  get_last_move[MOVE_SQUARE_INDEX]);
+  game_set_square(g, last_cancelled_move[MOVE_I_INDEX], last_cancelled_move[MOVE_J_INDEX],
+                  last_cancelled_move[MOVE_SQUARE_INDEX]);
 
-  queue_push_head(g->undo, get_last_move);
-  queue_pop_head(g->redo);
+  queue_push_head(g->last_moves, last_cancelled_move);
 }
