@@ -106,7 +106,10 @@ bool parity_lines(cgame g, uint i, uint j) {
   uint cpt_one_row = 0;
 
   for (int h = 0; h < game_nb_rows(g); h++) {
+<<<<<<< HEAD
     
+=======
+>>>>>>> a6e7829ed785b5d319c4559e9b7df1938cb5a452
     switch (game_get_number(g, h, j)) {
       case 0:
         cpt_zero_col++;
