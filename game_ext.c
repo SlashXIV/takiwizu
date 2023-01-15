@@ -96,10 +96,13 @@ void game_undo(game g) {
     int* pre_move = queue_peek_head(g->last_moves);
     game_set_square(g, pre_move[MOVE_I_INDEX], pre_move[MOVE_J_INDEX],
                     pre_move[MOVE_SQUARE_INDEX]);
+    free(pre_move);
   } else {
     int* move_location = queue_peek_head(g->cancelled_moves);
     game_set_square(g, move_location[MOVE_I_INDEX], move_location[MOVE_J_INDEX],
                     S_EMPTY);
+
+    free(move_location);
   }
 }
 
