@@ -34,7 +34,8 @@ add_test(test_gifrim_game_get_next_square ./game_test_gifrim game_get_next_squar
 add_test(test_gifrim_game_restart ./game_test_gifrim game_restart)
 add_test(test_gifrim_game_is_wrapping ./game_test_gifrim game_is_wrapping)
 add_test(test_gifrim_game_is_unique ./game_test_gifrim game_is_unique)
-
+add_test(test_gifrim_game_has_error_unique ./game_test_gifrim game_has_error_unique)
+add_test(test_gifrim_game_undo_redo_some ./game_test_gifrim undo_redo_some)
 
 
 

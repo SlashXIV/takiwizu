@@ -332,6 +332,117 @@ bool test_game_is_unique() {
   return true;
 }
 
+bool testv2_has_error_unique() {
+  // testing on i
+  game g = game_new_empty_ext(4, 8, false, true);
+
+  game_set_square(g, 0, 0, S_ONE);
+  game_set_square(g, 1, 0, S_ONE);
+  game_set_square(g, 2, 0, S_ZERO);
+  game_set_square(g, 3, 0, S_ZERO);
+
+  game_set_square(g, 0, 3, S_ONE);
+  game_set_square(g, 1, 3, S_ONE);
+  game_set_square(g, 2, 3, S_ZERO);
+  game_set_square(g, 3, 3, S_ZERO);
+
+  if (game_has_error(g, 1, 0) == 0) return false;
+
+  // testing on j
+  game g2 = game_new_empty_ext(6, 4, false, true);
+
+  game_set_square(g2, 0, 0, S_ONE);
+  game_set_square(g2, 0, 1, S_ONE);
+  game_set_square(g2, 0, 2, S_ZERO);
+  game_set_square(g2, 0, 3, S_ZERO);
+
+  game_set_square(g2, 2, 0, S_ONE);
+  game_set_square(g2, 2, 1, S_ONE);
+  game_set_square(g2, 2, 2, S_ZERO);
+  game_set_square(g2, 2, 3, S_ZERO);
+
+  if (game_has_error(g2, 2, 3) == 0) return false;
+
+  // i try this time the unique option but with wrapping on
+  game g3 = game_new_empty_ext(4, 4, true, true);
+
+  game_set_square(g3, 0, 0, S_ONE);
+  game_set_square(g3, 0, 1, S_ZERO);
+  game_set_square(g3, 0, 2, S_ZERO);
+  game_set_square(g3, 0, 3, S_ONE);
+
+  game_set_square(g3, 1, 0, S_ZERO);
+  game_set_square(g3, 2, 0, S_ZERO);
+
+  game_set_square(g3, 3, 1, S_ZERO);
+  game_set_square(g3, 3, 2, S_ZERO);
+
+  game_set_square(g3, 1, 3, S_ZERO);
+  game_set_square(g3, 2, 3, S_ZERO);
+  game_set_square(g3, 3, 0, S_ONE);
+  game_set_square(g3, 3, 3, S_ONE);
+
+  if (game_has_error(g3, 0, 1) == 0) return false;
+  if (game_has_error(g3, 1, 0) == 0) return false;
+
+  game_print(g);
+  game_print(g2);
+  game_print(g3);
+  game_delete(g);
+  game_delete(g2);
+  game_delete(g3);
+
+  return true;
+}
+
+bool testv2_undo_redo_some() {
+  game g = game_new_empty_ext(4, 4, true, true);
+
+  game_play_move(g, 1, 1, S_ONE);
+
+  game_undo(g);
+
+  if (game_get_square(g, 1, 1) == S_ONE) return false;
+
+  game_redo(g);
+
+  if (game_get_square(g, 1, 1) != S_ONE) return false;
+
+  game_play_move(g, 3, 1, S_ZERO);
+  game_play_move(g, 2, 2, S_ONE);
+  game_play_move(g, 0, 3, S_ZERO);
+
+  game_undo(g);
+  game_undo(g);
+
+  if (game_get_square(g, 0, 3) != S_EMPTY) return false;
+  if (game_get_square(g, 2, 2) != S_EMPTY) return false;
+
+  game_redo(g);
+  game_redo(g);
+
+  if (game_get_square(g, 0, 3) != S_ZERO) return false;
+  if (game_get_square(g, 2, 2) != S_ONE) return false;
+
+  game_play_move(g, 0, 2, S_ONE);
+  game_play_move(g, 0, 2, S_ZERO);
+  game_play_move(g, 0, 2, S_ONE);
+
+  game_undo(g);
+
+  game_undo(g);
+
+  game_redo(g);
+
+  if (game_get_square(g, 0, 2) != S_ZERO) return false;
+
+  game_redo(g);
+
+  if (game_get_square(g, 0, 2) != S_ONE) return false;
+
+  game_delete(g);
+  return true;
+}
 int main(int argc, char* argv[]) {
   bool ok = test_dummy();
 
@@ -385,9 +496,11 @@ int main(int argc, char* argv[]) {
 
   else if (!strcmp(argv[1], "game_is_unique")) {
     ok = test_game_is_unique();
-  }
-
-  else {
+  } else if (!strcmp(argv[1], "game_has_error_unique")) {
+    ok = testv2_has_error_unique();
+  } else if (!strcmp(argv[1], "undo_redo_some")) {
+    ok = testv2_undo_redo_some();
+  } else {
     fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
     exit(EXIT_FAILURE);
   }

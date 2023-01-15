@@ -79,6 +79,8 @@ bool game_is_unique(cgame g) { return g->unique; }
 void game_undo(game g) {
   // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
   // pile undo)
+  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
+  // pile undo)
   // - place un empty là ou le move a été joué
   // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la
   // pile undo
