@@ -15,15 +15,14 @@
 // verifies if the expression is true, else it abort on error_code
 void assert(bool expr, const char* error_code) {
   if (!expr) {
-    fputs("ERROR : \n\t", stderr);
+    fputs("ERROR : ", stderr);
     fputs(error_code, stderr);
-    fputs("\n", stderr);
+    fputs(" ;-;\n", stderr);
     exit(EXIT_FAILURE);
   }
 }
 
-// returns a dynamic-allocated square array identical to the one in the first
-// parameter
+// returns a dynamic-allocated square array identical to the first parameter
 square* grid_copy(square* squares_primal, uint nb_squares) {
   square* squares_clone = malloc(nb_squares * sizeof(square));
 
@@ -41,6 +40,16 @@ bool identical_squares(square S1, square S2) { return (S1 == S2); }
 bool identical_game_dimension(cgame g1, cgame g2) {
   return ((game_nb_cols(g1) == game_nb_cols(g2)) &&
           (game_nb_rows(g1) == game_nb_rows(g2)));
+}
+
+// returns true if the square is a one (immutable or not)
+bool is_one(square s){
+  return (s == S_IMMUTABLE_ONE || s == S_ONE);
+}
+
+// returns true if the square is a zero (immutable or not)
+bool is_zero(square s){
+  return (s == S_IMMUTABLE_ZERO || s == S_ZERO);
 }
 
 // [===== GAME FONCTIONS =====]
@@ -61,7 +70,6 @@ game game_new(square* squares) {
   // assign the grid to the game (by a copy)
   uint nb_cases = game_nb_cols(g) * game_nb_rows(g);
   g->grid = grid_copy(squares, nb_cases);
-  ;
 
   // output
   return g;
@@ -86,9 +94,12 @@ game game_copy(cgame g) {
 
   // cloning the game
   game game_clone =
-      game_new_ext(game_nb_rows(g), game_nb_cols(g),
-                   grid_copy(g->grid, game_nb_rows(g) * game_nb_cols(g)),
-                   game_is_wrapping(g), game_is_unique(g));
+      game_new_ext(
+        game_nb_rows(g), 
+        game_nb_cols(g),
+        g->grid,
+        game_is_wrapping(g),
+        game_is_unique(g));
 
   // output
   return game_clone;
@@ -148,31 +159,36 @@ int game_get_number(cgame g, uint i, uint j) {
   assert(i < game_nb_rows(g), "game_get_number(uint i) : i over grid");
   assert(j < game_nb_cols(g), "game_get_number(uint j) : j over grid");
 
-  if (game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
-      game_get_square(g, i, j) == S_ONE)
-    return 1;
+  square s = game_get_square(g, i, j);
 
-  if (game_get_square(g, i, j) == S_IMMUTABLE_ZERO ||
-      game_get_square(g, i, j) == S_ZERO)
-    return 0;
-
-  else
-    return -1;
+  if (is_one(s)) return 1;
+  else if (is_zero(s)) return 0;
+  else return -1;
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
-  // CHECKING GAME AND DIST
-  if (g == NULL || dist > 2) {
-    fprintf(stderr, "g is null, or  dist too far :/\n");
-    return -1;
-  }
-  // CHECKING IF INITIAL COORDINATES ARE OVER GRID
-  if (i >= g->height || j >= g->width) return -1;
+  assert(g != NULL, "game_get_next_square(cgame g) : g is pointing on nothing");
+  assert(dist <= 2, "game_get_next_square(uint dist) : dist too far");
+  assert(i < game_nb_rows(g), "game_get_next_square(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_get_next_square(uint j) : j over grid");
 
-  int ii = i;
-  int jj = j;
+  if (!game_is_wrapping(g)){
+    // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
+    if (dir == UP) i -= dist;
+    if (dir == DOWN) i += dist;
+    if (dir == LEFT) j -= dist;
+    if (dir == RIGHT) j += dist;
 
-  if (g->wrapping) {
+    // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
+
+    if (i >= g->height || j >= g->width) return -1;
+    return game_get_square(g, i, j);  
+  } 
+  
+  else {
+    int ii = i;
+    int jj = j;
+
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
     if (dir == UP) ii -= dist;
     if (dir == DOWN) ii += dist;
@@ -199,19 +215,10 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
     i = ii;
     j = jj;
     return game_get_square(g, i, j);
-
-  } else {
-    // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
-    if (dir == UP) i -= dist;
-    if (dir == DOWN) i += dist;
-    if (dir == LEFT) j -= dist;
-    if (dir == RIGHT) j += dist;
-
-    // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-
-    if (i >= g->height || j >= g->width) return -1;
-    return game_get_square(g, i, j);
   }
+
+ 
+
 }
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
