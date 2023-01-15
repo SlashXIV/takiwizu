@@ -67,7 +67,7 @@ int main(void) {
   game_set_square(g, 2, 2, S_ZERO);
   game_set_square(g, 2, 3, S_ZERO);
   game_set_square(g, 2, 4, S_ONE);
-  game_set_square(g, 2, 5, S_ONE);
+  game_set_square(g, 2, 5, S_ZERO);
 
   game_set_square(g,3, 0, S_ZERO);
   game_set_square(g,3, 1, S_ZERO);
