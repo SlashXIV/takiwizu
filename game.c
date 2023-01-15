@@ -15,9 +15,9 @@
 // verifies if the expression is true, else it abort on error_code
 void assert(bool expr, const char* error_code) {
   if (!expr) {
-    fprintf(stderr, "ERROR : \n\t");
-    fprintf(stderr, error_code);
-    fprintf(stderr, "\n");
+    fputs("ERROR : \n\t", stderr);
+    fputs(error_code, stderr);
+    fputs("\n", stderr);
     exit(EXIT_FAILURE);
   }
 }
