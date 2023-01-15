@@ -6,7 +6,7 @@
 // Structure of the game:
 
 struct game_s {
-  square* ArrayOfSquare;
+  square* grid;
   uint width;
   uint height;
   bool wrapping;

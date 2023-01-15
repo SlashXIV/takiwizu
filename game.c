@@ -10,115 +10,130 @@
 #include "game_struct.h"
 #include "queue.h"
 
-// We have to implement the functions now:
+// [===== AUXILIARY FONCTIONS =====]
 
-game game_new(square* squares) {
-  if (squares == NULL) {
-    fprintf(stderr,
-            "ERROR -> game_new(square * squares) : invalid  squares parameter; "
-            "pointing on nothing...");
+// verifies if the expression is true, else it abort on error_code
+void assert(bool expr, char * error_code){
+  if (!expr) {
+    fprintf(stderr, "ERROR : \n\t");
+    fprintf(stderr, error_code);
+    fprintf(stderr, "\n");
     exit(EXIT_FAILURE);
+  } 
+}
+
+// returns a dynamic-allocated square array identical to the one in the first parameter
+square * grid_copy(square * squares_primal, uint nb_squares) {
+  square* squares_clone = malloc(nb_squares * sizeof(square));
+
+  for (int i = 0; i < nb_squares; i++) {
+    squares_clone[i] = squares_primal[i];
   }
 
-  game new_game = malloc(sizeof(struct game_s));
-  new_game->width = DEFAULT_SIZE;
-  new_game->height = DEFAULT_SIZE;
-  new_game->unique = false;
-  new_game->wrapping = false;
-  new_game->last_moves = queue_new();
-  new_game->cancelled_moves = queue_new();
+  return squares_clone;
+}
 
-  square* arrayClone =
-      malloc((new_game->width * new_game->height) * sizeof(square));
+// returns true if both squares are equals, false otherwise
+bool identical_squares(square S1, square S2){
+  return (S1 == S2);
+}
 
-  for (int i = 0; i < new_game->width * new_game->height; i++) {
-    arrayClone[i] = squares[i];
-  }
+// returns true if both game dimensions are equals, false otherwise
+bool identical_game_dimension(cgame g1, cgame g2){
+  return ((game_nb_cols(g1) == game_nb_cols(g2)) && (game_nb_rows(g1) == game_nb_rows(g2)));
+}
 
-  new_game->ArrayOfSquare = arrayClone;
-  return new_game;
+
+// [===== GAME FONCTIONS =====]
+game game_new(square* squares) {
+  // checking existance of squares
+  assert(squares != NULL, "game_new(square * squares) : squares is pointing on nothing");
+
+  // game mallocation & properties assignment
+  game g = malloc(sizeof(struct game_s));
+  g->width = DEFAULT_SIZE;
+  g->height = DEFAULT_SIZE;
+  g->unique = false;
+  g->wrapping = false;
+  g->last_moves = queue_new();
+  g->cancelled_moves = queue_new();
+
+  // assign the grid to the game (by a copy)
+  uint nb_cases = game_nb_cols(g) * game_nb_rows(g);
+  g->grid = grid_copy(squares, nb_cases);;
+
+  // output
+  return g;
 }
 
 game game_new_empty(void) {
+  // generating an S_EMPTY grid on DEFAULT SIZE
   uint nb_cases = DEFAULT_SIZE * DEFAULT_SIZE;
+  square* squares_empty = calloc(nb_cases, sizeof(square)); // 0 <=> S_EMPTY
 
-  // automatically generate an empty square array with calloc (0 <=> S_EMPTY)
-  square* squares_empty = calloc(nb_cases, sizeof(square));
+  // create the game with our recently generated empty grid
+  game game_empty = game_new(squares_empty);
+  free(squares_empty); //  no longer needed (copied by game_new)
 
-  // using game_new with our empty squares ==> creation of empty game
-  game new_empty_game = game_new(squares_empty);
-  free(squares_empty);
-
-  return new_empty_game;
+  // output
+  return game_empty;
 }
 
 game game_copy(cgame g) {
-  if (g == NULL) {
-    fprintf(stderr,
-            "ERROR -> game_copy(cgame g) : invalid g parameter; pointing on "
-            "nothing...");
-    exit(EXIT_FAILURE);
-  }
+  // checking existance of game
+  assert(g != NULL, "game_copy(cgame g) : g pointing on nothing");
 
-  return game_new_ext(g->height, g->width, g->ArrayOfSquare, g->wrapping,
-                      g->unique);
+  // cloning the game
+  game game_clone = game_new_ext(
+    game_nb_rows(g),
+    game_nb_cols(g),
+    grid_copy(g->grid, game_nb_rows(g)*game_nb_cols(g)),
+    game_is_wrapping(g),
+    game_is_unique(g)
+  );
+
+  // output
+  return game_clone;
 }
 
 bool game_equal(cgame g1, cgame g2) {
-  if (g1 == NULL || g2 == NULL) {
-    fprintf(stderr,
-            "ERROR -> game_equal(cgame g1, cgame g2 : one of the two games are "
-            "pointing on nothing...");
-    exit(EXIT_FAILURE);
-  }
+
+  assert(g1 != NULL, "game_equal(cgame g1, cgame g2) : g1 pointing on nothing");
+  assert(g2 != NULL, "game_equal(cgame g1, cgame g2) : g2 pointing on nothing");
+
+  // verifying if the dimensions of both games are equals
+  if (!identical_game_dimension(g1, g2)) return false;
 
   // traverse and compare every square of both games
   for (int x = 0; x < g1->width; x++) {
     for (int y = 0; y < g1->height; y++) {
-      square g1_actual_square = game_get_square(g1, x, y);
-      square g2_actual_square = game_get_square(g2, x, y);
-      if (g1_actual_square != g2_actual_square) {
-        // unequal squares on same pos
+      square g1_current_square = game_get_square(g1, x, y);
+      square g2_current_square = game_get_square(g2, x, y);
+      if (!identical_squares(g1_current_square, g2_current_square)) {
         return false;
       }
     }
   }
+
   // out of the loop -> identical games
   return true;
 }
 
 void game_delete(game g) {
-  if (g->ArrayOfSquare != NULL) free(g->ArrayOfSquare);
+  if (g->grid != NULL) free(g->grid);
   if (g->last_moves != NULL) queue_free_full(g->last_moves, free);
   if (g->cancelled_moves != NULL) queue_free_full(g->cancelled_moves, free);
   free(g);
 }
 
 void game_set_square(game g, uint i, uint j, square s) {
-  if (g == NULL) {
-    fprintf(stderr,
-            "ERROR on game_set_square(game g, uint i, uint j, square s) : "
-            "invalid parameters; g pointing on nothing...");
-    exit(EXIT_FAILURE);
-  } else if (i > g->height || j > g->width) {
-    fprintf(stderr,
-            "ERROR on game_set_square(game g, uint i, uint j, square s) : "
-            "invalid parameters; i or j aren't under DEFAULT_SIZE (%d) ...",
-            DEFAULT_SIZE);
-    exit(EXIT_FAILURE);
-  } else if (s < S_EMPTY || s > S_IMMUTABLE_ONE) {  // s in [0;4]
-    fprintf(stderr,
-            "ERROR on game_set_square(game g, uint i, uint j, square s) : "
-            "invalid parameters; the square s (%u) isn't a square ...",
-            s);
-    exit(EXIT_FAILURE);
-  }
+  assert(g != NULL, "game_set_square(game g) : g pointing on nothing\n");
+  assert(i < game_nb_rows(g), "game_set_square(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_set_square(uint j) : j over grid");
+  assert(s >= S_EMPTY && s <= S_IMMUTABLE_ONE, "game_set_square(square s) : s not a square");
 
-  // CIBLE VERROUILÉE ...
   uint index_to_set = (i * g->width) + j;
-
-  // FIRE (LET THAT F** SQUARE IN)
-  g->ArrayOfSquare[index_to_set] = s;
+  g->grid[index_to_set] = s;
 }
 
 square game_get_square(cgame g, uint i, uint j) {
@@ -139,7 +154,7 @@ square game_get_square(cgame g, uint i, uint j) {
   uint index_to_get = (i * g->width) + j;
 
   // GET THAT SQUARE AND GIVE IT BACK
-  return g->ArrayOfSquare[index_to_get];
+  return g->grid[index_to_get];
 }
 
 int game_get_number(cgame g, uint i, uint j) {

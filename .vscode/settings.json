@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "array": "c"
+        "array": "c",
+        "queue.h": "c"
     }
 }

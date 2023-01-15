@@ -49,7 +49,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
     arrayClone[i] = squares[i];
   }
 
-  new_game->ArrayOfSquare = arrayClone;
+  new_game->grid = arrayClone;
   return new_game;
 }
 
