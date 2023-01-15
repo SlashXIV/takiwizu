@@ -291,7 +291,7 @@ bool test_game_restart() {
 
   game_restart(g2);
 
-  if (!queue_is_empty(g2->undo)) return false;
+  if (!queue_is_empty(g2->last_moves)) return false;
 
   game_delete(g2);
 
