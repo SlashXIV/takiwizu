@@ -97,7 +97,7 @@ bool test_game_play_move() {
   if (queue_peek_tail(g->last_moves) == NULL) return false;
 
   if (game_get_square(g, 2, 0) != S_ONE) {
-    return false; 
+    return false;
   }
 
   game_delete(g);
