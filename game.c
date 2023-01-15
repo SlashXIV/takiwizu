@@ -106,10 +106,6 @@ bool parity_lines(cgame g, uint i, uint j) {
   uint cpt_one_row = 0;
 
   for (int h = 0; h < game_nb_rows(g); h++) {
-<<<<<<< HEAD
-    
-=======
->>>>>>> a6e7829ed785b5d319c4559e9b7df1938cb5a452
     switch (game_get_number(g, h, j)) {
       case 0:
         cpt_zero_col++;
@@ -161,9 +157,9 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
 
     // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
     // AUTRES LIGNES
-    square compare_line[game_nb_cols(g)];
+    int compare_line[game_nb_cols(g)];
     for (uint case_index = 0; case_index < game_nb_cols(g); case_index++) {
-      compare_line[case_index] = game_get_square(g, i, case_index);
+      compare_line[case_index] = game_get_number(g, i, case_index);
     }
 
     // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
@@ -177,7 +173,7 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
         if (y == i) break;
 
         // ONE DIFFERENCE IS ENOUGH TO COMPARE THE NEXT LINE
-        if (compare_line[x] != game_get_square(g, y, x)) break;
+        if (compare_line[x] != game_get_number(g, y, x)) break;
 
         cpt_equal_case++;
       }
@@ -194,9 +190,9 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
 
     // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
     // AUTRES LIGNES
-    square compare_line[game_nb_rows(g)];
+    int compare_line[game_nb_rows(g)];
     for (uint case_index = 0; case_index < game_nb_rows(g); case_index++) {
-      compare_line[case_index] = game_get_square(g, case_index, j);
+      compare_line[case_index] = game_get_number(g, case_index, j);
     }
 
     // COMPARAISON DE LA LIGNE SAUVEGARDÉ AVEC TOUTES LES AUTRES LIGNES :
@@ -209,7 +205,7 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
         // IGNORE ITSELF
         if (x == j) break;
 
-        if (compare_line[y] != game_get_square(g, y, x)) break;
+        if (compare_line[y] != game_get_number(g, y, x)) break;
 
         cpt_equal_case++;
       }
