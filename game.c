@@ -43,14 +43,10 @@ bool identical_game_dimension(cgame g1, cgame g2) {
 }
 
 // returns true if the square is a one (immutable or not)
-bool is_one(square s){
-  return (s == S_IMMUTABLE_ONE || s == S_ONE);
-}
+bool is_one(square s) { return (s == S_IMMUTABLE_ONE || s == S_ONE); }
 
 // returns true if the square is a zero (immutable or not)
-bool is_zero(square s){
-  return (s == S_IMMUTABLE_ZERO || s == S_ZERO);
-}
+bool is_zero(square s) { return (s == S_IMMUTABLE_ZERO || s == S_ZERO); }
 
 // [===== GAME FONCTIONS =====]
 game game_new(square* squares) {
@@ -93,13 +89,8 @@ game game_copy(cgame g) {
   assert(g != NULL, "game_copy(cgame g) : g pointing on nothing");
 
   // cloning the game
-  game game_clone =
-      game_new_ext(
-        game_nb_rows(g), 
-        game_nb_cols(g),
-        g->grid,
-        game_is_wrapping(g),
-        game_is_unique(g));
+  game game_clone = game_new_ext(game_nb_rows(g), game_nb_cols(g), g->grid,
+                                 game_is_wrapping(g), game_is_unique(g));
 
   // output
   return game_clone;
@@ -161,9 +152,12 @@ int game_get_number(cgame g, uint i, uint j) {
 
   square s = game_get_square(g, i, j);
 
-  if (is_one(s)) return 1;
-  else if (is_zero(s)) return 0;
-  else return -1;
+  if (is_one(s))
+    return 1;
+  else if (is_zero(s))
+    return 0;
+  else
+    return -1;
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
@@ -172,7 +166,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
   assert(i < game_nb_rows(g), "game_get_next_square(uint i) : i over grid");
   assert(j < game_nb_cols(g), "game_get_next_square(uint j) : j over grid");
 
-  if (!game_is_wrapping(g)){
+  if (!game_is_wrapping(g)) {
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
     if (dir == UP) i -= dist;
     if (dir == DOWN) i += dist;
@@ -182,61 +176,54 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
     // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
 
     if (i >= g->height || j >= g->width) return -1;
-    return game_get_square(g, i, j);  
-  } 
-  
-  else {
-    int ii = i;
-    int jj = j;
-
-    // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
-    if (dir == UP) ii -= dist;
-    if (dir == DOWN) ii += dist;
-    if (dir == LEFT) jj -= dist;
-    if (dir == RIGHT) jj += dist;
-
-    // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
-
-    if (ii >= (int)g->height) {
-      ii = ii - g->height;
-    }
-
-    if (jj >= (int)g->width) {
-      jj = jj - g->width;
-    }
-
-    if (ii < 0) {
-      ii = ii + g->height;
-    }
-
-    if (jj < 0) {
-      jj = jj + g->width;
-    }
-    i = ii;
-    j = jj;
     return game_get_square(g, i, j);
   }
 
- 
+  int ii = i;
+  int jj = j;
 
+  // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
+  if (dir == UP) ii -= dist;
+  if (dir == DOWN) ii += dist;
+  if (dir == LEFT) jj -= dist;
+  if (dir == RIGHT) jj += dist;
+
+  // CHECKING IF NEW COORDINATES ARE STILL INSIDE GRID
+
+  if (ii >= (int)g->height) {
+    ii = ii - g->height;
+  }
+
+  if (jj >= (int)g->width) {
+    jj = jj - g->width;
+  }
+
+  if (ii < 0) {
+    ii = ii + g->height;
+  }
+
+  if (jj < 0) {
+    jj = jj + g->width;
+  }
+  i = ii;
+  j = jj;
+
+  return game_get_square(g, i, j);
 }
 
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  if (g == NULL || i >= g->height || j >= g->width || dist > 2) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    return -1;
-  }
+  assert(g, "game_get_next_number(cgame g) : g pointing on nothing");
 
-  if (game_get_next_square(g, i, j, dir, dist) == S_IMMUTABLE_ONE ||
-      game_get_next_square(g, i, j, dir, dist) == S_ONE)
+  // if (i >= g->height || j >= g->width || dist > 2) return -1;
+
+  square s = game_get_next_square(g, i, j, dir, dist);
+
+  if (is_one(s))
     return 1;
-
-  if (game_get_next_square(g, i, j, dir, dist) == S_IMMUTABLE_ZERO ||
-      game_get_next_square(g, i, j, dir, dist) == S_ZERO)
+  else if (is_zero(s))
     return 0;
-
   else
     return -1;
 }
