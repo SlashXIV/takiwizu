@@ -462,8 +462,8 @@ void game_play_move(game g, uint i, uint j, square s) {
   // We create an array for store the current move
   int* move = malloc(sizeof(int) * MOVE_SIZE);
   move[MOVE_SQUARE_INDEX] = game_get_square(g, i, j);  // store square
-  move[MOVE_I_INDEX] = i;       // store i
-  move[MOVE_J_INDEX] = j;       // store j
+  move[MOVE_I_INDEX] = i;                              // store i
+  move[MOVE_J_INDEX] = j;                              // store j
 
   game_set_square(g, i, j, s);
 

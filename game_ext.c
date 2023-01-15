@@ -77,14 +77,6 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 bool game_is_unique(cgame g) { return g->unique; }
 
 void game_undo(game g) {
-  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
-  // pile undo)
-  // - game_undo(g) récupère le dernier move réalisé (qui est stocké dans la
-  // pile undo)
-  // - place un empty là ou le move a été joué
-  // - renvoie ce move dans la pile redo en s'assurant qu'il a été retiré de la
-  // pile undo
-
   if (g == NULL) {
     fprintf(stderr, "game undefined");
     exit(EXIT_FAILURE);
@@ -95,11 +87,6 @@ void game_undo(game g) {
   int* m = queue_pop_head(g->last_moves);
 
   square save = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);
-
-  for (int i = 0; i < 3; i++) {
-    printf("%d ", m[i]);
-  }
-  printf("\n");
 
   game_set_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX], m[MOVE_SQUARE_INDEX]);
 
@@ -125,8 +112,7 @@ void game_redo(game g) {
   square saved = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);
 
   // We re set the canceled move in the game:
-  game_set_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX],
-                      m[MOVE_SQUARE_INDEX]);
+  game_set_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX], m[MOVE_SQUARE_INDEX]);
 
   m[MOVE_SQUARE_INDEX] = saved;
 
