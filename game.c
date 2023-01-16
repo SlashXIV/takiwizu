@@ -155,8 +155,8 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
   if (test_rows) {
     uint cpt_equal_case;
 
-    // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
-    // AUTRES LIGNES
+    //WE SAVE THE LINE (on which i is located) TO COMPARE AMONG THE
+    // OTHER LINES
     int compare_line[game_nb_cols(g)];
     for (uint case_index = 0; case_index < game_nb_cols(g); case_index++) {
       compare_line[case_index] = game_get_number(g, i, case_index);
@@ -188,8 +188,8 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
   if (test_cols) {
     uint cpt_equal_case;
 
-    // ON SAUVEGARDE LA LIGNE (sur laquelle i se trouve) À COMPARER PARMI LES
-    // AUTRES LIGNES
+    //WE SAVE THE LINE (on which i is located) TO COMPARE AMONG THE
+    // OTHER LINES
     int compare_line[game_nb_rows(g)];
     for (uint case_index = 0; case_index < game_nb_rows(g); case_index++) {
       compare_line[case_index] = game_get_number(g, case_index, j);

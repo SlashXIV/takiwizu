@@ -9,7 +9,7 @@
 #include "game_ext.h"
 #include "game_struct.h"
 
-void game_print(cgame g) {  // ilisa
+void game_print(cgame g) {  
   // printing j coords
 
   printf("   ");
@@ -62,7 +62,7 @@ void game_print(cgame g) {  // ilisa
   printf("\n");
 }
 
-game game_default(void) {  // ilisa
+game game_default(void) {  
 
   square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
 
@@ -105,13 +105,13 @@ game game_default(void) {  // ilisa
   tab[34] = S_EMPTY;
   tab[35] = S_IMMUTABLE_ZERO;
 
-  game g_output = game_new(tab);  // copie du tableau en interne
-  free(tab);                      // désormais inutile
+  game g_output = game_new(tab);  
+  free(tab);                      
 
   return g_output;
 }
 
-game game_default_solution(void) {  // ilisa
+game game_default_solution(void) {  
 
   square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
 
@@ -159,7 +159,7 @@ game game_default_solution(void) {  // ilisa
   tab[34] = S_ONE;
   tab[35] = S_IMMUTABLE_ZERO;
 
-  game g_output = game_new(tab);  // copie du tableau en interne
-  free(tab);                      // désormais inutile
+  game g_output = game_new(tab);  
+  free(tab);                      
   return g_output;
 }
