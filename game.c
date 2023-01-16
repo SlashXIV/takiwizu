@@ -434,10 +434,10 @@ int game_has_error(cgame g, uint i, uint j) {
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s) {
-  if (g == NULL) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    exit(EXIT_FAILURE);
-  }
+  
+  assert(g!=NULL,"game_restart(game g) : g is NULL, or  wrong coordinates given :/!");
+  assert(i < game_nb_rows(g), "game_check_move(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_check_move(uint j) : j over grid");
 
   if (i >= g->height || j >= g->width) return false;
 
@@ -459,7 +459,7 @@ void game_play_move(game g, uint i, uint j, square s) {
     exit(EXIT_FAILURE);
   }
 
-  // We create an array for store the current move
+  //We create an array for store the current move
   int* move = malloc(sizeof(int) * MOVE_SIZE);
   move[MOVE_SQUARE_INDEX] = game_get_square(g, i, j);  // store square
   move[MOVE_I_INDEX] = i;                              // store i
@@ -474,9 +474,7 @@ void game_play_move(game g, uint i, uint j, square s) {
 bool game_is_over(cgame g) {
   // We test if our pointer g is NULL, if it is the case we exit the programm.
 
-  if (g == NULL) {
-    exit(EXIT_FAILURE);
-  }
+  assert(g!=NULL,"game_is_over(game g) : g is NULL!");
 
   for (int i = 0; i < g->height; i++) {
     for (int j = 0; j < g->width; j++) {
@@ -493,10 +491,6 @@ bool game_is_over(cgame g) {
 }
 
 void game_clear_history( game g){
-
-  if (g == NULL) {
-    exit(EXIT_FAILURE);
-  }
 
   // clear all history
   queue_free_full(g->last_moves, free);
@@ -523,6 +517,5 @@ void game_restart(game g) {
   assert(g!=NULL,"game_restart(game g) : g is NULL!");
 
   game_reset_default(g);
-  
   game_clear_history(g);
 }
