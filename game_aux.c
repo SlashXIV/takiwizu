@@ -12,6 +12,8 @@
 void game_print(cgame g) {  
   // printing j coords
 
+  //assert(g!=NULL,"game_print(game g) : g is NULL!");
+
   printf("   ");
   for (int x = 0; x < game_nb_cols(g); x++) {
     printf("%d", x);
