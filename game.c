@@ -492,6 +492,22 @@ bool game_is_over(cgame g) {
   return true;
 }
 
+void game_clear_history( game g){
+
+  if (g == NULL) {
+    exit(EXIT_FAILURE);
+  }
+
+  // clear all history
+  queue_free_full(g->last_moves, free);
+  queue_free_full(g->cancelled_moves, free);
+
+  g->last_moves = queue_new();
+  g->cancelled_moves = queue_new();
+
+}
+
+
 void game_restart(game g) {
   if (g == NULL) {
     exit(EXIT_FAILURE);
@@ -504,11 +520,5 @@ void game_restart(game g) {
       if (game_get_square(g, i, j) == S_ZERO) game_set_square(g, i, j, S_EMPTY);
     }
   }
-
-  // clear all history
-  queue_free_full(g->last_moves, free);
-  queue_free_full(g->cancelled_moves, free);
-
-  g->last_moves = queue_new();
-  g->cancelled_moves = queue_new();
+  game_clear_history(g);
 }
