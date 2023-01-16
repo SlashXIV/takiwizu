@@ -507,18 +507,22 @@ void game_clear_history( game g){
 
 }
 
+void game_reset_default(game g){
 
-void game_restart(game g) {
-  if (g == NULL) {
-    exit(EXIT_FAILURE);
-  }
-
-  for (int i = 0; i < g->height; i++) {
-    for (int j = 0; j < g->width; j++) {
+   for (int i = 0; i < game_nb_rows(g) ; i++) {
+    for (int j = 0; j < game_nb_cols(g) ; j++) {
       if (game_get_square(g, i, j) == S_ONE) game_set_square(g, i, j, S_EMPTY);
 
       if (game_get_square(g, i, j) == S_ZERO) game_set_square(g, i, j, S_EMPTY);
     }
   }
+}
+
+void game_restart(game g) {
+  
+  assert(g!=NULL,"game_restart(game g) : g is NULL!");
+
+  game_reset_default(g);
+  
   game_clear_history(g);
 }
