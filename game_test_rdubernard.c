@@ -6,8 +6,7 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
-#include "game_struct.h"
-#include "queue.h"
+
 
 #define ASSERT(expr)                                                          \
   do {                                                                        \

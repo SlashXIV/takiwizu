@@ -2,6 +2,7 @@
     "files.associations": {
         "*.ejs": "html",
         "array": "c",
-        "queue.h": "c"
+        "queue.h": "c",
+        "game_struct.h": "c"
     }
 }
