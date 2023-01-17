@@ -15,23 +15,33 @@ build-job:
         - mkdir build
         - cd build
         - cmake ..
-        - make
+        - make 
 
 test-job: 
     stage: test
     script: 
+        - mkdir build
+        - cd build
+        - cmake ..
+        - make -s
         - make test
 
 
 memory_check-job:
     stage: memory_check
     script: 
+        - mkdir build
+        - cd build
+        - cmake ..
+        - make -s
         - make ExperimentalMemCheck
 
 
 coverage-job:
     stage: coverage 
     script: 
+        - mkdir build
         - cd build
+        - make -s
         - make ExperimentalCoverage
 
