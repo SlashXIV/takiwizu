@@ -1,0 +1,36 @@
+default:
+    tags:
+        - CREMI 
+        - Focal/Fossa 
+
+stages: 
+    - build 
+    - test 
+    - memory_check
+    - coverage 
+
+build-job: 
+    stage: build 
+    script: 
+        - mkdir build
+        - cd build
+        - make
+
+test-job: 
+    stage: test
+    script: 
+        - make test
+
+
+memory_check-job:
+    stage: memory_check
+    script: 
+        - make ExperimentalMemCheck
+
+
+coverage-job:
+    stage: coverage 
+    script: 
+        - cd build
+        - make ExperimentalCoverage
+
