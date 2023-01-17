@@ -22,7 +22,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
   new_game->wrapping = wrapping;
   new_game->last_moves = queue_new();
   new_game->cancelled_moves = queue_new();
-  new_game->grid = grid_copy(squares, nb_cols * nb_cols);
+  new_game->grid = grid_copy(squares, nb_cols * nb_rows);
 
   return new_game;
 }
@@ -33,7 +33,7 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping,
 
   game g_empty = game_new_ext(nb_rows, nb_cols, empty_grid, wrapping, unique);
 
-  free(empty_grid); // did a copy in game_new_ext, no longer needed
+  free(empty_grid);  // did a copy in game_new_ext, no longer needed
   return g_empty;
 }
 
