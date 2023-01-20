@@ -5,7 +5,6 @@
 #include "game_aux.h"
 #include "game_ext.h"
 #include "game_struct.h"
-#include "queue.h"
 
 void list_error_each_square(cgame g) {
   for (uint i = 0; i < game_nb_rows(g); i++)
