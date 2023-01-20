@@ -231,8 +231,6 @@ int game_has_error(cgame g, uint i, uint j) {
 bool game_check_move(cgame g, uint i, uint j, square s) {
   assert(g != NULL,
          "game_restart(game g) : g is NULL, or  wrong coordinates given :/!");
-  assert(i < game_nb_rows(g), "game_check_move(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_check_move(uint j) : j over grid");
 
   if (i >= game_nb_rows(g) || j >= game_nb_cols(g)) return false;
 
