@@ -7,7 +7,6 @@
 #include "game_aux.h"
 #include "game_ext.h"
 
-
 #define ASSERT(expr)                                                          \
   do {                                                                        \
     if ((expr) == 0) {                                                        \

@@ -22,7 +22,8 @@ bool empty_square(square s);
 // returns true if IMMUTABLE square, false otherwise
 bool immutable_square(square s);
 
-// returns true if there is 3 consecutives equal squares in the game, false otherwise
+// returns true if there is 3 consecutives equal squares in the game, false
+// otherwise
 bool three_identical_consecutives_squares_on_pos(cgame g, uint i, uint j);
 
 // verifies that there is the same amount of one and zero in the lines
@@ -30,7 +31,6 @@ bool parity_lines(cgame g, uint i, uint j);
 
 // return true if there is two equals lines in the game
 bool unicity_disrespected(cgame g, uint i, uint j);
-
 
 // return true if the parameter is even, false otherwise
 bool is_even(uint n);

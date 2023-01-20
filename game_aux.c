@@ -9,10 +9,10 @@
 #include "game_ext.h"
 #include "game_struct.h"
 
-void game_print(cgame g) {  
+void game_print(cgame g) {
   // printing j coords
 
-  //assert(g!=NULL,"game_print(game g) : g is NULL!");
+  // assert(g!=NULL,"game_print(game g) : g is NULL!");
 
   printf("   ");
   for (int x = 0; x < game_nb_cols(g); x++) {
@@ -64,8 +64,7 @@ void game_print(cgame g) {
   printf("\n");
 }
 
-game game_default(void) {  
-
+game game_default(void) {
   square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
 
   if (tab == NULL) exit(EXIT_FAILURE);
@@ -107,14 +106,13 @@ game game_default(void) {
   tab[34] = S_EMPTY;
   tab[35] = S_IMMUTABLE_ZERO;
 
-  game g_output = game_new(tab);  
-  free(tab);                      
+  game g_output = game_new(tab);
+  free(tab);
 
   return g_output;
 }
 
-game game_default_solution(void) {  
-
+game game_default_solution(void) {
   square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
 
   if (tab == NULL) exit(EXIT_FAILURE);
@@ -161,7 +159,7 @@ game game_default_solution(void) {
   tab[34] = S_ONE;
   tab[35] = S_IMMUTABLE_ZERO;
 
-  game g_output = game_new(tab);  
-  free(tab);                      
+  game g_output = game_new(tab);
+  free(tab);
   return g_output;
 }

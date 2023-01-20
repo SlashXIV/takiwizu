@@ -65,7 +65,6 @@ int main(void) {
     scanf(" %c", &input_char);  // space before format specifier implies not
                                 // consedirating any spaces & line breaks
     switch (input_char) {
-      
       case 'h':
         printf("\naction : help\n");
         display_help();

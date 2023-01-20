@@ -293,12 +293,23 @@ bool test_game_restart() {
 
   game_undo(g2);
   game_undo(g2);
-  game_redo(g2); // je remet le 0 0 S_ZERO (dans le jeu)
+  game_redo(g2);  // je remet le 0 0 S_ZERO (dans le jeu)
 
   game_restart(g2);
 
+  if (game_get_square(g2, 0, 0) == S_ZERO) {
+    return false;
+  }
 
-  if (game_get_square(g2, 0, 0) == S_ZERO){
+  game_undo(g2);
+
+  if (game_get_square(g2, 0, 0) != S_EMPTY) {
+    return false;
+  }
+
+  game_redo(g2);
+
+  if (game_get_square(g2, 0, 0) != S_EMPTY) {
     return false;
   }
 
