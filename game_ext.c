@@ -47,7 +47,11 @@ bool game_is_unique(cgame g) { return g->unique; }
 
 void game_undo(game g) {
   assert(g != NULL, "game_undo(game g) : g is pointing on nothing");
-  if (queue_is_empty(g->last_moves)) return;
+
+  if (queue_is_empty(g->last_moves)) {
+    printf("\nimpossible : nothing to undo\n");
+    return;
+  }
 
   int* m = queue_pop_head(g->last_moves);
   square saved = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);
@@ -60,7 +64,10 @@ void game_undo(game g) {
 
 void game_redo(game g) {
   assert(g != NULL, "game_redo(game g) : g is pointing on nothing");
-  if (queue_is_empty(g->cancelled_moves)) return;
+  if (queue_is_empty(g->cancelled_moves)) {
+    printf("\nimpossible : nothing to redo\n");
+    return;
+  }
 
   int* m = queue_pop_head(g->cancelled_moves);
   square saved = game_get_square(g, m[MOVE_I_INDEX], m[MOVE_J_INDEX]);

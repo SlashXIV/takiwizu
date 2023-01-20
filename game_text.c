@@ -82,16 +82,11 @@ int main(void) {
 
       case 'z':
         printf("\naction : undo\n");
-        if (queue_is_empty(g->last_moves))
-          printf("\nimpossible : nothing to undo\n");
         game_undo(g);
         break;
 
       case 'y':
         printf("\naction : redo\n");
-
-        if (queue_is_empty(g->cancelled_moves))
-          printf("\nimpossible : nothing to redo\n");
         game_redo(g);
         break;
 
