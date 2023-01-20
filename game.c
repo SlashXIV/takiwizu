@@ -234,11 +234,11 @@ bool game_check_move(cgame g, uint i, uint j, square s) {
   assert(i < game_nb_rows(g), "game_check_move(uint i) : i over grid");
   assert(j < game_nb_cols(g), "game_check_move(uint j) : j over grid");
 
-  if (i >= g->height || j >= g->width) return false;
+  if (i >= game_nb_rows(g) || j >= game_nb_cols(g)) return false;
 
-  square cas = game_get_square(g, i, j);
+  square case_actuelle = game_get_square(g, i, j);
 
-  if (cas == S_IMMUTABLE_ONE || cas == S_IMMUTABLE_ZERO ||
+  if (case_actuelle == S_IMMUTABLE_ONE || case_actuelle == S_IMMUTABLE_ZERO ||
       s == S_IMMUTABLE_ONE || s == S_IMMUTABLE_ZERO)
     return false;
 
