@@ -196,6 +196,14 @@ bool test_game_redo() {
   if (game_get_square(g, 0, 0) != S_ONE) return false;
   if (game_get_square(g, 3, 5) != S_ZERO) return false;
 
+  game_undo(g);
+
+  if (game_get_square(g, 3, 5) != S_EMPTY) return false;
+
+  game_redo(g);
+
+  if (game_get_square(g, 3, 5) != S_ZERO) return false;
+
   game_delete(g);
 
   return true;
