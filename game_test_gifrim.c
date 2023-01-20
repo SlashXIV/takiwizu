@@ -20,14 +20,18 @@ bool test_dummy() { return true; }
 bool test_game_check_move() {
   game g = game_default();
 
-  if (!game_check_move(g, 0, 4, S_ZERO)) return false;
+  if (!game_check_move(g, 0, 4, S_ZERO)) goto error;
 
-  if (game_check_move(g, 0, 1, S_ZERO)) return false;
+  if (game_check_move(g, 0, 1, S_ZERO)) goto error;
 
-  if (!game_check_move(g, 5, 0, S_ZERO)) return false;
+  if (!game_check_move(g, 5, 0, S_ZERO)) goto error;
 
   game_delete(g);
   return true;
+
+error:
+  game_delete(g);
+  return false;
 }
 
 bool test_game_has_error() {
