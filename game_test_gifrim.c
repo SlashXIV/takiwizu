@@ -18,13 +18,17 @@ void usage_gifrim(int argc) {
 bool test_dummy() { return true; }
 
 bool test_game_check_move() {
-  game g = game_default();
+  game g = game_new_empty_ext(6, 6, false, false);
 
-  if (!game_check_move(g, 0, 4, S_ZERO)) goto error;
+  game_set_square(g, 0, 4, S_IMMUTABLE_ZERO);
 
-  if (game_check_move(g, 0, 1, S_ZERO)) goto error;
+  game_set_square(g, 5, 0, S_IMMUTABLE_ZERO);
 
-  if (!game_check_move(g, 5, 0, S_ZERO)) goto error;
+  if (game_check_move(g, 0, 4, S_ZERO)) goto error;
+
+  if (!game_check_move(g, 0, 1, S_ZERO)) goto error;
+
+  if (game_check_move(g, 5, 0, S_ZERO)) goto error;
 
   game_delete(g);
   return true;
