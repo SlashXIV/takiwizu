@@ -44,5 +44,6 @@ coverage-job:
         - cd build
         - cmake ..
         - make -s
+        - make test
         - make ExperimentalCoverage
 
