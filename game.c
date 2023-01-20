@@ -229,8 +229,7 @@ int game_has_error(cgame g, uint i, uint j) {
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s) {
-  assert(g != NULL,
-         "game_restart(game g) : g is NULL, or  wrong coordinates given :/!");
+  assert(g != NULL, "game_check_move(game g) : g is NULL");
 
   if (i >= game_nb_rows(g) || j >= game_nb_cols(g)) return false;
 
@@ -244,13 +243,12 @@ bool game_check_move(cgame g, uint i, uint j, square s) {
 }
 
 void game_play_move(game g, uint i, uint j, square s) {
-  if (i >= g->height || j >= g->width || g == NULL ||
-      game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
-      game_get_square(g, i, j) == S_IMMUTABLE_ZERO || s == S_IMMUTABLE_ONE ||
-      s == S_IMMUTABLE_ZERO) {
-    fprintf(stderr, "g is null, or  wrong coordinates given :/\n");
-    exit(EXIT_FAILURE);
-  }
+  assert(g != NULL, "game_play_move(cgame g) : g is pointing on nothing");
+  assert(i < game_nb_rows(g), "game_play_move(uint i) : i over grid");
+  assert(j < game_nb_cols(g), "game_play_move(uint j) : j over grid");
+  assert(!game_is_immutable(g, i, j),
+         "game_play_move(uint i, uint j) : square is immutable");
+  assert(!immutable_square(s), "game_play_move(square s) : s is immutable");
 
   // We create an array for store the current move
   int* move = malloc(sizeof(int) * MOVE_SIZE);

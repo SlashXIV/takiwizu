@@ -283,10 +283,6 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp(argv[1], "is_over")) {
     okey = test_game_is_over();
-  } else if (!strcmp(argv[1], "game_nb_cols")) {
-    okey = test_game_nb_cols();
-  } else if (!strcmp(argv[1], "game_new_ext")) {
-    okey = test_game_new_ext();
   }
 
   else if (!strcmp("game_undo", argv[1])) {

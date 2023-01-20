@@ -354,9 +354,6 @@ bool test_game_copy() {
                          cpt_immutable_white == total_immutable_white);
 
   if (!game_equal(g_default_clone, g_default_primal) || !values_matches) {
-    printf("equal_fonc -> %d\n", game_equal(g_default_clone, g_default_primal));
-    printf("values_matches -> %d\n", values_matches);
-    printf("THERE IS AN ERROR : GAME NOT EQUAL OR VALUES DON4 T MATCHES");
     return false;
   }
 
