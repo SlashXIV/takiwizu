@@ -1,17 +1,19 @@
 
-<center>Voici le projet <ins>Takuzu</ins> de l'équipe <ins>TM06A</ins></center> 
+# <center>Voici le projet **Takuzu** de l'équipe <ins>TM06A</ins></center> 
 
 Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes effectuées lors de ce projet :
 
 <a href = "https://fr.wikipedia.org/wiki/Takuzu"> Cliquez ici </a> pour avoir un aperçu des <font color="red">règles</font> du jeu.
 
 
-1. Compilation avec GCC et Makefile :white_check_mark:
-2. Jouer en Mode Texte :white_check_mark:
-3. Travailler en équipe avec Git :white_check_mark:
-4. CMake :white_check_mark:
-5. Tests unitaires :white_check_mark:
-6. Implémentation du Jeu (V1) :white_check_mark:
+1. :construction: Compilation avec GCC et Makefile :white_check_mark:
+2. :memo: Jouer en Mode Texte :white_check_mark:
+3. :beers: Travailler en équipe avec Git :white_check_mark:
+4. :rocket: CMake :white_check_mark:
+5. :bar_chart: Tests unitaires :white_check_mark:
+6. :space_invader: Implémentation du Jeu (V1) :white_check_mark:
+7. :crystal_ball: Extension du Jeu (V2) :white_check_mark:
+8. :gift: Livraison du projet :white_check_mark:
 
 En attente des prochains TD... :hourglass:
 
