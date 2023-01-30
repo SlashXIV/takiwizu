@@ -30,8 +30,9 @@ game game_load(char *filename);
  * @param g game to save
  * @param filename output file
  **/
-void game_save(cgame g, char *filename);
-
+void game_save(cgame g, char *filename){
+    
+}
 /**
  * @}
  */
