@@ -13,8 +13,9 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 5. :bar_chart: Tests unitaires :white_check_mark:
 6. :space_invader: Implémentation du Jeu (V1) :white_check_mark:
 7. :crystal_ball: Extension du Jeu (V2) :white_check_mark:
-8. :gift: Livraison du projet :white_check_mark:
-
+8. :gift: Livraison du projet :wrench:
+9. :beer: Défis git :wrench:
+10. :bento: GAME IO :wrench:
 En attente des prochains TD... :hourglass:
 
 
