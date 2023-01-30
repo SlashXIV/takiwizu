@@ -32,19 +32,23 @@ game game_load(char * filename){
     int nb_rows, nb_cols, wrapping, unique;
     fscanf(fgame, "%d %d %d %d", &nb_rows, &nb_cols, &wrapping, &unique);
 
-    //Creation d'un jeu
-    game g = game_new_empty_ext(nb_rows, nb_cols, wrapping, unique);
 
 
-    //On insère dans le nouveau tableau les valeurs du fichier
+    square * tab = malloc(nb_rows * nb_cols * sizeof(square));
+
+    //On insère dans ce tableau les valeurs du fichier
 
     for(int i = 0; i < nb_rows; i++){
         for(int j = 0; j < nb_cols; j++){
-            char c;
-            fscanf(fgame, "%c", &c);
-            game_set_square(g, i, j, str_to_square[c]);
+            unsigned char c;
+            fscanf(fgame, " %c", &c);
+            tab[i*nb_cols + j] = str_to_square[c];
         }
     }
+
+
+    //Creation d'un jeu
+    game g = game_new_ext(nb_rows, nb_cols, tab, wrapping, unique);
 
     return g;
 
