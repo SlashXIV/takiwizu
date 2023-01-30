@@ -15,8 +15,40 @@ char square_to_str[255] = {
     [S_IMMUTABLE_ONE] = 'B'
 };
 
+square str_to_square[255] = {
+    ['e'] = S_EMPTY,
+    ['w'] = S_ZERO,
+    ['b'] = S_ONE,
+    ['W'] = S_IMMUTABLE_ZERO,
+    ['B'] = S_IMMUTABLE_ONE
+};
+
 game game_load(char * filename){
-    return NULL;
+    
+    //Ouverture du fichier de sauvegarde
+    FILE * fgame = fopen(filename, "r");
+
+    //Sauvegarde de la taille du plateau (nb_rows nb_cols wrapping unique)
+    int nb_rows, nb_cols, wrapping, unique;
+    fscanf(fgame, "%d %d %d %d", &nb_rows, &nb_cols, &wrapping, &unique);
+
+    //Creation d'un jeu
+    game g = game_new_empty_ext(nb_rows, nb_cols, wrapping, unique);
+
+
+    //On insère dans le nouveau tableau les valeurs du fichier
+
+    for(int i = 0; i < nb_rows; i++){
+        for(int j = 0; j < nb_cols; j++){
+            char c;
+            fscanf(fgame, "%c", &c);
+            game_set_square(g, i, j, str_to_square[c]);
+        }
+    }
+
+    return g;
+
+
 }
 
 void game_save(cgame g, char * filename){

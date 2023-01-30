@@ -53,7 +53,7 @@ int main(void) {
   // GAME START
   game g = game_new_empty_ext(6, 6, false, false);
 
-  game_save(g,"Ma_sauvegarde.txt");
+  
 
   while (!game_is_over(g)) {
     printf("\n");
@@ -92,6 +92,8 @@ int main(void) {
         printf("\naction : redo\n");
         game_redo(g);
         break;
+      
+
 
       // PLAY
       case 'w':
