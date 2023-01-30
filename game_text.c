@@ -5,6 +5,7 @@
 #include "game_aux.h"
 #include "game_ext.h"
 #include "game_struct.h"
+#include "game_tools.h"
 
 void list_error_each_square(cgame g) {
   for (uint i = 0; i < game_nb_rows(g); i++)
@@ -50,7 +51,9 @@ void display_help() {
 
 int main(void) {
   // GAME START
-  game g = game_new_empty_ext(6, 6, true, true);
+  game g = game_new_empty_ext(6, 6, false, false);
+
+  game_save(g,"Ma_sauvegarde.txt");
 
   while (!game_is_over(g)) {
     printf("\n");
