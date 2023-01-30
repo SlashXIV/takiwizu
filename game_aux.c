@@ -8,12 +8,9 @@
 #include "game.h"
 #include "game_ext.h"
 #include "game_struct.h"
+#include "annex_funcs.h"
 
 void game_print(cgame g) {
-  // printing j coords
-
-  // assert(g!=NULL,"game_print(game g) : g is NULL!");
-
   printf("   ");
   for (int x = 0; x < game_nb_cols(g); x++) {
     printf("%d", x);
@@ -65,101 +62,99 @@ void game_print(cgame g) {
 }
 
 game game_default(void) {
-  square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  square * grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  assert(grid != NULL, "game_default() : could not create grid");
 
-  if (tab == NULL) exit(EXIT_FAILURE);
+  grid[0] = S_EMPTY;
+  grid[1] = S_IMMUTABLE_ONE;
+  grid[2] = S_IMMUTABLE_ZERO;
+  grid[3] = S_EMPTY;
+  grid[4] = S_EMPTY;
+  grid[5] = S_EMPTY;
+  grid[6] = S_EMPTY;
+  grid[7] = S_EMPTY;
+  grid[8] = S_EMPTY;
+  grid[9] = S_EMPTY;
+  grid[10] = S_EMPTY;
+  grid[11] = S_EMPTY;
+  grid[12] = S_EMPTY;
+  grid[13] = S_IMMUTABLE_ZERO;
+  grid[14] = S_EMPTY;
+  grid[15] = S_EMPTY;
+  grid[16] = S_IMMUTABLE_ZERO;
+  grid[17] = S_EMPTY;
+  grid[18] = S_EMPTY;
+  grid[19] = S_IMMUTABLE_ZERO;
+  grid[20] = S_IMMUTABLE_ONE;
+  grid[21] = S_EMPTY;
+  grid[22] = S_EMPTY;
+  grid[23] = S_EMPTY;
+  grid[24] = S_EMPTY;
+  grid[25] = S_EMPTY;
+  grid[26] = S_IMMUTABLE_ONE;
+  grid[27] = S_EMPTY;
+  grid[28] = S_EMPTY;
+  grid[29] = S_IMMUTABLE_ZERO;
+  grid[30] = S_EMPTY;
+  grid[31] = S_EMPTY;
+  grid[32] = S_EMPTY;
+  grid[33] = S_EMPTY;
+  grid[34] = S_EMPTY;
+  grid[35] = S_IMMUTABLE_ZERO;
 
-  tab[0] = S_EMPTY;
-  tab[1] = S_IMMUTABLE_ONE;
-  tab[2] = S_IMMUTABLE_ZERO;
-  tab[3] = S_EMPTY;
-  tab[4] = S_EMPTY;
-  tab[5] = S_EMPTY;
-  tab[6] = S_EMPTY;
-  tab[7] = S_EMPTY;
-  tab[8] = S_EMPTY;
-  tab[9] = S_EMPTY;
-  tab[10] = S_EMPTY;
-  tab[11] = S_EMPTY;
-  tab[12] = S_EMPTY;
-  tab[13] = S_IMMUTABLE_ZERO;
-  tab[14] = S_EMPTY;
-  tab[15] = S_EMPTY;
-  tab[16] = S_IMMUTABLE_ZERO;
-  tab[17] = S_EMPTY;
-  tab[18] = S_EMPTY;
-  tab[19] = S_IMMUTABLE_ZERO;
-  tab[20] = S_IMMUTABLE_ONE;
-  tab[21] = S_EMPTY;
-  tab[22] = S_EMPTY;
-  tab[23] = S_EMPTY;
-  tab[24] = S_EMPTY;
-  tab[25] = S_EMPTY;
-  tab[26] = S_IMMUTABLE_ONE;
-  tab[27] = S_EMPTY;
-  tab[28] = S_EMPTY;
-  tab[29] = S_IMMUTABLE_ZERO;
-  tab[30] = S_EMPTY;
-  tab[31] = S_EMPTY;
-  tab[32] = S_EMPTY;
-  tab[33] = S_EMPTY;
-  tab[34] = S_EMPTY;
-  tab[35] = S_IMMUTABLE_ZERO;
-
-  game g_output = game_new(tab);
-  free(tab);
+  game g_output = game_new(grid);
+  free(grid);
 
   return g_output;
 }
 
 game game_default_solution(void) {
-  square *tab = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  square *grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  assert(grid != NULL, "game_default_solution() : could not create grid");
 
-  if (tab == NULL) exit(EXIT_FAILURE);
+  grid[0] = S_ZERO;
+  grid[1] = S_IMMUTABLE_ONE;
+  grid[2] = S_IMMUTABLE_ZERO;
+  grid[3] = S_ONE;
+  grid[4] = S_ZERO;
+  grid[5] = S_ONE;
 
-  tab[0] = S_ZERO;
-  tab[1] = S_IMMUTABLE_ONE;
-  tab[2] = S_IMMUTABLE_ZERO;
-  tab[3] = S_ONE;
-  tab[4] = S_ZERO;
-  tab[5] = S_ONE;
+  grid[6] = S_ZERO;
+  grid[7] = S_ONE;
+  grid[8] = S_ONE;
+  grid[9] = S_ZERO;
+  grid[10] = S_ONE;
+  grid[11] = S_ZERO;
 
-  tab[6] = S_ZERO;
-  tab[7] = S_ONE;
-  tab[8] = S_ONE;
-  tab[9] = S_ZERO;
-  tab[10] = S_ONE;
-  tab[11] = S_ZERO;
+  grid[12] = S_ONE;
+  grid[13] = S_IMMUTABLE_ZERO;
+  grid[14] = S_ZERO;
+  grid[15] = S_ONE;
+  grid[16] = S_IMMUTABLE_ZERO;
+  grid[17] = S_ONE;
 
-  tab[12] = S_ONE;
-  tab[13] = S_IMMUTABLE_ZERO;
-  tab[14] = S_ZERO;
-  tab[15] = S_ONE;
-  tab[16] = S_IMMUTABLE_ZERO;
-  tab[17] = S_ONE;
+  grid[18] = S_ONE;
+  grid[19] = S_IMMUTABLE_ZERO;
+  grid[20] = S_IMMUTABLE_ONE;
+  grid[21] = S_ZERO;
+  grid[22] = S_ZERO;
+  grid[23] = S_ONE;
 
-  tab[18] = S_ONE;
-  tab[19] = S_IMMUTABLE_ZERO;
-  tab[20] = S_IMMUTABLE_ONE;
-  tab[21] = S_ZERO;
-  tab[22] = S_ZERO;
-  tab[23] = S_ONE;
+  grid[24] = S_ZERO;
+  grid[25] = S_ONE;
+  grid[26] = S_IMMUTABLE_ONE;
+  grid[27] = S_ZERO;
+  grid[28] = S_ONE;
+  grid[29] = S_IMMUTABLE_ZERO;
 
-  tab[24] = S_ZERO;
-  tab[25] = S_ONE;
-  tab[26] = S_IMMUTABLE_ONE;
-  tab[27] = S_ZERO;
-  tab[28] = S_ONE;
-  tab[29] = S_IMMUTABLE_ZERO;
+  grid[30] = S_ONE;
+  grid[31] = S_ZERO;
+  grid[32] = S_ZERO;
+  grid[33] = S_ONE;
+  grid[34] = S_ONE;
+  grid[35] = S_IMMUTABLE_ZERO;
 
-  tab[30] = S_ONE;
-  tab[31] = S_ZERO;
-  tab[32] = S_ZERO;
-  tab[33] = S_ONE;
-  tab[34] = S_ONE;
-  tab[35] = S_IMMUTABLE_ZERO;
-
-  game g_output = game_new(tab);
-  free(tab);
+  game g_output = game_new(grid);
+  free(grid);
   return g_output;
 }
