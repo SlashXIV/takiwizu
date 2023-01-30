@@ -10,6 +10,7 @@
 #define __GAME_TOOLS_H__
 
 #include "game.h"
+#include "game_struct.h"
 
 /**
  * @name Game Tools
@@ -30,9 +31,8 @@ game game_load(char *filename);
  * @param g game to save
  * @param filename output file
  **/
-void game_save(cgame g, char *filename){
-    
-}
+void game_save(cgame g, char *filename);
+
 /**
  * @}
  */

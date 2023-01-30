@@ -2,9 +2,18 @@
 #include <stdio.h>
 #include "game_tools.h"
 #include "game.h"
+#include "annex_funcs.h"
 
 #include "game_ext.h"
 #include "game_struct.h"
+
+char square_to_str[255] = {
+    [S_EMPTY] = 'e',
+    [S_ZERO] = 'w',
+    [S_ONE] = 'b',
+    [S_IMMUTABLE_ZERO] = 'W',
+    [S_IMMUTABLE_ONE] = 'B'
+};
 
 game game_load(char * filename){
     return NULL;
@@ -20,10 +29,12 @@ void game_save(cgame g, char * filename){
     //Sauvegarde du plateau de jeu ligne par ligne
     for(int i = 0; i < game_nb_rows(g); i++){
         for(int j = 0; j < game_nb_cols(g); j++){
-            fprintf(fgame, "%d", game_get_number(g, i, j));
+            fprintf(fgame, "%c", square_to_str[game_get_square(g,i,j)]);
         }
         fprintf(fgame, "\n");
     }
+
+    fclose(fgame);
 }
 
 
