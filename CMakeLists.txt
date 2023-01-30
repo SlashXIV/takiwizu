@@ -7,7 +7,7 @@ set(CMAKE_C_FLAGS "-std=c99 -Wall -g --coverage")
 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
-add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c) # GAME LIB MAKER
+add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c) # GAME LIB MAKER
 
 # [====== LIBRARY LINK ======]
 target_link_libraries(game_text game)
