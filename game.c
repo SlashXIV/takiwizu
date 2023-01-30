@@ -64,7 +64,7 @@ bool game_equal(cgame g1, cgame g2) {
   assert(g2 != NULL, "game_equal(cgame g1, cgame g2) : g2 pointing on nothing");
 
   // verifying if the dimensions of both games are equals
-  if (!identical_game_dimension(g1, g2)) return false;
+  if (!identical_game_dimension(g1, g2) || !identical_game_dimension(g1, g2)) return false;
 
   // traverse and compare every square of both games
   for (int x = 0; x < g1->width; x++) {
@@ -75,8 +75,8 @@ bool game_equal(cgame g1, cgame g2) {
         return false;
       }
     }
-  }
 
+  }
   // out of the loop -> identical games
   return true;
 }
