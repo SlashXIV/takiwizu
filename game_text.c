@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "game.h"
 #include "game_aux.h"
@@ -47,6 +48,8 @@ void display_help() {
   printf("- press 'q' to quit\n");
   printf("- press 'z' to undo\n");
   printf("- press 'r' to redo\n");
+  printf("- press 's' <filename> to save current game\n");
+  printf("- press 'l' <path_to_save> to load a game\n");
 }
 
 int main(void) {
@@ -93,6 +96,30 @@ int main(void) {
         game_redo(g);
         break;
       
+      case 's':
+        printf("\naction : save game\n");
+        char filename_input[255];
+        scanf("%s", filename_input);
+        if (strlen(filename_input) == 0) {
+          printf("filename required, please retry !\n");
+          break;
+        }
+        game_save(g, filename_input);
+        printf("game saved!\n");
+        break;
+        
+      case 'l':
+        printf("\naction : load game\n");
+        char  file_path_input[100];
+        scanf("%s", file_path_input);
+        game g_loaded = game_load(file_path_input); 
+      
+        if (g_loaded == NULL) {
+          printf("file not found, please try again\n");
+          break;
+        }
+        printf("game from \"%s\" successfulyl loaded !\n", file_path_input);
+        break;
 
 
       // PLAY

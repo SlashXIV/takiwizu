@@ -29,9 +29,9 @@ game game_load(char *filename);
  * @brief Saves a game in a text file.
  * @details See the file format description in @ref index.
  * @param g game to save
- * @param filename output file
+ * @param file_path output file
  **/
-void game_save(cgame g, char *filename);
+void game_save(cgame g, char *file_path);
 
 /**
  * @}

@@ -2,3 +2,4 @@ build/
 .o
 .vscode/launch.json
 .vscode/settings.json
+saves/*
