@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "annex_funcs.h"
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
@@ -40,7 +41,6 @@ void play_on_square(game g, int i, int j, int move) {
 }
 
 void display_help() {
-  printf("\naction : help\n");
   printf("- press 'w <i> <j>' to put a zero/white at square (i,j)\n");
   printf("- press 'b' <i> <j>' to put a one/black at square (i,j)\n");
   printf("- press 'e' <i> <j>' to empty square (i,j)\n");
@@ -49,14 +49,18 @@ void display_help() {
   printf("- press 'z' to undo\n");
   printf("- press 'r' to redo\n");
   printf("- press 's' <filename> to save current game\n");
-  printf("- press 'l' <path_to_save> to load a game\n");
 }
 
-int main(void) {
-  // GAME START
-  game g = game_new_empty_ext(6, 6, false, false);
+int main(int argc, char *argv[]) {
+  game g;
 
-  
+  if (argc == 2) {
+    g = game_load(argv[1]);
+    assert(g != NULL, "file not found, try again!");
+    printf("game from \"%s\" successfully loaded !\n", argv[1]);
+  } else {
+    g = game_new_empty_ext(6, 6, false, false);
+  }
 
   while (!game_is_over(g)) {
     printf("\n");
@@ -95,32 +99,17 @@ int main(void) {
         printf("\naction : redo\n");
         game_redo(g);
         break;
-      
+
       case 's':
         printf("\naction : save game\n");
         char filename_input[255];
-        scanf("%s", filename_input);
+        scanf(" %s", filename_input);
         if (strlen(filename_input) == 0) {
           printf("filename required, please retry !\n");
           break;
         }
         game_save(g, filename_input);
-        printf("game saved!\n");
         break;
-        
-      case 'l':
-        printf("\naction : load game\n");
-        char  file_path_input[100];
-        scanf("%s", file_path_input);
-        game g_loaded = game_load(file_path_input); 
-      
-        if (g_loaded == NULL) {
-          printf("file not found, please try again\n");
-          break;
-        }
-        printf("game from \"%s\" successfulyl loaded !\n", file_path_input);
-        break;
-
 
       // PLAY
       case 'w':
