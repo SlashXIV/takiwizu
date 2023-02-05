@@ -3,33 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "annex_funcs.h"
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
 
-#define ASSERT(expr)                                                          \
-  do {                                                                        \
-    if ((expr) == 0) {                                                        \
-      fprintf(stderr, "[%s:%d] Assertion '%s' failed!\n", __FILE__, __LINE__, \
-              #expr);                                                         \
-      abort();                                                                \
-    }                                                                         \
-  } while (0)
-
-/* [====== USAGE ======] */
 void usage(char *cmd) {
   fprintf(stderr, "Usage %s <testname> [<...>]\n", cmd);
   exit(EXIT_FAILURE);
 }
 
-/* [====== DUMMY TESTS ======] */
-
-// -> DUMMY
 bool test_dummy(void) { return true; }
 
-/* [====== GAME UNIT-TESTS ======] */
-
-// ISSUE #7 -> game_get_square()
 bool test_game_get_square(void) {
   // game init simulation
   game g = game_default();
@@ -104,7 +89,7 @@ bool test_game_get_square(void) {
 bool test_game_set_square(void) {
   // GENERATE EMPTY GAME
   game g = game_new_empty();
-  ASSERT(g);
+  check(g, "g is null");
 
   // FILLING 'b' then 'w' MID
   for (int x = 0; x < DEFAULT_SIZE; x++) {

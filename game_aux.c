@@ -63,7 +63,7 @@ void game_print(cgame g) {
 
 game game_default(void) {
   square * grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
-  assert(grid != NULL, "game_default() : could not create grid");
+  check(grid != NULL, "game_default() : could not create grid");
 
   grid[0] = S_EMPTY;
   grid[1] = S_IMMUTABLE_ONE;
@@ -110,7 +110,7 @@ game game_default(void) {
 
 game game_default_solution(void) {
   square *grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
-  assert(grid != NULL, "game_default_solution() : could not create grid");
+  check(grid != NULL, "game_default_solution() : could not create grid");
 
   grid[0] = S_ZERO;
   grid[1] = S_IMMUTABLE_ONE;

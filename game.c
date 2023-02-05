@@ -14,7 +14,7 @@
 // [===== GAME FONCTIONS =====]
 game game_new(square* squares) {
   // checking existance of squares
-  assert(squares != NULL,
+  check(squares != NULL,
          "game_new(square * squares) : squares is pointing on nothing");
 
   // game mallocation & properties assignment
@@ -49,7 +49,7 @@ game game_new_empty(void) {
 
 game game_copy(cgame g) {
   // checking existance of game
-  assert(g != NULL, "game_copy(cgame g) : g pointing on nothing");
+  check(g != NULL, "game_copy(cgame g) : g pointing on nothing");
 
   // cloning the game
   game game_clone = game_new_ext(game_nb_rows(g), game_nb_cols(g), g->grid,
@@ -60,8 +60,8 @@ game game_copy(cgame g) {
 }
 
 bool game_equal(cgame g1, cgame g2) {
-  assert(g1 != NULL, "game_equal(cgame g1, cgame g2) : g1 pointing on nothing");
-  assert(g2 != NULL, "game_equal(cgame g1, cgame g2) : g2 pointing on nothing");
+  check(g1 != NULL, "game_equal(cgame g1, cgame g2) : g1 pointing on nothing");
+  check(g2 != NULL, "game_equal(cgame g1, cgame g2) : g2 pointing on nothing");
 
   // verifying if the dimensions of both games are equals
   if (!identical_game_dimension(g1, g2) || !identical_game_dimension(g1, g2)) return false;
@@ -89,10 +89,10 @@ void game_delete(game g) {
 }
 
 void game_set_square(game g, uint i, uint j, square s) {
-  assert(g != NULL, "game_set_square(game g) : g pointing on nothing");
-  assert(i < game_nb_rows(g), "game_set_square(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_set_square(uint j) : j over grid");
-  assert(s >= S_EMPTY && s <= S_IMMUTABLE_ONE,
+  check(g != NULL, "game_set_square(game g) : g pointing on nothing");
+  check(i < game_nb_rows(g), "game_set_square(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_set_square(uint j) : j over grid");
+  check(s >= S_EMPTY && s <= S_IMMUTABLE_ONE,
          "game_set_square(square s) : s not a square");
 
   uint index_to_set = (i * g->width) + j;
@@ -100,18 +100,18 @@ void game_set_square(game g, uint i, uint j, square s) {
 }
 
 square game_get_square(cgame g, uint i, uint j) {
-  assert(g != NULL, "game_get_square(game g) : g pointing on nothing");
-  assert(i < game_nb_rows(g), "game_get_square(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_get_square(uint j) : j over grid");
+  check(g != NULL, "game_get_square(game g) : g pointing on nothing");
+  check(i < game_nb_rows(g), "game_get_square(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_get_square(uint j) : j over grid");
 
   uint index_to_get = (i * g->width) + j;
   return g->grid[index_to_get];
 }
 
 int game_get_number(cgame g, uint i, uint j) {
-  assert(g != NULL, "game_get_number(game g) : g pointing on nothing");
-  assert(i < game_nb_rows(g), "game_get_number(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_get_number(uint j) : j over grid");
+  check(g != NULL, "game_get_number(game g) : g pointing on nothing");
+  check(i < game_nb_rows(g), "game_get_number(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_get_number(uint j) : j over grid");
 
   square s = game_get_square(g, i, j);
 
@@ -124,10 +124,10 @@ int game_get_number(cgame g, uint i, uint j) {
 }
 
 int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
-  assert(g != NULL, "game_get_next_square(cgame g) : g is pointing on nothing");
-  assert(dist <= 2, "game_get_next_square(uint dist) : dist too far");
-  assert(i < game_nb_rows(g), "game_get_next_square(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_get_next_square(uint j) : j over grid");
+  check(g != NULL, "game_get_next_square(cgame g) : g is pointing on nothing");
+  check(dist <= 2, "game_get_next_square(uint dist) : dist too far");
+  check(i < game_nb_rows(g), "game_get_next_square(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_get_next_square(uint j) : j over grid");
 
   if (!game_is_wrapping(g)) {
     // REAJUST THE POSITION WITH THE DISTANCE PARAMETER
@@ -177,7 +177,7 @@ int game_get_next_square(cgame g, uint i, uint j, direction dir, uint dist) {
 int game_get_next_number(cgame g, uint i, uint j, direction dir,
                          uint dist) {  // gab
 
-  assert(g, "game_get_next_number(cgame g) : g pointing on nothing");
+  check(g, "game_get_next_number(cgame g) : g pointing on nothing");
 
   // if (i >= g->height || j >= g->width || dist > 2) return -1;
 
@@ -192,26 +192,26 @@ int game_get_next_number(cgame g, uint i, uint j, direction dir,
 }
 
 bool game_is_empty(cgame g, uint i, uint j) {
-  assert(g != NULL, "game_empty_square(cgame g) : g is pointing on nothing");
-  assert(i < game_nb_rows(g), "game_empty_square(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_empty_square(uint j) : j over grid");
+  check(g != NULL, "game_empty_square(cgame g) : g is pointing on nothing");
+  check(i < game_nb_rows(g), "game_empty_square(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_empty_square(uint j) : j over grid");
 
   return empty_square(game_get_square(g, i, j));
 }
 
 bool game_is_immutable(cgame g, uint i, uint j) {
-  assert(g != NULL,
+  check(g != NULL,
          "game_immutable_square(cgame g) : g is pointing on nothing");
-  assert(i < game_nb_rows(g), "game_immutable_square(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_immutable_square(uint j) : j over grid");
+  check(i < game_nb_rows(g), "game_immutable_square(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_immutable_square(uint j) : j over grid");
 
   return immutable_square(game_get_square(g, i, j));
 }
 
 int game_has_error(cgame g, uint i, uint j) {
-  assert(g != NULL, "game_has_error(cgame g) : g is pointing on nothing");
-  assert(i < game_nb_rows(g), "game_has_error(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_has_error(uint j) : j over grid");
+  check(g != NULL, "game_has_error(cgame g) : g is pointing on nothing");
+  check(i < game_nb_rows(g), "game_has_error(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_has_error(uint j) : j over grid");
 
   if (three_identical_consecutives_squares_on_pos(g, i, j)) {
     return GAME_HAS_ERROR;
@@ -229,7 +229,7 @@ int game_has_error(cgame g, uint i, uint j) {
 }
 
 bool game_check_move(cgame g, uint i, uint j, square s) {
-  assert(g != NULL, "game_check_move(game g) : g is NULL");
+  check(g != NULL, "game_check_move(game g) : g is NULL");
 
   if (i >= game_nb_rows(g) || j >= game_nb_cols(g)) return false;
 
@@ -243,12 +243,12 @@ bool game_check_move(cgame g, uint i, uint j, square s) {
 }
 
 void game_play_move(game g, uint i, uint j, square s) {
-  assert(g != NULL, "game_play_move(cgame g) : g is pointing on nothing");
-  assert(i < game_nb_rows(g), "game_play_move(uint i) : i over grid");
-  assert(j < game_nb_cols(g), "game_play_move(uint j) : j over grid");
-  assert(!game_is_immutable(g, i, j),
+  check(g != NULL, "game_play_move(cgame g) : g is pointing on nothing");
+  check(i < game_nb_rows(g), "game_play_move(uint i) : i over grid");
+  check(j < game_nb_cols(g), "game_play_move(uint j) : j over grid");
+  check(!game_is_immutable(g, i, j),
          "game_play_move(uint i, uint j) : square is immutable");
-  assert(!immutable_square(s), "game_play_move(square s) : s is immutable");
+  check(!immutable_square(s), "game_play_move(square s) : s is immutable");
 
   // We create an array for store the current move
   int* move = malloc(sizeof(int) * MOVE_SIZE);
@@ -265,7 +265,7 @@ void game_play_move(game g, uint i, uint j, square s) {
 bool game_is_over(cgame g) {
   // We test if our pointer g is NULL, if it is the case we exit the programm.
 
-  assert(g != NULL, "game_is_over(game g) : g is NULL!");
+  check(g != NULL, "game_is_over(game g) : g is NULL!");
 
   for (int i = 0; i < g->height; i++) {
     for (int j = 0; j < g->width; j++) {
@@ -301,7 +301,7 @@ void game_reset_default(game g) {
 }
 
 void game_restart(game g) {
-  assert(g != NULL, "game_restart(game g) : g is NULL!");
+  check(g != NULL, "game_restart(game g) : g is NULL!");
 
   game_reset_default(g);
   game_clear_history(g);

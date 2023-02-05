@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
   if (argc == 2) {
     g = game_load(argv[1]);
-    assert(g != NULL, "file not found, try again!");
+    check(g != NULL, "file not found, try again!");
     printf("game from \"%s\" successfully loaded !\n", argv[1]);
   } else {
     g = game_new_empty_ext(6, 6, false, false);

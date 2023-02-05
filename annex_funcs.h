@@ -1,5 +1,8 @@
+#include "game.h"
+#include <stdbool.h>
+
 // verifies if the expression is true, else it abort on error_code
-void assert(bool expr, const char* error_code);
+void check(bool expr, const char* error_code);
 
 // returns a dynamic-allocated square array identical to the first parameter
 square* grid_copy(square* squares_primal, uint nb_squares);

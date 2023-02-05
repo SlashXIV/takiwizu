@@ -5,7 +5,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-void assert(bool expr, const char* error_code) {
+void check(bool expr, const char* error_code) {
   if (!expr) {
     fputs("ERROR : ", stderr);
     fputs(error_code, stderr);

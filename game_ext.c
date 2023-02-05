@@ -10,10 +10,10 @@
 
 game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
                   bool unique) {
-  assert(squares != NULL,
+  check(squares != NULL,
          "game_new_ext(square* squares) : squares is pointing on nothing");
-  assert(is_even(nb_cols), "game_new_ext(uint nb_cols) : nb_cols is not even");
-  assert(is_even(nb_rows), "game_new_ext(uint nb_rows) : nb_rows is not even");
+  check(is_even(nb_cols), "game_new_ext(uint nb_cols) : nb_cols is not even");
+  check(is_even(nb_rows), "game_new_ext(uint nb_rows) : nb_rows is not even");
 
   game new_game = malloc(sizeof(struct game_s));
   new_game->height = nb_rows;
@@ -46,7 +46,7 @@ bool game_is_wrapping(cgame g) { return g->wrapping; }
 bool game_is_unique(cgame g) { return g->unique; }
 
 void game_undo(game g) {
-  assert(g != NULL, "game_undo(game g) : g is pointing on nothing");
+  check(g != NULL, "game_undo(game g) : g is pointing on nothing");
 
   if (queue_is_empty(g->last_moves)) {
     printf("\nimpossible : nothing to undo\n");
@@ -63,7 +63,7 @@ void game_undo(game g) {
 }
 
 void game_redo(game g) {
-  assert(g != NULL, "game_redo(game g) : g is pointing on nothing");
+  check(g != NULL, "game_redo(game g) : g is pointing on nothing");
   if (queue_is_empty(g->cancelled_moves)) {
     printf("\nimpossible : nothing to redo\n");
     return;
