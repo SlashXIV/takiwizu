@@ -37,4 +37,4 @@ void game_save(cgame g, char *file_path);
  * @}
  */
 
-#endif // __GAME_TOOLS_H__
+#endif  // __GAME_TOOLS_H__

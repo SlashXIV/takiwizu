@@ -36,6 +36,8 @@ add_test(test_gifrim_game_is_wrapping ./game_test_gifrim game_is_wrapping)
 add_test(test_gifrim_game_is_unique ./game_test_gifrim game_is_unique)
 add_test(test_gifrim_game_has_error_unique ./game_test_gifrim game_has_error_unique)
 add_test(test_gifrim_game_undo_redo_some ./game_test_gifrim undo_redo_some)
+add_test(test_gifrim_game_save ./game_test_gifrim game_save)
+add_test(test_gifrim_game_load ./game_test_gifrim game_load)
 
 
 

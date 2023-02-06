@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "annex_funcs.h"
 #include "game.h"
 #include "game_ext.h"
 #include "game_struct.h"
-#include "annex_funcs.h"
 
 void game_print(cgame g) {
   printf("   ");
@@ -62,7 +62,7 @@ void game_print(cgame g) {
 }
 
 game game_default(void) {
-  square * grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  square *grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
   check(grid != NULL, "game_default() : could not create grid");
 
   grid[0] = S_EMPTY;

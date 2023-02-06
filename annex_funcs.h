@@ -1,5 +1,6 @@
-#include "game.h"
 #include <stdbool.h>
+
+#include "game.h"
 
 // verifies if the expression is true, else it abort on error_code
 void check(bool expr, const char* error_code);

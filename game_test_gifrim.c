@@ -6,6 +6,7 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_tools.h"
 
 void usage_gifrim(int argc) {
   fprintf(stderr,
@@ -473,6 +474,52 @@ bool testv2_undo_redo_some() {
   game_delete(g);
   return true;
 }
+
+bool test_game_save() {
+  game g = game_new_empty_ext(4, 4, true, true);
+
+  game_play_move(g, 3, 3, S_ONE);
+
+  game_play_move(g, 0, 0, S_ZERO);
+
+  game_play_move(g, 2, 2, S_ONE);
+
+  game_play_move(g, 1, 3, S_ZERO);
+
+  game_save(g, "test_save.txt");
+
+  game g2 = game_load("test_save.txt");
+
+  if (game_get_square(g2, 3, 3) != S_ONE) return false;
+
+  if (game_get_square(g2, 0, 0) != S_ZERO) return false;
+
+  if (game_get_square(g2, 2, 2) != S_ONE) return false;
+
+  if (game_get_square(g2, 1, 3) != S_ZERO) return false;
+
+  game_delete(g);
+  game_delete(g2);
+
+  return true;
+}
+
+bool test_game_load() {
+  game g = game_load("test_save.txt");
+
+  if (game_get_square(g, 3, 3) != S_ONE) return false;
+
+  if (game_get_square(g, 0, 0) != S_ZERO) return false;
+
+  if (game_get_square(g, 2, 2) != S_ONE) return false;
+
+  if (game_get_square(g, 1, 3) != S_ZERO) return false;
+
+  game_delete(g);
+
+  return true;
+}
+
 int main(int argc, char* argv[]) {
   bool ok = test_dummy();
 
@@ -530,6 +577,10 @@ int main(int argc, char* argv[]) {
     ok = testv2_has_error_unique();
   } else if (!strcmp(argv[1], "undo_redo_some")) {
     ok = testv2_undo_redo_some();
+  } else if (!strcmp(argv[1], "game_save")) {
+    ok = test_game_save();
+  } else if (!strcmp(argv[1], "game_load")) {
+    ok = test_game_load();
   } else {
     fprintf(stderr, "=> ERROR : test \"%s\" not found !\n", argv[1]);
     exit(EXIT_FAILURE);

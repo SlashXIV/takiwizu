@@ -11,7 +11,7 @@
 game game_new_ext(uint nb_rows, uint nb_cols, square* squares, bool wrapping,
                   bool unique) {
   check(squares != NULL,
-         "game_new_ext(square* squares) : squares is pointing on nothing");
+        "game_new_ext(square* squares) : squares is pointing on nothing");
   check(is_even(nb_cols), "game_new_ext(uint nb_cols) : nb_cols is not even");
   check(is_even(nb_rows), "game_new_ext(uint nb_rows) : nb_rows is not even");
 

@@ -15,7 +15,7 @@
 game game_new(square* squares) {
   // checking existance of squares
   check(squares != NULL,
-         "game_new(square * squares) : squares is pointing on nothing");
+        "game_new(square * squares) : squares is pointing on nothing");
 
   // game mallocation & properties assignment
   game g = malloc(sizeof(struct game_s));
@@ -64,7 +64,8 @@ bool game_equal(cgame g1, cgame g2) {
   check(g2 != NULL, "game_equal(cgame g1, cgame g2) : g2 pointing on nothing");
 
   // verifying if the dimensions of both games are equals
-  if (!identical_game_dimension(g1, g2) || !identical_game_dimension(g1, g2)) return false;
+  if (!identical_game_dimension(g1, g2) || !identical_game_dimension(g1, g2))
+    return false;
 
   // traverse and compare every square of both games
   for (int x = 0; x < g1->width; x++) {
@@ -75,7 +76,6 @@ bool game_equal(cgame g1, cgame g2) {
         return false;
       }
     }
-
   }
   // out of the loop -> identical games
   return true;
@@ -93,7 +93,7 @@ void game_set_square(game g, uint i, uint j, square s) {
   check(i < game_nb_rows(g), "game_set_square(uint i) : i over grid");
   check(j < game_nb_cols(g), "game_set_square(uint j) : j over grid");
   check(s >= S_EMPTY && s <= S_IMMUTABLE_ONE,
-         "game_set_square(square s) : s not a square");
+        "game_set_square(square s) : s not a square");
 
   uint index_to_set = (i * g->width) + j;
   g->grid[index_to_set] = s;
@@ -200,8 +200,7 @@ bool game_is_empty(cgame g, uint i, uint j) {
 }
 
 bool game_is_immutable(cgame g, uint i, uint j) {
-  check(g != NULL,
-         "game_immutable_square(cgame g) : g is pointing on nothing");
+  check(g != NULL, "game_immutable_square(cgame g) : g is pointing on nothing");
   check(i < game_nb_rows(g), "game_immutable_square(uint i) : i over grid");
   check(j < game_nb_cols(g), "game_immutable_square(uint j) : j over grid");
 
@@ -247,7 +246,7 @@ void game_play_move(game g, uint i, uint j, square s) {
   check(i < game_nb_rows(g), "game_play_move(uint i) : i over grid");
   check(j < game_nb_cols(g), "game_play_move(uint j) : j over grid");
   check(!game_is_immutable(g, i, j),
-         "game_play_move(uint i, uint j) : square is immutable");
+        "game_play_move(uint i, uint j) : square is immutable");
   check(!immutable_square(s), "game_play_move(square s) : s is immutable");
 
   // We create an array for store the current move

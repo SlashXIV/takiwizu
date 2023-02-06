@@ -31,7 +31,7 @@ bool identical_game_dimension(cgame g1, cgame g2) {
           (game_nb_rows(g1) == game_nb_rows(g2)));
 }
 
-bool identical_options(cgame g1, cgame g2){
+bool identical_options(cgame g1, cgame g2) {
   return (game_is_unique(g1) == game_is_unique(g2) &&
           game_is_wrapping(g1) == game_is_wrapping(g2));
 }
