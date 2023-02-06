@@ -22,8 +22,7 @@ square str_to_square[255] = {['e'] = S_EMPTY,
                              ['B'] = S_IMMUTABLE_ONE};
 
 game game_load(char* file_path) {
-    
-  //Oppening of the saving file:
+  // Oppening of the saving file:
   FILE* fgame = fopen(file_path, "r");
   if (fgame == NULL) {
     return NULL;
@@ -43,14 +42,13 @@ game game_load(char* file_path) {
       tab[i * nb_cols + j] = str_to_square[c];
     }
   }
-  game g_output =  game_new_ext(nb_rows, nb_cols, tab, wrapping, unique);
+  game g_output = game_new_ext(nb_rows, nb_cols, tab, wrapping, unique);
   free(tab);
   fclose(fgame);
   return g_output;
 }
 
 void game_save(cgame g, char* filename) {
-
   // Creation of a saving file
   FILE* fgame = fopen(filename, "w");
 
@@ -67,5 +65,3 @@ void game_save(cgame g, char* filename) {
   }
   fclose(fgame);
 }
-
-
