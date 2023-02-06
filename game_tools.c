@@ -22,18 +22,20 @@ square str_to_square[255] = {['e'] = S_EMPTY,
                              ['B'] = S_IMMUTABLE_ONE};
 
 game game_load(char* file_path) {
-  // Ouverture du fichier de sauvegarde
+    
+  //Oppening of the saving file:
   FILE* fgame = fopen(file_path, "r");
   if (fgame == NULL) {
     return NULL;
   }
-  // Sauvegarde de la taille du plateau (nb_rows nb_cols wrapping unique)
+  // We save the size of the grid (nb_rows nb_cols wrapping unique)
+
   int nb_rows, nb_cols, wrapping, unique;
   fscanf(fgame, "%d %d %d %d", &nb_rows, &nb_cols, &wrapping, &unique);
 
   square* tab = malloc(nb_rows * nb_cols * sizeof(square));
 
-  // On insère dans ce tableau les valeurs du fichier
+  // We insert in this array, the values of the file.
   for (int i = 0; i < nb_rows; i++) {
     for (int j = 0; j < nb_cols; j++) {
       unsigned char c;
@@ -46,14 +48,15 @@ game game_load(char* file_path) {
 }
 
 void game_save(cgame g, char* filename) {
-  // Creation d'un fichier de sauvegarde dans le
+
+  // Creation of a saving file
   FILE* fgame = fopen(filename, "w");
 
-  // Sauvegarde de la taille du plateau (nb_rows nb_cols wrapping unique\n)
+  // We save the size of the grid (nb_rows nb_cols wrapping unique\n)
   fprintf(fgame, "%d %d %d %d\n", game_nb_rows(g), game_nb_cols(g),
           game_is_wrapping(g), game_is_unique(g));
 
-  // Sauvegarde du plateau de jeu ligne par ligne
+  // Saving the game grid line by line
   for (int i = 0; i < game_nb_rows(g); i++) {
     for (int j = 0; j < game_nb_cols(g); j++) {
       fprintf(fgame, "%c", square_to_str[game_get_square(g, i, j)]);
