@@ -43,8 +43,10 @@ game game_load(char* file_path) {
       tab[i * nb_cols + j] = str_to_square[c];
     }
   }
-
-  return game_new_ext(nb_rows, nb_cols, tab, wrapping, unique);
+  game g_output =  game_new_ext(nb_rows, nb_cols, tab, wrapping, unique);
+  free(tab);
+  fclose(fgame);
+  return g_output;
 }
 
 void game_save(cgame g, char* filename) {
@@ -65,3 +67,5 @@ void game_save(cgame g, char* filename) {
   }
   fclose(fgame);
 }
+
+
