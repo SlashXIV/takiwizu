@@ -10,8 +10,8 @@
 #include "game_tools.h"
 
 void list_error_each_square(cgame g) {
-  for (uint i = 0; i < game_nb_cols(g); i++)
-    for (uint j = 0; j < game_nb_rows(g); j++)
+  for (uint i = 0; i < game_nb_rows(g); i++)
+    for (uint j = 0; j < game_nb_cols(g); j++)
       if (game_has_error(g, i, j)) printf("Error at square (%d, %d)\n", i, j);
 }
 
