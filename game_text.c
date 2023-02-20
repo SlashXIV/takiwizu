@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     check(g != NULL, "file not found, try again!");
     printf("game from \"%s\" successfully loaded !\n", argv[1]);
   } else {
-    g = game_new_empty_ext(6, 6, false, false);
+    g = game_default();
   }
 
   while (!game_is_over(g)) {
