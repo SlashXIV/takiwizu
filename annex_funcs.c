@@ -9,7 +9,7 @@ void check(bool expr, const char* error_code) {
   if (!expr) {
     fputs("ERROR : ", stderr);
     fputs(error_code, stderr);
-    fputs(" ;-;\n", stderr);
+    fputs("\U0001F917 \n", stderr);
     exit(EXIT_FAILURE);
   }
 }
