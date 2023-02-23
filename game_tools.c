@@ -275,3 +275,58 @@ bool game_solve(game g){
   }
 
 }
+
+uint generate_all_solutions(int pos, int len, game g)
+{
+  // If the game is over, we've found a solution
+  if (game_is_over(g)) {
+    return 1;
+  }
+
+  // If we've reached the end of the word, return from the function
+  if (pos == len) {
+    return 0;
+  }
+
+  // Get the row and column of the current position in the game board
+  int i = pos / game_nb_cols(g);
+  int j = pos % game_nb_cols(g);
+
+  uint count = 0;
+
+  // If the current square is immutable, skip to the next position
+  if (game_get_square(g, i, j) == S_IMMUTABLE_ONE || game_get_square(g, i, j) == S_IMMUTABLE_ZERO) {
+    count += generate_all_solutions(pos + 1, len, g);
+  } else {
+    // Try setting the current square to 1
+    game_set_square(g, i, j, S_ONE);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      count += generate_all_solutions(pos + 1, len, g);
+    }
+
+    // Try setting the current square to 0
+    game_set_square(g, i, j, S_ZERO);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      count += generate_all_solutions(pos + 1, len, g);
+    }
+
+    // Reset the square back to empty so we can try the next possibility
+    game_set_square(g, i, j, S_EMPTY);
+  }
+
+  return count;
+}
+
+
+//FONCTIONNE avec un jeu en 4x4 et default mais à partir de 6x6 (vide) ça charge à l'infini 
+// a revoir
+uint game_nb_solutions(cgame g)
+{
+  check(g != NULL, "game_nb_solutions(cgame g) : g is pointing on nothing");
+;
+  game g_copy = game_copy(g);
+  uint count = generate_all_solutions(0, game_nb_cols(g) * game_nb_rows(g), g_copy);
+  game_delete(g_copy);
+  return count;
+}
+
