@@ -11,7 +11,7 @@
 
 void list_error_each_square(cgame g) {
   for (uint i = 0; i < game_nb_rows(g); i++)
-    for (uint j = 0; j < game_nb_rows(g); j++)
+    for (uint j = 0; j < game_nb_cols(g); j++)
       if (game_has_error(g, i, j)) printf("Error at square (%d, %d)\n", i, j);
 }
 
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     check(g != NULL, "file not found, try again!");
     printf("game from \"%s\" successfully loaded !\n", argv[1]);
   } else {
-    g = game_new_empty_ext(6, 6, false, false);
+    g = game_default();
   }
 
   while (!game_is_over(g)) {
