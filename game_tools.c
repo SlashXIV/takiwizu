@@ -248,6 +248,11 @@ bool game_solve(game g) {
                           game_solved, g);
 
   if (count > 0) {
+    for (int i = 0; i < game_nb_cols(g); i++) {
+      for (int j = 0; j < game_nb_rows(g); j++) {
+        game_set_square(g, i, j, game_get_square(game_solved, i, j));
+      }
+    }
     game_delete(game_solved);
     return true;
   } else {
