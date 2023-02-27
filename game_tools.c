@@ -48,6 +48,7 @@ game game_load(char* file_path) {
   return g_output;
 }
 
+
 void game_save(cgame g, char* filename) {
   // Creation of a saving file
   FILE* fgame = fopen(filename, "w");
