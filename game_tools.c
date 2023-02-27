@@ -48,7 +48,6 @@ game game_load(char* file_path) {
   return g_output;
 }
 
-
 void game_save(cgame g, char* filename) {
   // Creation of a saving file
   FILE* fgame = fopen(filename, "w");
@@ -242,28 +241,16 @@ void generate_first_solution(int pos, int len, uint* count, bool solved,
 
 bool game_solve(game g) {
   check(g != NULL, "game_solve(game g) : g is pointing on nothing");
-  FILE* fgame = fopen("solved_game.txt", "w");
   game game_solved = game_copy(g);
   bool solved = true;
   uint count = 0;
   generate_first_solution(0, game_nb_cols(g) * game_nb_rows(g), &count, solved,
                           game_solved, g);
 
-  // boucle for pour récupérer les valeurs des cases dans game_solved et les
-  // mettre dans un fichier
-
   if (count > 0) {
-    for (int i = 0; i < game_nb_cols(g); i++) {
-      for (int j = 0; j < game_nb_rows(g); j++) {
-        fprintf(fgame, "%d", game_get_number(game_solved, i, j));
-      }
-      fprintf(fgame, "|");
-    }
-    fclose(fgame);
     game_delete(game_solved);
     return true;
   } else {
-    fclose(fgame);
     game_delete(game_solved);
     return false;
   }
