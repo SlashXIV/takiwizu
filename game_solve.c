@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "game.h"
 #include "annex_funcs.h"
+#include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
 #include "game_struct.h"
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
   if (argc == 4) {
     output_desired = true;
     char *output = argv[3];
-    FILE * f = fopen(output, "w");
+    FILE *f = fopen(output, "w");
   }
 
   game g = game_load(input);
