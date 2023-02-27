@@ -59,7 +59,7 @@ void game_save(cgame g, char* filename) {
   // Saving the game grid line by line
   for (int i = 0; i < game_nb_rows(g); i++) {
     for (int j = 0; j < game_nb_cols(g); j++) {
-      fprintf(fgame, "%c", game_get_number(g, i, j));
+      fprintf(fgame, "%c", square_to_str[game_get_square(g, i, j)]);
     }
     fprintf(fgame, "\n");
   }
@@ -309,9 +309,6 @@ uint generate_all_solutions(int pos, int len, game g) {
   return count;
 }
 
-// FONCTIONNE avec un jeu en 4x4 et default mais à partir de 6x6 (vide) ça
-// charge à l'infini
-// a revoir
 uint game_nb_solutions(cgame g) {
   check(g != NULL, "game_nb_solutions(cgame g) : g is pointing on nothing");
   ;
