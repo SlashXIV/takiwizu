@@ -11,11 +11,12 @@
 
 int main(int argc, char *argv[]) {
   check((argc == 3 || argc == 4), "wrong argument composition");
+  bool output_desired = false;
 
   char *option = argv[1];
   char *input = argv[2];
   if (argc == 4) {
-    bool output_desired = true;
+    output_desired = true;
     char *output = argv[3];
     FILE * f = fopen(output, "w");
   }
