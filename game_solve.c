@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     case 'c':
       int nb_solutions = game_nb_solutions(g);
-      if (output_desired){
+      if (output_desired) {
         fprintf(file, "%d\n", nb_solutions);
       } else {
         printf("%d\n", nb_solutions);

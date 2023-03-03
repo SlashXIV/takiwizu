@@ -210,37 +210,29 @@ bool test_game_redo() {
   return true;
 }
 
-bool test_game_solve(){
-
-  //Cette fonction Calcule la solution d'un jeu donné:
+bool test_game_solve() {
+  // Cette fonction Calcule la solution d'un jeu donné:
 
   game g1 = game_default();
   game g2 = game_default();
 
-  //Test si on obtient un solution => true else false
+  // Test si on obtient un solution => true else false
 
-  if(game_solve(g1) && game_solve(g2)){
+  if (game_solve(g1) && game_solve(g2)) {
     return true;
   }
 
   return false;
   game_delete(g1);
   game_delete(g2);
-
 }
 
-bool test_nb_solutions(){
+bool test_nb_solutions() {
+  // Cette fonction Calcule le nombre total de solutions d'un jeu donné.
 
-  //Cette fonction Calcule le nombre total de solutions d'un jeu donné.
-
-
-
-  //game g = game_default();
+  // game g = game_default();
 
   return true;
-
-
-
 }
 
 int main(int argc, char *argv[]) {
@@ -299,12 +291,11 @@ int main(int argc, char *argv[]) {
   else if (!strcmp("game_redo", argv[1])) {
     okey = test_game_redo();
   }
-  
+
   else if (!strcmp(argv[1], "game_solve")) {
     okey = test_game_solve();
 
   }
-
 
   else {
     fprintf(stderr, "-> Error : the name : %s is not found!\n", argv[1]);
