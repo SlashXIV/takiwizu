@@ -236,7 +236,7 @@ bool test_game_nb_solutions() {
 
   // on va tester avec un jeu simple (en 4,4 et en 2,2 pour la grid):
   // Sur cette grid en 4,4 on est censé avoir 90 solutions.
-  // Sur cette grid en 2,2 on est censé avoir 2 solutions.
+  // Sur cette grid en 2,2 on est censé avoir 2 solutions...
 
   game g1 = game_new_empty_ext(2, 2, false, false);
 
