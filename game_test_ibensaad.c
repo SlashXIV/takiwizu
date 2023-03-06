@@ -211,20 +211,24 @@ bool test_game_redo() {
 }
 
 bool test_game_solve() {
-  // Cette fonction Calcule la solution d'un jeu donné:
+
+//Cette fonction Calcule la solution d'un jeu donné:
+
+//On crée un jeu par défaut et on appel game_solve pour donner la solution du game_default
+//Si jamais notre solution par defaut donnée par default_solution est = à notre jeu g1 modifié par game_solve pour avoir la solution.
+//Le test est validé.
 
   game g1 = game_default();
-  game g2 = game_default();
+  game_solve(g1);
 
-  // Test si on obtient un solution => true else false
+  game gsol = game_default_solution();
 
-  if (game_solve(g1) && game_solve(g2)) {
-    return true;
-  }
+  return (game_equal(gsol,g1));
 
-  return false;
+
   game_delete(g1);
-  game_delete(g2);
+  game_delete(gsol);
+
 }
 
 bool test_game_nb_solutions() {
@@ -242,7 +246,7 @@ bool test_game_nb_solutions() {
 
   uint test2 = game_nb_solutions(g2);
 
-  return (test1 == 2 && test2 == 90);
+  return(test1 == 2 && test2 == 90);
 }
 
 int main(int argc, char *argv[]) {
