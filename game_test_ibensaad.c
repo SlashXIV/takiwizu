@@ -227,12 +227,23 @@ bool test_game_solve() {
   game_delete(g2);
 }
 
-bool test_nb_solutions() {
+bool test_game_nb_solutions() {
+
   // Cette fonction Calcule le nombre total de solutions d'un jeu donné.
 
-  // game g = game_default();
+  // on va tester avec un jeu simple (en 4,4 et en 2,2 pour la grid):
+  //Sur cette grid en 4,4 on est censé avoir 90 solutions.
+  //Sur cette grid en 2,2 on est censé avoir 2 solutions.
 
-  return true;
+  game g1 = game_new_empty_ext(2,2,false,false);
+
+  game g2 = game_new_empty_ext(4,4,false,false);
+
+  uint test1 = game_nb_solutions(g1);
+
+  uint test2 = game_nb_solutions(g2);
+
+  return(test1 == 2 && test2 == 90);
 }
 
 int main(int argc, char *argv[]) {
@@ -294,6 +305,11 @@ int main(int argc, char *argv[]) {
 
   else if (!strcmp(argv[1], "game_solve")) {
     okey = test_game_solve();
+
+  }
+
+   else if (!strcmp(argv[1], "game_nb_solutions")) {
+    okey = test_game_nb_solutions();
 
   }
 
