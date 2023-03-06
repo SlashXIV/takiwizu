@@ -37,12 +37,12 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'c':
-      int nb_solutions = game_nb_solutions(g);
+      {int nb_solutions = game_nb_solutions(g);
       if (output_desired) {
         fprintf(file, "%d\n", nb_solutions);
       } else {
         printf("%d\n", nb_solutions);
-      }
+      }}
       break;
 
     default:
