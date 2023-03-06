@@ -214,9 +214,9 @@ bool test_game_solve() {
   // Cette fonction Calcule la solution d'un jeu donné:
 
   // On crée un jeu par défaut et on appel game_solve pour donner la solution du
-  // game_default Si jamais notre solution par defaut donnée par default_solution
-  // est = à notre jeu g1 modifié par game_solve pour avoir la solution. Le test
-  // est validé.
+  // game_default Si jamais notre solution par defaut donnée par
+  // default_solution est = à notre jeu g1 modifié par game_solve pour avoir la
+  // solution. Le test est validé.
 
   game g1 = game_default();
   game_solve(g1);
