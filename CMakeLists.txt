@@ -3,14 +3,15 @@ cmake_minimum_required(VERSION 2.6)
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(tazuku-06A)
 link_directories(${CMAKE_SOURCE_DIR}) # EQUIVALENT "LDFLAGS = -L ./"
-set(CMAKE_C_FLAGS "-std=c99 -Wall -g --coverage")
-
+set(CMAKE_C_FLAGS "-std=c99 -Wall -g ") #--coverage
+ 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
 add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c) # GAME LIB MAKER
 
 # [====== LIBRARY LINK ======]
 target_link_libraries(game_text game)
+
 
 # [====== TESTS ======]
 include(CTest)
@@ -20,7 +21,9 @@ enable_testing()
 add_executable(game_test_rdubernard game_test_rdubernard.c)
 add_executable(game_test_gifrim game_test_gifrim.c)
 add_executable(game_test_ibensaad game_test_ibensaad.c)
+add_executable(game_solve game_solve.c)
 
+target_link_libraries(game_solve game)
 # -> dummy test (gifrim)
 target_link_libraries(game_test_gifrim game)
 add_test(test_gifrim_dummy ./game_test_gifrim dummy)
