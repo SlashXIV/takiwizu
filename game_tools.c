@@ -261,8 +261,9 @@ bool game_solve(game g) {
   }
 }
 
-uint generate_all_solutions(int pos, int len, game g,uint nb_cols) {
-  // If the game is over, we've found a solution and we return 1 that is added to the counter 
+uint generate_all_solutions(int pos, int len, game g, uint nb_cols) {
+  // If the game is over, we've found a solution and we return 1 that is added
+  // to the counter
   if (game_is_over(g)) {
     return 1;
   }
@@ -280,20 +281,18 @@ uint generate_all_solutions(int pos, int len, game g,uint nb_cols) {
   // If the current square is immutable, skip to the next position
   if (game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
       game_get_square(g, i, j) == S_IMMUTABLE_ZERO) {
-    count += generate_all_solutions(pos + 1, len, g,nb_cols);
+    count += generate_all_solutions(pos + 1, len, g, nb_cols);
   } else {
     // Try setting the current square to 1
     game_set_square(g, i, j, S_ONE);
     if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
-      count += generate_all_solutions(pos + 1, len, g,nb_cols);
-
+      count += generate_all_solutions(pos + 1, len, g, nb_cols);
     }
 
     // Try setting the current square to 0
     game_set_square(g, i, j, S_ZERO);
     if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
-      count += generate_all_solutions(pos + 1, len, g,nb_cols);
-
+      count += generate_all_solutions(pos + 1, len, g, nb_cols);
     }
 
     // Reset the square back to empty so we can try the next possibility
@@ -307,8 +306,8 @@ uint game_nb_solutions(cgame g) {
   check(g != NULL, "game_nb_solutions(cgame g) : g is pointing on nothing");
   ;
   game g_copy = game_copy(g);
-  uint count =
-      generate_all_solutions(0, game_nb_cols(g) * game_nb_rows(g), g_copy,game_nb_cols(g));
+  uint count = generate_all_solutions(0, game_nb_cols(g) * game_nb_rows(g),
+                                      g_copy, game_nb_cols(g));
   game_delete(g_copy);
   return count;
 }

@@ -36,14 +36,14 @@ int main(int argc, char *argv[]) {
         game_print(g);
       break;
 
-    case 'c':
-      {int nb_solutions = game_nb_solutions(g);
+    case 'c': {
+      int nb_solutions = game_nb_solutions(g);
       if (output_desired) {
         fprintf(file, "%d\n", nb_solutions);
       } else {
         printf("%d\n", nb_solutions);
-      }}
-      break;
+      }
+    } break;
 
     default:
       fprintf(stderr, "option saisie invalide (-%c)\n", option);
