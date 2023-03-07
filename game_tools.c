@@ -261,8 +261,8 @@ bool game_solve(game g) {
   }
 }
 
-uint generate_all_solutions(int pos, int len, game g) {
-  // If the game is over, we've found a solution
+uint generate_all_solutions(int pos, int len, game g,uint nb_cols) {
+  // If the game is over, we've found a solution and we return 1 that is added to the counter 
   if (game_is_over(g)) {
     return 1;
   }
@@ -273,28 +273,34 @@ uint generate_all_solutions(int pos, int len, game g) {
   }
 
   // Get the row and column of the current position in the game board
-  int i = pos / game_nb_cols(g);
-  int j = pos % game_nb_cols(g);
+  int i = pos / nb_cols;
+  int j = pos % nb_cols;
+
+
+  //printf("i = %d, j = %d, pos = %d, nb_cols = %d, nb_rows = %d\n", i, j, pos,nb_cols,nb_rows);
 
   uint count = 0;
 
   // If the current square is immutable, skip to the next position
   if (game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
       game_get_square(g, i, j) == S_IMMUTABLE_ZERO) {
-    count += generate_all_solutions(pos + 1, len, g);
+    count += generate_all_solutions(pos + 1, len, g,nb_cols);
   } else {
     // Try setting the current square to 1
     game_set_square(g, i, j, S_ONE);
     if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
-      count += generate_all_solutions(pos + 1, len, g);
+      count += generate_all_solutions(pos + 1, len, g,nb_cols);
+
     }
 
     // Try setting the current square to 0
     game_set_square(g, i, j, S_ZERO);
     if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
-      count += generate_all_solutions(pos + 1, len, g);
+      count += generate_all_solutions(pos + 1, len, g,nb_cols);
+
     }
 
+    //game_print(g);
     // Reset the square back to empty so we can try the next possibility
     game_set_square(g, i, j, S_EMPTY);
   }
@@ -307,7 +313,7 @@ uint game_nb_solutions(cgame g) {
   ;
   game g_copy = game_copy(g);
   uint count =
-      generate_all_solutions(0, game_nb_cols(g) * game_nb_rows(g), g_copy);
+      generate_all_solutions(0, game_nb_cols(g) * game_nb_rows(g), g_copy,game_nb_cols(g));
   game_delete(g_copy);
   return count;
 }

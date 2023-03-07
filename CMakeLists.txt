@@ -4,7 +4,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(tazuku-06A)
 link_directories(${CMAKE_SOURCE_DIR}) # EQUIVALENT "LDFLAGS = -L ./"
 set(CMAKE_C_FLAGS "-std=c99 -Wall -g --coverage") 
- 
+
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
 add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c) # GAME LIB MAKER
