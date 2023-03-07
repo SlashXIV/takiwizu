@@ -102,9 +102,6 @@ bool parity_lines(cgame g, uint i, uint j) {
       case 1:
         cpt_one_col++;
         break;
-
-      default:
-        return true;
     }
   }
 
@@ -117,15 +114,26 @@ bool parity_lines(cgame g, uint i, uint j) {
       case 1:
         cpt_one_row++;
         break;
-
-      default:  // -1, empty
-        return true;
     }
   }
 
-  if (cpt_zero_col == cpt_one_col && cpt_zero_row == cpt_one_row) return true;
+  if (cpt_zero_col == cpt_one_col && cpt_zero_row == cpt_one_row)
+    return true;
 
-  return false;
+  else if (cpt_zero_col > (game_nb_cols(g) / 2))
+    return false;
+
+  else if (cpt_one_col > (game_nb_cols(g) / 2))
+    return false;
+
+  else if (cpt_zero_row > (game_nb_rows(g) / 2))
+    return false;
+
+  else if (cpt_one_row > (game_nb_rows(g) / 2))
+    return false;
+
+  else
+    return true;
 }
 
 bool unicity_disrespected(cgame g, uint i, uint j) {
