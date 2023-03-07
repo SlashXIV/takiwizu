@@ -275,10 +275,6 @@ uint generate_all_solutions(int pos, int len, game g,uint nb_cols) {
   // Get the row and column of the current position in the game board
   int i = pos / nb_cols;
   int j = pos % nb_cols;
-
-
-  //printf("i = %d, j = %d, pos = %d, nb_cols = %d, nb_rows = %d\n", i, j, pos,nb_cols,nb_rows);
-
   uint count = 0;
 
   // If the current square is immutable, skip to the next position
@@ -300,7 +296,6 @@ uint generate_all_solutions(int pos, int len, game g,uint nb_cols) {
 
     }
 
-    //game_print(g);
     // Reset the square back to empty so we can try the next possibility
     game_set_square(g, i, j, S_EMPTY);
   }
