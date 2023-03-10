@@ -223,10 +223,17 @@ bool test_game_solve() {
 
   game gsol = game_default_solution();
 
-  return (game_equal(gsol, g1));
+  bool equal = game_equal(gsol, g1);
+
+  if (!equal) {
+    game_delete(g1);
+    game_delete(gsol);
+    return false;
+  }
 
   game_delete(g1);
   game_delete(gsol);
+  return true;
 }
 
 bool test_game_nb_solutions() {
@@ -244,13 +251,10 @@ bool test_game_nb_solutions() {
 
   uint test2 = game_nb_solutions(g2);
 
-
-   game_delete(g1);
-  game_delete(g2);
-
   return (test1 == 2 && test2 == 90);
 
-
+  game_delete(g1);
+  game_delete(g2);
 }
 
 int main(int argc, char *argv[]) {
