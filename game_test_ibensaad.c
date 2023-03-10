@@ -255,6 +255,7 @@ bool test_game_nb_solutions() {
 
   bool test2check = (test2 == 90);
 
+  // On vérifie que les tests sont validés:
   if (!test1check || !test2check) {
     game_delete(g1);
     game_delete(g2);
