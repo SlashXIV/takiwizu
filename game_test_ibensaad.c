@@ -251,10 +251,21 @@ bool test_game_nb_solutions() {
 
   uint test2 = game_nb_solutions(g2);
 
-  return (test1 == 2 && test2 == 90);
+  bool test1check = (test1 == 2);
+
+  bool test2check = (test2 == 90);
+
+  if (!test1check || !test2check) {
+    game_delete(g1);
+    game_delete(g2);
+    return false;
+  }
 
   game_delete(g1);
+
   game_delete(g2);
+
+  return true;
 }
 
 int main(int argc, char *argv[]) {
