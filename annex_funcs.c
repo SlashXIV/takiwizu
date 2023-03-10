@@ -213,3 +213,99 @@ bool unicity_disrespected(cgame g, uint i, uint j) {
 }
 
 bool is_even(uint n) { return (n % 2 == 0); }
+
+uint generate_all_solutions(int pos, int len, game g, uint nb_cols) {
+  // If the game is over, we've found a solution and we return 1 that is added
+  // to the counter
+  if (game_is_over(g)) {
+    return 1;
+  }
+
+  // If we've reached the end of the word, return from the function
+  if (pos == len) {
+    return 0;
+  }
+
+  // Get the row and column of the current position in the game board
+  int i = pos / nb_cols;
+  int j = pos % nb_cols;
+  uint count = 0;
+
+  // If the current square is immutable, skip to the next position
+  if (game_is_immutable(g, i, j)) {
+    count += generate_all_solutions(pos + 1, len, g, nb_cols);
+  } else {
+    // Try setting the current square to 1
+    game_set_square(g, i, j, S_ONE);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      count += generate_all_solutions(pos + 1, len, g, nb_cols);
+    }
+
+    // Try setting the current square to 0
+    game_set_square(g, i, j, S_ZERO);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      count += generate_all_solutions(pos + 1, len, g, nb_cols);
+    }
+
+    // Reset the square back to empty so we can try the next possibility
+    game_set_square(g, i, j, S_EMPTY);
+  }
+
+  return count;
+}
+
+void generate_first_solution(game solution, game g, int pos, int len,
+                             uint* count, bool solved, int nb_rows,
+                             int nb_cols) {
+  // If the game is over, we've found a solution
+  if (game_is_over(g)) {
+    // Increment the count of solutions found
+    (*count)++;
+
+    // If this is the first solution we've found and we want to solve the game,
+    // copy the current game state into the solution game board
+    if (*count == 1 && solved) {
+      for (int i = 0; i < nb_cols; i++) {
+        for (int j = 0; j < nb_rows; j++) {
+          game_set_square(solution, i, j, game_get_square(g, i, j));
+        }
+      }
+    }
+
+    // Return from the function
+    return;
+  }
+
+  // If we've reached the end of the word, return from the function
+  if (pos == len) {
+    return;
+  }
+
+  // Get the row and column of the current position in the game board
+  int i = pos / nb_cols;
+  int j = pos % nb_cols;
+
+  // If the current square is immutable, skip to the next position
+  if (game_get_square(g, i, j) == S_IMMUTABLE_ONE ||
+      game_get_square(g, i, j) == S_IMMUTABLE_ZERO) {
+    generate_first_solution(solution, g, pos + 1, len, count, solved, nb_rows,
+                            nb_cols);
+  } else {
+    // Try setting the current square to 1
+    game_set_square(g, i, j, S_ONE);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      generate_first_solution(solution, g, pos + 1, len, count, solved, nb_rows,
+                              nb_cols);
+    }
+
+    // Try setting the current square to 0
+    game_set_square(g, i, j, S_ZERO);
+    if (game_has_error(g, i, j) == GAME_HAS_NO_ERROR) {
+      generate_first_solution(solution, g, pos + 1, len, count, solved, nb_rows,
+                              nb_cols);
+    }
+
+    // Reset the square back to empty so we can try the next possibility
+    game_set_square(g, i, j, S_EMPTY);
+  }
+}

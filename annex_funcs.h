@@ -38,3 +38,11 @@ bool unicity_disrespected(cgame g, uint i, uint j);
 
 // return true if the parameter is even, false otherwise
 bool is_even(uint n);
+
+// generate the first solution found for the current game given
+void generate_first_solution(game solution, game g, int pos, int len,
+                             uint* count, bool solved, int nb_rows,
+                             int nb_cols);
+
+// generate all the solutions for the current game given
+uint generate_all_solutions(int pos, int len, game g, uint nb_cols);
