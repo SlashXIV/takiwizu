@@ -30,7 +30,9 @@ game game_load(char* file_path) {
   // We save the size of the grid (nb_rows nb_cols wrapping unique)
 
   int nb_rows, nb_cols, wrapping, unique;
-  fscanf(fgame, "%d %d %d %d", &nb_rows, &nb_cols, &wrapping, &unique);
+  int s = fscanf(fgame, "%d %d %d %d", &nb_rows, &nb_cols, &wrapping, &unique);
+
+  if (s == EOF) return NULL;
 
   square* tab = malloc(nb_rows * nb_cols * sizeof(square));
 
@@ -38,7 +40,8 @@ game game_load(char* file_path) {
   for (int i = 0; i < nb_rows; i++) {
     for (int j = 0; j < nb_cols; j++) {
       unsigned char c;
-      fscanf(fgame, " %c", &c);
+      int s = fscanf(fgame, " %c", &c);
+      if (s == EOF) return NULL;
       tab[i * nb_cols + j] = str_to_square[c];
     }
   }
