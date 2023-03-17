@@ -109,7 +109,8 @@ int main(int argc, char *argv[]) {
       case 's':
         printf("\naction : save game\n");
         char filename_input[255];
-        scanf(" %s", filename_input);
+        int s2 = scanf(" %s", filename_input);
+        if (s2 == EOF) return EXIT_FAILURE;
         if (strlen(filename_input) == 0) {
           printf("filename required, please retry !\n");
           break;
@@ -126,7 +127,8 @@ int main(int argc, char *argv[]) {
 
         // ON POSITION
         uint i, j;
-        scanf("%d %d", &i, &j);
+        int s3 = scanf("%d %d", &i, &j);
+        if (s3 == EOF) return EXIT_FAILURE;
         switch (input_char) {
           // WHITE
           case 'w':
