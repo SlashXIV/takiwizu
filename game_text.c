@@ -17,6 +17,9 @@ void list_error_each_square(cgame g) {
 
 void play_on_square(game g, int i, int j, int move) {
   char pion;
+
+  if (pion == 9999) return;
+
   switch (move) {
     case S_ZERO:
       pion = 'w';
