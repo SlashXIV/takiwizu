@@ -16,7 +16,7 @@ void list_error_each_square(cgame g) {
 }
 
 void play_on_square(game g, int i, int j, int move) {
-  char pion;
+  char pion = 'e';
 
   switch (move) {
     case S_ZERO:
