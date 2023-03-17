@@ -54,7 +54,6 @@ void display_help() {
 
 int main(int argc, char *argv[]) {
   game g;
-  int a, b = 0;
 
   if (argc == 2) {
     g = game_load(argv[1]);
