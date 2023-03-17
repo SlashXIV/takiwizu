@@ -72,8 +72,8 @@ int main(int argc, char *argv[]) {
 
     char input_char;
 
-    if(input_char == 9999) return;
-    
+    if (input_char == 9999) return;
+
     scanf(" %c", &input_char);  // space before format specifier implies not
                                 // consedirating any spaces & line breaks
     switch (input_char) {
@@ -119,10 +119,7 @@ int main(int argc, char *argv[]) {
       case 'b':
       case 'e':;
 
-        //si la valeur du scanf vaut 999 alors on a un problème
-
-
-
+        // si la valeur du scanf vaut 999 alors on a un problème
 
         // ON POSITION
         uint i, j;
