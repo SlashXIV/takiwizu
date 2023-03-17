@@ -18,7 +18,7 @@ void list_error_each_square(cgame g) {
 void play_on_square(game g, int i, int j, int move) {
   char pion;
 
-  if (pion == 9999) return;
+  char pion2;
 
   switch (move) {
     case S_ZERO:
@@ -56,6 +56,7 @@ void display_help() {
 
 int main(int argc, char *argv[]) {
   game g;
+  int a, b = 0;
 
   if (argc == 2) {
     g = game_load(argv[1]);
@@ -75,10 +76,8 @@ int main(int argc, char *argv[]) {
 
     char input_char;
 
-    if (input_char == 9999) return;
-
-    scanf(" %c", &input_char);  // space before format specifier implies not
-                                // consedirating any spaces & line breaks
+    a = scanf(" %c", &input_char);  // space before format specifier implies not
+                                    // consedirating any spaces & line breaks
     switch (input_char) {
       case 'h':
         printf("\naction : help\n");
@@ -147,6 +146,7 @@ int main(int argc, char *argv[]) {
   }
 
   // WIN CONDITION (OUT OF WHILE LOOP)
+  b += a;
   game_print(g);
   printf("congratulation, gg wp, you did it ;] !\n");
   return EXIT_SUCCESS;
