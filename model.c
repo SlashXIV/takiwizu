@@ -21,6 +21,20 @@
 #define BLACK_TILE "black.png"
 #define GRID "grid.png"
 
+
+/* Idée pour l'interface graphique:
+
+-Fond sombre (noir/ bleu nuit très foncé)
+-Ecriture en rouge.
+-creation d'un menu avec l'option "jouer" et l'option "rules" qui afficherait les régles du jeu.
+-Un temps de start (avec un compteur 3,2,1... avant que le jeu commence après avoir choisi l'option jouer).
+-une grille au centre de l'ecran.
+-Nom du groupe en petit en bas à droite.
+
+-Optionnel : ajout d'une petite takuzu "cagnotte" avec ajout de points à chaque coup joué correctement, si erreur la cagnotte se remet à 0.
+
+*/
+
 /* **************************************************************** */
 
 struct Env_t {
