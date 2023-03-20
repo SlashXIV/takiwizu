@@ -9,10 +9,11 @@ set(CMAKE_C_FLAGS "-std=c99 -Wall -g")
 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
-add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c) # GAME LIB MAKER
+add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c model.c) # GAME LIB MAKER
 
 # [====== LIBRARY LINK ======]
-target_link_libraries(game_text game)
+target_link_libraries(game_text game model)
+
 
 
 # [====== TESTS ======]
@@ -24,6 +25,7 @@ add_executable(game_test_rdubernard game_test_rdubernard.c)
 add_executable(game_test_gifrim game_test_gifrim.c)
 add_executable(game_test_ibensaad game_test_ibensaad.c)
 add_executable(game_solve game_solve.c)
+add_executable(model model.c)
 
 target_link_libraries(game_solve game)
 # -> dummy test (gifrim)
