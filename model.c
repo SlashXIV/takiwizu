@@ -17,8 +17,8 @@
 #define FONT "arial.ttf"
 #define FONTSIZE 20
 #define BACKGROUND "background.jpg"
-#define WHITE_TILE "white_tile.png"
-#define BLACK_TILE "black_tile.png"
+#define WHITE_TILE "white.png"
+#define BLACK_TILE "black.png"
 #define GRID "grid.png"
 
 
@@ -90,17 +90,19 @@ void render(SDL_Window *win, SDL_Renderer *ren,
             SDL_QueryTexture(env->white_tile, NULL, NULL, &rect.w, &rect.h);
 
           
-            rect.x = (w - rect.w) / 2;
+            rect.x = 10;
 
-            rect.y = (h - rect.h) / 2;
+            rect.y = 10;
 
             SDL_RenderCopy(ren, env->white_tile, NULL, &rect);
 
             SDL_QueryTexture(env->black_tile, NULL, NULL, &rect.w, &rect.h);
 
-            rect.x = (w - rect.w) / 2;
+            rect.x = 50;
 
-            rect.y = (h - rect.h) / 2;
+            rect.y = 50;
+
+            SDL_RenderCopy(ren, env->black_tile, NULL, &rect);
           
 
 }
@@ -132,6 +134,12 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   /* PUT YOUR CODE HERE TO CLEAN MEMORY */
+
+  SDL_DestroyTexture(env->background);
+
+  SDL_DestroyTexture(env->white_tile);
+
+  SDL_DestroyTexture(env->black_tile);
 
   free(env);
 }
