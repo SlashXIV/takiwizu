@@ -58,17 +58,17 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   /* PUT YOUR CODE HERE TO INIT TEXTURES, ... */
 
   
-/*
-  env->background = load_texture(ren, BACKGROUND);
+
+  env->background = IMG_LoadTexture(ren, BACKGROUND);
   if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
 
-  env->white_tile = load_texture(ren, WHITE_TILE);
+  env->white_tile = IMG_LoadTexture(ren, WHITE_TILE);
   if (!env->white_tile) ERROR("IMG_LoadTexture: %s\n", WHITE_TILE);
 
-  env->black_tile = load_texture(ren, BLACK_TILE);
+  env->black_tile = IMG_LoadTexture(ren, BLACK_TILE);
   if (!env->black_tile) ERROR("IMG_LoadTexture: %s\n", BLACK_TILE);
 
-  */
+  
 
   return env;
 }
@@ -78,7 +78,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 void render(SDL_Window *win, SDL_Renderer *ren,
             Env *env) { /* PUT YOUR CODE HERE TO RENDER TEXTURES, ... */
 
-          /*
+          
             SDL_Rect rect;
 
             int w, h;
@@ -101,7 +101,7 @@ void render(SDL_Window *win, SDL_Renderer *ren,
             rect.x = (w - rect.w) / 2;
 
             rect.y = (h - rect.h) / 2;
-          */
+          
 
 }
 
@@ -114,11 +114,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
   /* PUT YOUR CODE HERE TO PROCESS EVENTS */
 
-  /* int w, h;
+  int w, h;
 
   SDL_GetWindowSize(win, &w, &h);
 
-  */
+  
 
   
 
