@@ -3,16 +3,27 @@ cmake_minimum_required(VERSION 2.6)
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(tazuku-06A)
 link_directories(${CMAKE_SOURCE_DIR}) # EQUIVALENT "LDFLAGS = -L ./"
-set(CMAKE_C_FLAGS "-std=c99 -Wall -g")
+set(CMAKE_C_FLAGS "-std=c99 -Wall -g ")
 #set(CMAKE_C_FLAGS_DEBUG "-g -O0 --coverage")   # options de compilation en mode Debug
 #set(CMAKE_C_FLAGS_RELEASE "-O3")               # options de compilation en mode Release
 
 # [====== TARGETS ======]
 add_executable(game_text game_text.c) # FINAL EXEC
-add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c model.c) # GAME LIB MAKER
+add_library(game game.c game_aux.c game_ext.c queue.c annex_funcs.c game_tools.c) # GAME LIB MAKER
 
 # [====== LIBRARY LINK ======]
-target_link_libraries(game_text game model)
+target_link_libraries(game_text game)
+
+## find SDL2
+include(SDL2.cmake)
+message(STATUS "SDL2 include dir: ${SDL2_ALL_INC}")
+message(STATUS "SDL2 all libraries: ${SDL2_ALL_LIBS}")
+
+include_directories(${SDL2_ALL_INC})
+
+add_executable(model main.c model.c)
+target_link_libraries(model ${SDL2_ALL_LIBS} m)
+
 
 
 
@@ -25,7 +36,6 @@ add_executable(game_test_rdubernard game_test_rdubernard.c)
 add_executable(game_test_gifrim game_test_gifrim.c)
 add_executable(game_test_ibensaad game_test_ibensaad.c)
 add_executable(game_solve game_solve.c)
-add_executable(model model.c)
 
 target_link_libraries(game_solve game)
 # -> dummy test (gifrim)

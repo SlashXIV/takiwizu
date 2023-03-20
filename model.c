@@ -1,6 +1,6 @@
 #include "model.h"
 
-#include <SDL.h>
+#include <SDL2/SDL.h>  
 #include <SDL_image.h>  // required to load transparent texture from PNG
 #include <SDL_ttf.h>    // required to use TTF fonts
 #include <stdbool.h>
@@ -16,9 +16,9 @@
 
 #define FONT "arial.ttf"
 #define FONTSIZE 20
-#define BACKGROUND "background.png"
-#define WHITE_TILE "white.png"
-#define BLACK_TILE "black.png"
+#define BACKGROUND "background.jpg"
+#define WHITE_TILE "white_tile.png"
+#define BLACK_TILE "black_tile.png"
 #define GRID "grid.png"
 
 
@@ -57,6 +57,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   /* PUT YOUR CODE HERE TO INIT TEXTURES, ... */
 
+  
+/*
   env->background = load_texture(ren, BACKGROUND);
   if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
 
@@ -66,6 +68,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   env->black_tile = load_texture(ren, BLACK_TILE);
   if (!env->black_tile) ERROR("IMG_LoadTexture: %s\n", BLACK_TILE);
 
+  */
+
   return env;
 }
 
@@ -73,6 +77,32 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
 void render(SDL_Window *win, SDL_Renderer *ren,
             Env *env) { /* PUT YOUR CODE HERE TO RENDER TEXTURES, ... */
+
+          /*
+            SDL_Rect rect;
+
+            int w, h;
+
+            SDL_GetWindowSize(win, &w, &h);
+
+            SDL_RenderCopy(ren, env->background, NULL, NULL);
+
+            SDL_QueryTexture(env->white_tile, NULL, NULL, &rect.w, &rect.h);
+
+          
+            rect.x = (w - rect.w) / 2;
+
+            rect.y = (h - rect.h) / 2;
+
+            SDL_RenderCopy(ren, env->white_tile, NULL, &rect);
+
+            SDL_QueryTexture(env->black_tile, NULL, NULL, &rect.w, &rect.h);
+
+            rect.x = (w - rect.w) / 2;
+
+            rect.y = (h - rect.h) / 2;
+          */
+
 }
 
 /* **************************************************************** */
@@ -83,6 +113,17 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   }
 
   /* PUT YOUR CODE HERE TO PROCESS EVENTS */
+
+  /* int w, h;
+
+  SDL_GetWindowSize(win, &w, &h);
+
+  */
+
+  
+
+
+
 
   return false;
 }

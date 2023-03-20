@@ -2,7 +2,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>  
 #include <stdbool.h>
 #include <stdio.h>
 
