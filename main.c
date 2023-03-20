@@ -4,11 +4,18 @@
 #include <SDL_ttf.h>    // required to use TTF fonts
 #include <stdbool.h>
 #include <stdio.h>
+
 #include "model.h"
 
 /* **************************************************************** */
 
 int main(int argc, char* argv[]) {
+  /* SDL ver */
+  SDL_version nb;
+  SDL_VERSION(&nb);
+  printf("SDL successfully loaded! (ver %d.%d.%d)\n", nb.major, nb.minor,
+         nb.patch);
+
   /* initialize SDL2 and some extensions */
   if (SDL_Init(SDL_INIT_VIDEO) != 0)
     ERROR("Error: SDL_Init VIDEO (%s)", SDL_GetError());
@@ -21,6 +28,7 @@ int main(int argc, char* argv[]) {
       APP_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
       SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
   if (!win) ERROR("Error: SDL_CreateWindow (%s)", SDL_GetError());
+  
   SDL_Renderer* ren = SDL_CreateRenderer(
       win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (!ren) ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);

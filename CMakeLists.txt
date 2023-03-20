@@ -22,14 +22,16 @@ message(STATUS "SDL2 all libraries: ${SDL2_ALL_LIBS}")
 include_directories(${SDL2_ALL_INC})
 
 add_executable(model main.c model.c)
+target_link_libraries(model game)
 target_link_libraries(model ${SDL2_ALL_LIBS} m)
 
-## copy useful data files in build dir
-foreach(file "background.jpg" "white.png" "black.png")
-  file(COPY ${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-endforeach(file)
+# # copy useful data files in build dir
+# foreach(file "background.jpg" "white.png" "black.png")
+#   file(COPY ${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# endforeach(file)
 
-
+# copy our sprites in build 
+file (COPY sprites DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 # [====== TESTS ======]
