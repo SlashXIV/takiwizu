@@ -193,6 +193,24 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     }
   }
 
+  // Si l'utilisateur appuie sur la touche 'e'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_e) {
+    SDL_Rect rect;
+    SDL_GetMouseState(&rect.x, &rect.y);
+
+    // Calculez l'indice de la colonne et de la rangée correspondantes
+    int col_index = (rect.x - 84) / 34;
+    int row_index = (rect.y - 150) / 34;
+
+    // Vérifiez que les indices sont valides avant de les utiliser
+    if (col_index >= 0 && col_index < 6 && row_index >= 0 && row_index < 6) {
+      game_set_square(env->g, row_index, col_index, S_EMPTY);
+
+      // Afficher la grille mise à jour (à retirer plus tard)
+      game_print(env->g);
+    }
+  }
+
   return false;
 }
 
