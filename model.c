@@ -134,9 +134,9 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   mv_down(&rect);
   mv_down(&rect);
 
-  ///__________________________________________________\\\
-   ///    AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE  \\\
-  ///____________________________________________________  \\\ 
+  /*____________________________________________________
+        AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE
+    ____________________________________________________  */
 
   for (int i = 0; i < DEFAULT_SIZE; i++) {
     for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -160,9 +160,9 @@ void render(SDL_Window *win, SDL_Renderer *ren,
     for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
   }
 
-  ///_____________________________________________\\\ 
- ///   RECHERCHE D'ERREURS ET AFFICHAGE DE CROIX   \\\
-/// _______________________________________________ \\\
+  /*_____________________________________________
+    RECHERCHE D'ERREURS ET AFFICHAGE DE CROIX
+  _______________________________________________ */
 
   for (int i = 0; i < game_nb_rows(env->g); i++) {
     for (int j = 0; j < game_nb_cols(env->g); j++) {
@@ -200,7 +200,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
 
-  // Si l'utilisateur appuie sur la touche 'w'
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'w'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
@@ -221,7 +221,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     }
   }
 
-  // Si l'utilisateur appuie sur la touche 'b'
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'b'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_b) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
@@ -242,7 +242,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     }
   }
 
-  // Si l'utilisateur appuie sur la touche 'e'
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'e'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_e) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
@@ -260,6 +260,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
     }
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'r'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_r) {
+    game_restart(env->g);
   }
 
   return false;
