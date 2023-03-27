@@ -267,6 +267,16 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     game_restart(env->g);
   }
 
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'z'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_z) {
+    game_undo(env->g);
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'y'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_y) {
+    game_redo(env->g);
+  }
+
   return false;
 }
 
