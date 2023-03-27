@@ -247,5 +247,11 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   SDL_DestroyTexture(env->black_tile);
 
+  SDL_DestroyTexture(env->immutable_black);
+
+  SDL_DestroyTexture(env->immutable_white);
+
+  free(env->g);
+
   free(env);
 }
