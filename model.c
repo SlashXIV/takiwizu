@@ -168,7 +168,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
-      game_set_square(env->g, row_index, col_index, S_ZERO);
+      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
+        game_set_square(env->g, row_index, col_index, S_ZERO);}
 
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
@@ -186,7 +187,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
-      game_set_square(env->g, row_index, col_index, S_ONE);
+      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
+          game_set_square(env->g, row_index, col_index, S_ONE);}
 
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
@@ -204,8 +206,9 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
+      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
       game_set_square(env->g, row_index, col_index, S_EMPTY);
-
+      }
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
     }
