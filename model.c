@@ -21,6 +21,8 @@
 #define WHITE_TILE "sprites/white.png"
 #define BLACK_TILE "sprites/black.png"
 #define EMPTY_TILE "sprites/empty_frame.jpg"
+#define IMMUTABLE_WHITE "sprites/white.png"
+#define IMMUTABLE_BLACK "sprites/black.png"
 #define TILE_SIZE 34
 #define GRID "sprites/grid.png"
 
@@ -47,6 +49,8 @@ struct Env_t {
   SDL_Texture *white_tile;
   SDL_Texture *black_tile;
   SDL_Texture *empty_tile;
+  SDL_Texture *immutable_white;
+  SDL_Texture *immutable_black;
   game g;
 };
 
@@ -69,6 +73,12 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
 
   env->empty_tile = IMG_LoadTexture(ren, EMPTY_TILE);
   if (!env->empty_tile) ERROR("IMG_LoadTexture: %s\n", EMPTY_TILE);
+
+  env->immutable_white = IMG_LoadTexture(ren, IMMUTABLE_WHITE);
+  if (!env->immutable_white) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_WHITE);
+
+  env->immutable_black = IMG_LoadTexture(ren, IMMUTABLE_BLACK);
+  if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
 
   env->g = game_default();
 
@@ -129,12 +139,16 @@ void render(SDL_Window *win, SDL_Renderer *ren,
     for (int j = 0; j < DEFAULT_SIZE; j++) {
       square current_square = game_get_square(env->g, i, j);
 
-      if (one_square(current_square))
+      if (current_square == S_ZERO)
         SDL_set_tile(env, ren, rect, env->white_tile);
-      else if (zero_square(current_square))
+      else if (current_square == S_ONE)
         SDL_set_tile(env, ren, rect, env->black_tile);
-      else if (empty_square(current_square))
+      else if (current_square == S_EMPTY)
         SDL_set_tile(env, ren, rect, env->empty_tile);
+      else if (current_square == S_IMMUTABLE_ZERO)
+        SDL_set_tile(env, ren, rect, env->immutable_white);
+      else if (current_square == S_IMMUTABLE_ONE)
+        SDL_set_tile(env, ren, rect, env->immutable_black);
 
       mv_right(&rect);
     }
@@ -167,9 +181,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     int row_index = (rect.y - 150) / 34;
 
     // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
-      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
-        game_set_square(env->g, row_index, col_index, S_ZERO);}
+    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
+        row_index < game_nb_rows(env->g)) {
+      if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
+        game_set_square(env->g, row_index, col_index, S_ZERO);
+      }
 
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
@@ -186,9 +202,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     int row_index = (rect.y - 150) / 34;
 
     // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
-      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
-          game_set_square(env->g, row_index, col_index, S_ONE);}
+    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
+        row_index < game_nb_rows(env->g)) {
+      if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
+        game_set_square(env->g, row_index, col_index, S_ONE);
+      }
 
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
@@ -205,9 +223,10 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     int row_index = (rect.y - 150) / 34;
 
     // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 && row_index < game_nb_rows(env->g)) {
-      if(!immutable_square(game_get_square(env->g, row_index, col_index))){
-      game_set_square(env->g, row_index, col_index, S_EMPTY);
+    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
+        row_index < game_nb_rows(env->g)) {
+      if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
+        game_set_square(env->g, row_index, col_index, S_EMPTY);
       }
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
