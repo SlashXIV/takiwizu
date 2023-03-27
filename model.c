@@ -21,8 +21,8 @@
 #define WHITE_TILE "sprites/white.png"
 #define BLACK_TILE "sprites/black.png"
 #define EMPTY_TILE "sprites/empty_frame.jpg"
-#define IMMUTABLE_WHITE "sprites/white.png"
-#define IMMUTABLE_BLACK "sprites/black.png"
+#define IMMUTABLE_WHITE "sprites/immutable_white.png"
+#define IMMUTABLE_BLACK "sprites/immutable_black.png"
 #define TILE_SIZE 34
 #define GRID "sprites/grid.png"
 
