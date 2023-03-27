@@ -134,7 +134,10 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   mv_down(&rect);
   mv_down(&rect);
 
-  // display game
+  ///__________________________________________________\\\
+   ///    AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE  \\\
+  ///____________________________________________________  \\\ 
+
   for (int i = 0; i < DEFAULT_SIZE; i++) {
     for (int j = 0; j < DEFAULT_SIZE; j++) {
       square current_square = game_get_square(env->g, i, j);
@@ -155,6 +158,32 @@ void render(SDL_Window *win, SDL_Renderer *ren,
 
     mv_down(&rect);
     for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
+  }
+
+  ///_____________________________________________\\\ 
+ ///   RECHERCHE D'ERREURS ET AFFICHAGE DE CROIX   \\\
+/// _______________________________________________ \\\
+
+  for (int i = 0; i < game_nb_rows(env->g); i++) {
+    for (int j = 0; j < game_nb_cols(env->g); j++) {
+      if (game_has_error(env->g, j, i)) {
+        // draw a red circle on the tile
+
+        SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);  // Définir la couleur
+                                                      // rouge
+        int line_thickness = 8;  // Définir l'épaisseur de la ligne
+        int x1 = 84 + i * 34 + line_thickness / 2;
+        int y1 = 150 + j * 34 + line_thickness / 2;
+        int x2 = 84 + (i + 1) * 34 - line_thickness / 2;
+        int y2 = 150 + (j + 1) * 34 - line_thickness / 2;
+        SDL_RenderDrawLine(ren, x1, y1, x2, y2);  // Dessiner la première ligne
+        int x3 = 84 + (i + 1) * 34 - line_thickness / 2;
+        int y3 = 150 + j * 34 + line_thickness / 2;
+        int x4 = 84 + i * 34 + line_thickness / 2;
+        int y4 = 150 + (j + 1) * 34 - line_thickness / 2;
+        SDL_RenderDrawLine(ren, x3, y3, x4, y4);  // Dessiner la deuxième ligne
+      }
+    }
   }
 }
 
