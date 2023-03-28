@@ -213,7 +213,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
       if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
-        game_set_square(env->g, row_index, col_index, S_ZERO);
+        game_play_move(env->g, row_index, col_index, S_ZERO);
       }
 
       // Afficher la grille mise à jour (à retirer plus tard)
@@ -234,7 +234,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
       if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
-        game_set_square(env->g, row_index, col_index, S_ONE);
+        game_play_move(env->g, row_index, col_index, S_ONE);
       }
 
       // Afficher la grille mise à jour (à retirer plus tard)
@@ -248,14 +248,14 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     SDL_GetMouseState(&rect.x, &rect.y);
 
     // Calculez l'indice de la colonne et de la rangée correspondantes
-    int col_index = (rect.x - 84) / 34;
-    int row_index = (rect.y - 150) / 34;
+    int col_index = (rect.x - 84) / TILE_SIZE;
+    int row_index = (rect.y - 150) / TILE_SIZE;
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
       if (!immutable_square(game_get_square(env->g, row_index, col_index))) {
-        game_set_square(env->g, row_index, col_index, S_EMPTY);
+        game_play_move(env->g, row_index, col_index, S_EMPTY);
       }
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
@@ -267,6 +267,16 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     game_restart(env->g);
   }
 
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'z'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_z) {
+    game_undo(env->g);
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'y'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_y) {
+    game_redo(env->g);
+  }
+  
   return false;
 }
 
