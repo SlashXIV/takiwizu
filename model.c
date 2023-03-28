@@ -24,9 +24,9 @@
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
 
-#define TILE_SIZE 50
-#define X_OFFSET 100
-#define Y_OFFSET 100
+#define TILE_SIZE 60
+#define X_OFFSET 130
+#define Y_OFFSET 160
 
 /* Idée pour l'interface graphique:
 
@@ -120,7 +120,6 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   SDL_Rect rect;
 
   move_to(&rect, X_OFFSET, Y_OFFSET);
-  
 
   /*____________________________________________________
         AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE
@@ -160,19 +159,16 @@ void render(SDL_Window *win, SDL_Renderer *ren,
         SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);  // Définir la couleur
                                                       // rouge
         int line_thickness = 20;  // Définir l'épaisseur de la ligne
-        int x1 = X_OFFSET-8 + i * TILE_SIZE + line_thickness / 2;
-        int y1 = Y_OFFSET-10 + j * TILE_SIZE + line_thickness / 2;
-        int x2 = X_OFFSET-8 + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y2 = Y_OFFSET-10 + (j + 1) * TILE_SIZE - line_thickness / 2;
+        int x1 = X_OFFSET - 5 + i * TILE_SIZE + line_thickness / 2;
+        int y1 = Y_OFFSET - 5 + j * TILE_SIZE + line_thickness / 2;
+        int x2 = X_OFFSET - 5 + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y2 = Y_OFFSET - 5 + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x1, y1, x2, y2);  // Dessiner la première ligne
 
-
-
-
-        int x3 = X_OFFSET-8 + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y3 = Y_OFFSET-10 + j * TILE_SIZE + line_thickness / 2;
-        int x4 = X_OFFSET-8 + i * TILE_SIZE + line_thickness / 2;
-        int y4 = Y_OFFSET-10 + (j + 1) * TILE_SIZE - line_thickness / 2;
+        int x3 = X_OFFSET - 5 + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y3 = Y_OFFSET - 5 + j * TILE_SIZE + line_thickness / 2;
+        int x4 = X_OFFSET - 5 + i * TILE_SIZE + line_thickness / 2;
+        int y4 = Y_OFFSET - 5 + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x3, y3, x4, y4);  // Dessiner la deuxième ligne
       }
     }
@@ -202,14 +198,16 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
 
     // Calcul du square correspondant
-    square square_pointed_at_event = game_get_square(env->g, row_index, col_index);
+    square square_pointed_at_event =
+        game_get_square(env->g, row_index, col_index);
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
-      if (!zero_square(square_pointed_at_event) && !immutable_square(square_pointed_at_event)) {
+      if (!zero_square(square_pointed_at_event) &&
+          !immutable_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_ZERO);
-      } 
+      }
       // Afficher la grille mise à jour (à retirer plus tard)
       game_print(env->g);
     }
@@ -223,13 +221,15 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     // Calculez l'indice de la colonne et de la rangée correspondantes
     int col_index = (rect.x - X_OFFSET) / TILE_SIZE;
     int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
-    
-    square square_pointed_at_event = game_get_square(env->g, row_index, col_index);
-    
+
+    square square_pointed_at_event =
+        game_get_square(env->g, row_index, col_index);
+
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
-      if (!one_square(square_pointed_at_event) && !immutable_square(square_pointed_at_event)) {
+      if (!one_square(square_pointed_at_event) &&
+          !immutable_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_ONE);
       }
 
@@ -246,12 +246,14 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     // Calculez l'indice de la colonne et de la rangée correspondantes
     int col_index = (rect.x - X_OFFSET) / TILE_SIZE;
     int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
-    square square_pointed_at_event = game_get_square(env->g, row_index, col_index);
+    square square_pointed_at_event =
+        game_get_square(env->g, row_index, col_index);
 
     // Vérifiez que les indices sont valides avant de les utiliser
     if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
         row_index < game_nb_rows(env->g)) {
-      if (!immutable_square(square_pointed_at_event) || !empty_square(square_pointed_at_event) ) {
+      if (!immutable_square(square_pointed_at_event) ||
+          !empty_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_EMPTY);
       }
       // Afficher la grille mise à jour (à retirer plus tard)
