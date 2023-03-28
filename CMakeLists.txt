@@ -33,7 +33,6 @@ target_link_libraries(model ${SDL2_ALL_LIBS} m)
 # copy our sprites in build 
 file (COPY sprites DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-
 # [====== TESTS ======]
 include(CTest)
 enable_testing()

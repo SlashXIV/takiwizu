@@ -14,8 +14,9 @@
 #include "game_struct.h"
 #include "game_tools.h"
 
-#define FONT "arial.ttf"
-#define FONTSIZE 20
+#define FONT "sprites/arial.ttf"
+#define FONTSIZE 50
+#define FONTSIZEHELP 20
 
 #define BACKGROUND "sprites/background.jpg"
 #define WHITE_TILE "sprites/white.png"
@@ -53,6 +54,8 @@ struct Env_t {
   SDL_Texture *empty_tile;
   SDL_Texture *immutable_white;
   SDL_Texture *immutable_black;
+  SDL_Texture *titre;
+  SDL_Texture *help;
   game g;
 };
 
@@ -81,6 +84,26 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
 
   env->immutable_black = IMG_LoadTexture(ren, IMMUTABLE_BLACK);
   if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
+
+  SDL_Color color = {255, 255, 255, 255};
+  TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
+  if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
+  TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+
+  TTF_Font *font_help = TTF_OpenFont(FONT, FONTSIZEHELP);
+  if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
+  TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
+
+  SDL_Surface *surface = TTF_RenderText_Blended(font, "Takuzu", color);
+  env->titre = SDL_CreateTextureFromSurface(ren, surface);
+  SDL_FreeSurface(surface);
+
+  // press H for help text
+  SDL_Surface *help_surface =
+      TTF_RenderText_Blended(font_help, "Press H for help", color);
+  env->help = SDL_CreateTextureFromSurface(ren, help_surface);
+  SDL_FreeSurface(help_surface);
+  TTF_CloseFont(font);
 
   env->g = game_default();
 
@@ -118,6 +141,24 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   SDL_RenderCopy(ren, env->background, NULL, NULL); /* étirable */
 
   SDL_Rect rect;
+
+  /*____________________________________________________
+          AFFICHAGE DU TITRE DU JEU
+      ____________________________________________________  */
+
+  SDL_QueryTexture(env->titre, NULL, NULL, &rect.w, &rect.h);
+  rect.x = (w - rect.w) / 2;
+  rect.y = 50;
+  SDL_RenderCopy(ren, env->titre, NULL, &rect);
+
+  /*____________________________________________________
+          AFFICHAGE DU BOUTON H (HELP) EN BAS AU CENTRE
+      ____________________________________________________  */
+
+  SDL_QueryTexture(env->help, NULL, NULL, &rect.w, &rect.h);
+  rect.x = (w - rect.w) / 2;
+  rect.y = h - 50;
+  SDL_RenderCopy(ren, env->help, NULL, &rect);
 
   move_to(&rect, X_OFFSET, Y_OFFSET);
 
@@ -274,6 +315,25 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'y'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_y) {
     game_redo(env->g);
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'h'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_h) {
+    // créer une nouvelle fenêtre
+    SDL_Window *newWin = SDL_CreateWindow(
+        "Help Menu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
+    // vérifier si la nouvelle fenêtre a bien été créée
+    if (!newWin) {
+      printf("Erreur: SDL_CreateWindow (%s)", SDL_GetError());
+      return false;
+    }
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q) {
+    exit(EXIT_SUCCESS);
   }
 
   return false;
