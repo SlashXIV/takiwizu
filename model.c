@@ -159,16 +159,20 @@ void render(SDL_Window *win, SDL_Renderer *ren,
 
         SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);  // Définir la couleur
                                                       // rouge
-        int line_thickness = 8;  // Définir l'épaisseur de la ligne
-        int x1 = X_OFFSET + i * TILE_SIZE + line_thickness / 2;
-        int y1 = Y_OFFSET + j * TILE_SIZE + line_thickness / 2;
-        int x2 = X_OFFSET + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y2 = Y_OFFSET + (j + 1) * TILE_SIZE - line_thickness / 2;
+        int line_thickness = 20;  // Définir l'épaisseur de la ligne
+        int x1 = X_OFFSET-8 + i * TILE_SIZE + line_thickness / 2;
+        int y1 = Y_OFFSET-10 + j * TILE_SIZE + line_thickness / 2;
+        int x2 = X_OFFSET-8 + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y2 = Y_OFFSET-10 + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x1, y1, x2, y2);  // Dessiner la première ligne
-        int x3 = X_OFFSET + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y3 = Y_OFFSET + j * TILE_SIZE + line_thickness / 2;
-        int x4 = X_OFFSET + i * TILE_SIZE + line_thickness / 2;
-        int y4 = Y_OFFSET + (j + 1) * TILE_SIZE - line_thickness / 2;
+
+
+
+
+        int x3 = X_OFFSET-8 + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y3 = Y_OFFSET-10 + j * TILE_SIZE + line_thickness / 2;
+        int x4 = X_OFFSET-8 + i * TILE_SIZE + line_thickness / 2;
+        int y4 = Y_OFFSET-10 + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x3, y3, x4, y4);  // Dessiner la deuxième ligne
       }
     }
