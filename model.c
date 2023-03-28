@@ -70,10 +70,9 @@ void calculate_grid_position(int window_width, int window_height,
 /* **************************************************************** */
 
 Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
-          char *argv[]) {  // main equivalent
+          char *argv[]) { 
 
   Env *env = malloc(sizeof(struct Env_t));
-  /* PUT YOUR CODE HERE TO INIT TEXTURES, ... */
 
   env->background = IMG_LoadTexture(ren, BACKGROUND);
   if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
@@ -210,30 +209,34 @@ void render(SDL_Window *win, SDL_Renderer *ren,
     for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
   }
 
-  /*_____________________________________________
-    RECHERCHE D'ERREURS ET AFFICHAGE DE CROIX
-  _______________________________________________ */
-
-  for (int i = 0; i < game_nb_rows(env->g); i++) {
+    /*_____________________________________________
+        RECHERCHE D'ERREURS ET AFFICHAGE DE CARRÉS PLEINS
+    _______________________________________________ */
+// Boucle pour parcourir la grille et dessiner des carrés pour les cases en erreur
+for (int i = 0; i < game_nb_rows(env->g); i++) {
     for (int j = 0; j < game_nb_cols(env->g); j++) {
-      if (game_has_error(env->g, j, i)) {
-        SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);  // Définir la couleur
-                                                      // rouge
-        int line_thickness = 20;  // Définir l'épaisseur de la ligne
-        int x1 = grid_x + i * TILE_SIZE + line_thickness / 2;
-        int y1 = grid_y + j * TILE_SIZE + line_thickness / 2;
-        int x2 = grid_x + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y2 = grid_y + (j + 1) * TILE_SIZE - line_thickness / 2;
-        SDL_RenderDrawLine(ren, x1, y1, x2, y2);  // Dessiner la première ligne
-
-        int x3 = grid_x + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y3 = grid_y + j * TILE_SIZE + line_thickness / 2;
-        int x4 = grid_x + i * TILE_SIZE + line_thickness / 2;
-        int y4 = grid_y + (j + 1) * TILE_SIZE - line_thickness / 2;
-        SDL_RenderDrawLine(ren, x3, y3, x4, y4);  // Dessiner la deuxième ligne
-      }
+        if (game_has_error(env->g, j, i)) { // Si la case a une erreur
+            // Définir la couleur rouge avec opacité réduite de moitié (128/255)
+            SDL_SetRenderDrawColor(ren, 255, 0, 0, 128);
+            // Définir le mode de fusion pour dessiner des formes semi-transparentes
+            SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
+            // Définir le rectangle à dessiner
+            SDL_Rect rect = {
+                .x = grid_x + i * TILE_SIZE,
+                .y = grid_y + j * TILE_SIZE,
+                .w = TILE_SIZE,
+                .h = TILE_SIZE
+            };
+            // Dessiner le carré semi-transparent
+            SDL_RenderFillRect(ren, &rect);
+            // Réinitialiser le mode de fusion pour dessiner des formes opaques à nouveau
+            SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_NONE);
+        }
     }
-  }
+}
+
+
+
 
   // SI H EST APPUYÉ, AFFICHER L'ÉCRAN D'AIDE
 
@@ -244,7 +247,6 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   SDL_RenderPresent(ren);
 }
 
-/* **************************************************************** */
 
 bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   // Quitter le jeu si l'utilisateur clique sur la croix en haut à droite de la
@@ -349,7 +351,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q) {
-    exit(EXIT_SUCCESS);
+    return true;
   }
 
   return false;
@@ -358,7 +360,6 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 /* **************************************************************** */
 
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
-  /* PUT YOUR CODE HERE TO CLEAN MEMORY */
 
   SDL_DestroyTexture(env->background);
 
@@ -370,7 +371,14 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   SDL_DestroyTexture(env->immutable_white);
 
+  SDL_DestroyTexture(env->help_screen);
+
+  SDL_DestroyTexture(env->titre);
+
+    SDL_DestroyTexture(env->help);
+
   free(env->g);
+
 
   free(env);
 }
