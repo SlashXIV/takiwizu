@@ -24,10 +24,9 @@
 #define EMPTY_TILE "sprites/empty_frame.jpg"
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
+#define HELP_BACKGROUND "sprites/help_background.jpg"
 
-#define TILE_SIZE 60
-#define X_OFFSET 130
-#define Y_OFFSET 160
+#define TILE_SIZE 50
 
 /* Idée pour l'interface graphique:
 
@@ -56,8 +55,17 @@ struct Env_t {
   SDL_Texture *immutable_black;
   SDL_Texture *titre;
   SDL_Texture *help;
+  bool help_pressed;
+  SDL_Texture *help_screen;
   game g;
 };
+
+void calculate_grid_position(int window_width, int window_height,
+                             int grid_width, int grid_height, int *grid_x,
+                             int *grid_y) {
+  *grid_x = (window_width - (grid_width * TILE_SIZE)) / 2;
+  *grid_y = (window_height - (grid_height * TILE_SIZE)) / 2;
+}
 
 /* **************************************************************** */
 
@@ -106,6 +114,10 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
   TTF_CloseFont(font);
 
   env->g = game_default();
+
+  env->help_pressed = false;
+
+  env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
 
   return env;
 }
@@ -160,11 +172,21 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   rect.y = h - 50;
   SDL_RenderCopy(ren, env->help, NULL, &rect);
 
-  move_to(&rect, X_OFFSET, Y_OFFSET);
+  /*____________________________________________________
+        CENTRAGE DE LA GRILLE DE JEU DANS LA FENÊTRE
+    ____________________________________________________  */
+
+  int grid_w = DEFAULT_SIZE * TILE_SIZE;
+  int grid_h = DEFAULT_SIZE * TILE_SIZE;
+  int grid_x = (w - grid_w) / 2;
+  int grid_y = (h - grid_h) / 2;
 
   /*____________________________________________________
         AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE
     ____________________________________________________  */
+
+  rect.x = grid_x;
+  rect.y = grid_y;
 
   for (int i = 0; i < DEFAULT_SIZE; i++) {
     for (int j = 0; j < DEFAULT_SIZE; j++) {
@@ -195,25 +217,31 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   for (int i = 0; i < game_nb_rows(env->g); i++) {
     for (int j = 0; j < game_nb_cols(env->g); j++) {
       if (game_has_error(env->g, j, i)) {
-        // draw a red circle on the tile
-
         SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);  // Définir la couleur
                                                       // rouge
         int line_thickness = 20;  // Définir l'épaisseur de la ligne
-        int x1 = X_OFFSET - 5 + i * TILE_SIZE + line_thickness / 2;
-        int y1 = Y_OFFSET - 5 + j * TILE_SIZE + line_thickness / 2;
-        int x2 = X_OFFSET - 5 + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y2 = Y_OFFSET - 5 + (j + 1) * TILE_SIZE - line_thickness / 2;
+        int x1 = grid_x + i * TILE_SIZE + line_thickness / 2;
+        int y1 = grid_y + j * TILE_SIZE + line_thickness / 2;
+        int x2 = grid_x + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y2 = grid_y + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x1, y1, x2, y2);  // Dessiner la première ligne
 
-        int x3 = X_OFFSET - 5 + (i + 1) * TILE_SIZE - line_thickness / 2;
-        int y3 = Y_OFFSET - 5 + j * TILE_SIZE + line_thickness / 2;
-        int x4 = X_OFFSET - 5 + i * TILE_SIZE + line_thickness / 2;
-        int y4 = Y_OFFSET - 5 + (j + 1) * TILE_SIZE - line_thickness / 2;
+        int x3 = grid_x + (i + 1) * TILE_SIZE - line_thickness / 2;
+        int y3 = grid_y + j * TILE_SIZE + line_thickness / 2;
+        int x4 = grid_x + i * TILE_SIZE + line_thickness / 2;
+        int y4 = grid_y + (j + 1) * TILE_SIZE - line_thickness / 2;
         SDL_RenderDrawLine(ren, x3, y3, x4, y4);  // Dessiner la deuxième ligne
       }
     }
   }
+
+  // SI H EST APPUYÉ, AFFICHER L'ÉCRAN D'AIDE
+
+  if (env->help_pressed) {
+    SDL_RenderCopy(ren, env->help_screen, NULL, NULL);
+  }
+
+  SDL_RenderPresent(ren);
 }
 
 /* **************************************************************** */
@@ -225,9 +253,13 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     return true;
   }
 
-  // Mettre à jour la taille de la fenêtre
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
+
+  int grid_w = DEFAULT_SIZE * TILE_SIZE;
+  int grid_h = DEFAULT_SIZE * TILE_SIZE;
+  int grid_x = (w - grid_w) / 2;
+  int grid_y = (h - grid_h) / 2;
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'w'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w) {
@@ -235,8 +267,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     SDL_GetMouseState(&rect.x, &rect.y);
 
     // Calculez l'indice de la colonne et de la rangée correspondantes
-    int col_index = (rect.x - X_OFFSET) / TILE_SIZE;
-    int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
+    int col_index = (rect.x - grid_x) / TILE_SIZE;
+    int row_index = (rect.y - grid_y) / TILE_SIZE;
 
     // Calcul du square correspondant
     square square_pointed_at_event =
@@ -249,8 +281,6 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
           !immutable_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_ZERO);
       }
-      // Afficher la grille mise à jour (à retirer plus tard)
-      game_print(env->g);
     }
   }
 
@@ -260,8 +290,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     SDL_GetMouseState(&rect.x, &rect.y);
 
     // Calculez l'indice de la colonne et de la rangée correspondantes
-    int col_index = (rect.x - X_OFFSET) / TILE_SIZE;
-    int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
+    int col_index = (rect.x - grid_x) / TILE_SIZE;
+    int row_index = (rect.y - grid_y) / TILE_SIZE;
 
     square square_pointed_at_event =
         game_get_square(env->g, row_index, col_index);
@@ -273,9 +303,6 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
           !immutable_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_ONE);
       }
-
-      // Afficher la grille mise à jour (à retirer plus tard)
-      game_print(env->g);
     }
   }
 
@@ -285,8 +312,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     SDL_GetMouseState(&rect.x, &rect.y);
 
     // Calculez l'indice de la colonne et de la rangée correspondantes
-    int col_index = (rect.x - X_OFFSET) / TILE_SIZE;
-    int row_index = (rect.y - Y_OFFSET) / TILE_SIZE;
+    int col_index = (rect.x - grid_x) / TILE_SIZE;
+    int row_index = (rect.y - grid_y) / TILE_SIZE;
     square square_pointed_at_event =
         game_get_square(env->g, row_index, col_index);
 
@@ -297,8 +324,6 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
           !empty_square(square_pointed_at_event)) {
         game_play_move(env->g, row_index, col_index, S_EMPTY);
       }
-      // Afficher la grille mise à jour (à retirer plus tard)
-      game_print(env->g);
     }
   }
 
@@ -319,16 +344,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'h'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_h) {
-    // créer une nouvelle fenêtre
-    SDL_Window *newWin = SDL_CreateWindow(
-        "Help Menu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-
-    // vérifier si la nouvelle fenêtre a bien été créée
-    if (!newWin) {
-      printf("Erreur: SDL_CreateWindow (%s)", SDL_GetError());
-      return false;
-    }
+    env->help_pressed = !env->help_pressed;
   }
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q'
