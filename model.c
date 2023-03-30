@@ -25,6 +25,8 @@
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
 #define HELP_BACKGROUND "sprites/help_background.jpg"
+#define GAME_1 "sprites/game_1.txt"
+#define WIN_SCREEN "sprites/win_screen.jpg"
 
 #define TILE_SIZE 50
 
@@ -58,6 +60,8 @@ struct Env_t {
   bool help_pressed;
   SDL_Texture *help_screen;
   game g;
+  game g2;
+  SDL_Texture *win_screen;
 };
 
 void calculate_grid_position(int window_width, int window_height,
@@ -69,9 +73,7 @@ void calculate_grid_position(int window_width, int window_height,
 
 /* **************************************************************** */
 
-Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
-          char *argv[]) { 
-
+Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   Env *env = malloc(sizeof(struct Env_t));
 
   env->background = IMG_LoadTexture(ren, BACKGROUND);
@@ -113,10 +115,17 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc,
   TTF_CloseFont(font);
 
   env->g = game_default();
+  game_save(env->g, "game_load.txt");
+
+  env->g2 = game_load("game_load.txt");
+  env->g2 = game_custom1();
 
   env->help_pressed = false;
 
   env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
+
+  env->win_screen = IMG_LoadTexture(ren, WIN_SCREEN);
+  if (!env->win_screen) ERROR("IMG_LoadTexture: %s\n", WIN_SCREEN);
 
   return env;
 }
@@ -209,34 +218,31 @@ void render(SDL_Window *win, SDL_Renderer *ren,
     for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
   }
 
-    /*_____________________________________________
-        RECHERCHE D'ERREURS ET AFFICHAGE DE CARRÉS PLEINS
-    _______________________________________________ */
-// Boucle pour parcourir la grille et dessiner des carrés pour les cases en erreur
-for (int i = 0; i < game_nb_rows(env->g); i++) {
+  /*_____________________________________________
+      RECHERCHE D'ERREURS ET AFFICHAGE DE CARRÉS PLEINS
+  _______________________________________________ */
+  // Boucle pour parcourir la grille et dessiner des carrés pour les cases en
+  // erreur
+  for (int i = 0; i < game_nb_rows(env->g); i++) {
     for (int j = 0; j < game_nb_cols(env->g); j++) {
-        if (game_has_error(env->g, j, i)) { // Si la case a une erreur
-            // Définir la couleur rouge avec opacité réduite de moitié (128/255)
-            SDL_SetRenderDrawColor(ren, 255, 0, 0, 128);
-            // Définir le mode de fusion pour dessiner des formes semi-transparentes
-            SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
-            // Définir le rectangle à dessiner
-            SDL_Rect rect = {
-                .x = grid_x + i * TILE_SIZE,
-                .y = grid_y + j * TILE_SIZE,
-                .w = TILE_SIZE,
-                .h = TILE_SIZE
-            };
-            // Dessiner le carré semi-transparent
-            SDL_RenderFillRect(ren, &rect);
-            // Réinitialiser le mode de fusion pour dessiner des formes opaques à nouveau
-            SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_NONE);
-        }
+      if (game_has_error(env->g, j, i)) {  // Si la case a une erreur
+        // Définir la couleur rouge avec opacité réduite de moitié (128/255)
+        SDL_SetRenderDrawColor(ren, 255, 0, 0, 128);
+        // Définir le mode de fusion pour dessiner des formes semi-transparentes
+        SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
+        // Définir le rectangle à dessiner
+        SDL_Rect rect = {.x = grid_x + i * TILE_SIZE,
+                         .y = grid_y + j * TILE_SIZE,
+                         .w = TILE_SIZE,
+                         .h = TILE_SIZE};
+        // Dessiner le carré semi-transparent
+        SDL_RenderFillRect(ren, &rect);
+        // Réinitialiser le mode de fusion pour dessiner des formes opaques à
+        // nouveau
+        SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_NONE);
+      }
     }
-}
-
-
-
+  }
 
   // SI H EST APPUYÉ, AFFICHER L'ÉCRAN D'AIDE
 
@@ -244,9 +250,14 @@ for (int i = 0; i < game_nb_rows(env->g); i++) {
     SDL_RenderCopy(ren, env->help_screen, NULL, NULL);
   }
 
+  // SI LE JEU EST GAGNÉ, AFFICHER L'ÉCRAN DE VICTOIRE
+
+  if (game_is_over(env->g)) {
+    SDL_RenderCopy(ren, env->win_screen, NULL, NULL);
+  }
+
   SDL_RenderPresent(ren);
 }
-
 
 bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   // Quitter le jeu si l'utilisateur clique sur la croix en haut à droite de la
@@ -267,22 +278,26 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
+    bool move_possible;
 
     // Calculez l'indice de la colonne et de la rangée correspondantes
     int col_index = (rect.x - grid_x) / TILE_SIZE;
     int row_index = (rect.y - grid_y) / TILE_SIZE;
+    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
+                        row_index >= 0 && row_index < game_nb_rows(env->g));
+    if (inside_grid) {
+      square square_pointed_at_event =
+          game_get_square(env->g, row_index, col_index);
+      bool already_zero_square = (square_pointed_at_event == S_ZERO);
+      bool already_immutable = (immutable_square(square_pointed_at_event));
+      move_possible = inside_grid && !already_zero_square && !already_immutable;
+    }
 
-    // Calcul du square correspondant
-    square square_pointed_at_event =
-        game_get_square(env->g, row_index, col_index);
-
-    // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
-        row_index < game_nb_rows(env->g)) {
-      if (!zero_square(square_pointed_at_event) &&
-          !immutable_square(square_pointed_at_event)) {
-        game_play_move(env->g, row_index, col_index, S_ZERO);
-      }
+    if (!move_possible) {
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
+                               "le move est impossible", NULL);
+    } else {
+      game_play_move(env->g, row_index, col_index, S_ZERO);
     }
   }
 
@@ -290,21 +305,29 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_b) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
+    bool move_possible;
 
-    // Calculez l'indice de la colonne et de la rangée correspondantes
     int col_index = (rect.x - grid_x) / TILE_SIZE;
     int row_index = (rect.y - grid_y) / TILE_SIZE;
+    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
+                        row_index >= 0 && row_index < game_nb_rows(env->g));
 
-    square square_pointed_at_event =
-        game_get_square(env->g, row_index, col_index);
+    if (inside_grid) {
+      square square_pointed_at_event =
+          game_get_square(env->g, row_index, col_index);
+      bool already_one_square = (square_pointed_at_event == S_ONE);
+      bool already_immutable = (immutable_square(square_pointed_at_event));
+      move_possible = !already_one_square && !already_immutable;
 
-    // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
-        row_index < game_nb_rows(env->g)) {
-      if (!one_square(square_pointed_at_event) &&
-          !immutable_square(square_pointed_at_event)) {
+      if (!move_possible) {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
+                                 "le move est impossible", NULL);
+      } else {
         game_play_move(env->g, row_index, col_index, S_ONE);
       }
+    } else {
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
+                               "le move est impossible", NULL);
     }
   }
 
@@ -312,21 +335,38 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_e) {
     SDL_Rect rect;
     SDL_GetMouseState(&rect.x, &rect.y);
+    bool move_possible;
 
-    // Calculez l'indice de la colonne et de la rangée correspondantes
     int col_index = (rect.x - grid_x) / TILE_SIZE;
     int row_index = (rect.y - grid_y) / TILE_SIZE;
-    square square_pointed_at_event =
-        game_get_square(env->g, row_index, col_index);
+    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
+                        row_index >= 0 && row_index < game_nb_rows(env->g));
 
-    // Vérifiez que les indices sont valides avant de les utiliser
-    if (col_index >= 0 && col_index < game_nb_cols(env->g) && row_index >= 0 &&
-        row_index < game_nb_rows(env->g)) {
-      if (!immutable_square(square_pointed_at_event) ||
-          !empty_square(square_pointed_at_event)) {
+    if (inside_grid) {
+      square square_pointed_at_event =
+          game_get_square(env->g, row_index, col_index);
+      bool already_two_square = (square_pointed_at_event == S_EMPTY);
+      bool already_immutable = (immutable_square(square_pointed_at_event));
+      move_possible = inside_grid && !already_two_square && !already_immutable;
+
+      if (!move_possible) {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
+                                 "le move est impossible", NULL);
+      } else {
         game_play_move(env->g, row_index, col_index, S_EMPTY);
       }
+    } else {
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
+                               "le move est impossible", NULL);
     }
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'l'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_l) {
+    game_replace(env->g, env->g2);
+    // show message box "game loaded"
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                             "Game loaded", NULL);
   }
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'r'
@@ -349,9 +389,18 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     env->help_pressed = !env->help_pressed;
   }
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q) {
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q' OU LA TOUCHE 'ESC'
+  if (e->type == SDL_KEYDOWN &&
+      (e->key.keysym.sym == SDLK_ESCAPE || e->key.keysym.sym == SDLK_q)) {
     return true;
+  }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 's'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
+    game_solve(env->g);
+    // show message box "game saved"
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                             "Game solved", NULL);
   }
 
   return false;
@@ -360,7 +409,6 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 /* **************************************************************** */
 
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
-
   SDL_DestroyTexture(env->background);
 
   SDL_DestroyTexture(env->white_tile);
@@ -375,10 +423,9 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   SDL_DestroyTexture(env->titre);
 
-    SDL_DestroyTexture(env->help);
+  SDL_DestroyTexture(env->help);
 
   free(env->g);
-
 
   free(env);
 }

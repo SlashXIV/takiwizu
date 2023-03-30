@@ -309,3 +309,76 @@ void generate_first_solution(game solution, game g, int pos, int len,
     game_set_square(g, i, j, S_EMPTY);
   }
 }
+
+// Replace all the squares by the squares of an other game
+
+void game_replace(game g, game g2) {
+  // verification if the games have the same size
+  if (game_nb_cols(g) != game_nb_cols(g2) ||
+      game_nb_rows(g) != game_nb_rows(g2)) {
+    printf("The games have not the same size");
+    return;
+  }
+  for (int i = 0; i < game_nb_cols(g); i++) {
+    for (int j = 0; j < game_nb_rows(g); j++) {
+      game_set_square(g, i, j, game_get_square(g2, i, j));
+    }
+  }
+}
+
+// Clear all game to empty
+
+void game_clear(game g) {
+  for (int i = 0; i < game_nb_cols(g); i++) {
+    for (int j = 0; j < game_nb_rows(g); j++) {
+      game_set_square(g, i, j, S_EMPTY);
+    }
+  }
+}
+
+game game_custom1(void) {
+  square* grid = malloc((DEFAULT_SIZE * DEFAULT_SIZE) * sizeof(square));
+  check(grid != NULL, "game_custom1() : could not create grid");
+
+  grid[0] = S_EMPTY;
+  grid[1] = S_EMPTY;
+  grid[2] = S_EMPTY;
+  grid[3] = S_IMMUTABLE_ONE;
+  grid[4] = S_EMPTY;
+  grid[5] = S_EMPTY;
+  grid[6] = S_EMPTY;
+  grid[7] = S_EMPTY;
+  grid[8] = S_EMPTY;
+  grid[9] = S_IMMUTABLE_ONE;
+  grid[10] = S_EMPTY;
+  grid[11] = S_EMPTY;
+  grid[12] = S_EMPTY;
+  grid[13] = S_EMPTY;
+  grid[14] = S_IMMUTABLE_ZERO;
+  grid[15] = S_EMPTY;
+  grid[16] = S_EMPTY;
+  grid[17] = S_EMPTY;
+  grid[18] = S_EMPTY;
+  grid[19] = S_IMMUTABLE_ONE;
+  grid[20] = S_EMPTY;
+  grid[21] = S_EMPTY;
+  grid[22] = S_EMPTY;
+  grid[23] = S_EMPTY;
+  grid[24] = S_EMPTY;
+  grid[25] = S_EMPTY;
+  grid[26] = S_IMMUTABLE_ZERO;
+  grid[27] = S_EMPTY;
+  grid[28] = S_EMPTY;
+  grid[29] = S_EMPTY;
+  grid[30] = S_EMPTY;
+  grid[31] = S_EMPTY;
+  grid[32] = S_EMPTY;
+  grid[33] = S_IMMUTABLE_ZERO;
+  grid[34] = S_EMPTY;
+  grid[35] = S_IMMUTABLE_ONE;
+
+  game g_output = game_new(grid);
+  free(grid);
+
+  return g_output;
+}

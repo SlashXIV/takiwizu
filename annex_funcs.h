@@ -46,3 +46,11 @@ void generate_first_solution(game solution, game g, int pos, int len,
 
 // generate all the solutions for the current game given
 uint generate_all_solutions(int pos, int len, game g, uint nb_cols);
+
+// Replace all the squares by the squares of an other game
+void game_replace(game g, game g2);
+
+// Clear all game to empty squares
+void game_clear(game g);
+
+game game_custom1(void);
