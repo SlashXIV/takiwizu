@@ -13,8 +13,7 @@ int main(int argc, char* argv[]) {
   /* SDL ver */
   SDL_version nb;
   SDL_VERSION(&nb);
-  printf("SDL successfully loaded! (ver %d.%d.%d)\n", nb.major, nb.minor,
-         nb.patch);
+  printf("Welcome to Takiwizu !\n");
 
   /* initialize SDL2 and some extensions */
   if (SDL_Init(SDL_INIT_VIDEO) != 0)
