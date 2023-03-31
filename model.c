@@ -14,12 +14,12 @@
 #include "game_struct.h"
 #include "game_tools.h"
 
-#define FONT "sprites/arial.ttf"
+#define FONT "sprites/Leaf.ttf"
 #define MCFONT "sprites/Minecraft.ttf"
-#define FONTSIZE 50
-#define FONTSIZEHELP 20
+#define FONTSIZE 70
+#define FONTSIZEHELP 
 
-#define BACKGROUND "sprites/background.jpg"
+#define BACKGROUND "sprites/background.jpeg"
 #define WHITE_TILE "sprites/white.png"
 #define BLACK_TILE "sprites/black.png"
 #define EMPTY_TILE "sprites/empty_frame.jpg"
@@ -31,12 +31,7 @@
 
 #define TILE_SIZE 50
 
-/* **************************************************************** */
-
-// Structure:
 struct Env_t {
-  /* METTRE LES VARIABLE CI-DESSOUS */
-
   SDL_Texture *background;
   SDL_Texture *white_tile;
   SDL_Texture *black_tile;
@@ -48,95 +43,14 @@ struct Env_t {
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
   SDL_Texture *victory_font;
+<<<<<<< HEAD
 
+=======
+  SDL_Surface *icon;
+>>>>>>> 26af6b060e7ce01e3b0352cfc04aaf08da4af731
   game g;
-  game g2;
-
   bool help_pressed;
 };
-
-void calculate_grid_position(int window_width, int window_height,
-                             int grid_width, int grid_height, int *grid_x,
-                             int *grid_y) {
-  *grid_x = (window_width - (grid_width * TILE_SIZE)) / 2;
-  *grid_y = (window_height - (grid_height * TILE_SIZE)) / 2;
-}
-
-/* **************************************************************** */
-
-Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
-  Env *env = malloc(sizeof(struct Env_t));
-
-  env->background = IMG_LoadTexture(ren, BACKGROUND);
-  if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
-
-  env->white_tile = IMG_LoadTexture(ren, WHITE_TILE);
-  if (!env->white_tile) ERROR("IMG_LoadTexture: %s\n", WHITE_TILE);
-
-  env->black_tile = IMG_LoadTexture(ren, BLACK_TILE);
-  if (!env->black_tile) ERROR("IMG_LoadTexture: %s\n", BLACK_TILE);
-
-  env->empty_tile = IMG_LoadTexture(ren, EMPTY_TILE);
-  if (!env->empty_tile) ERROR("IMG_LoadTexture: %s\n", EMPTY_TILE);
-
-  env->immutable_white = IMG_LoadTexture(ren, IMMUTABLE_WHITE);
-  if (!env->immutable_white) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_WHITE);
-
-  env->immutable_black = IMG_LoadTexture(ren, IMMUTABLE_BLACK);
-  if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
-
-  SDL_Color color = {0, 0, 0, 255};
-  SDL_Color red = {255, 0, 0, 255};
-  SDL_Color color2 = {27, 59, 34, 255};
-
-  TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
-  if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
-  TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-
-  TTF_Font *font_help = TTF_OpenFont(FONT, FONTSIZEHELP);
-  if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
-  TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
-
-  SDL_Surface *surface = TTF_RenderText_Blended(font, "TAKUZU", color);
-  env->titre = SDL_CreateTextureFromSurface(ren, surface);
-  SDL_FreeSurface(surface);
-
-  // press H for help text:
-  SDL_Surface *help_surface =
-      TTF_RenderText_Blended(font_help, "Press H for help", color);
-  env->help = SDL_CreateTextureFromSurface(ren, help_surface);
-  SDL_FreeSurface(help_surface);
-
-  // Team 6A:
-  SDL_Surface *team_name = TTF_RenderText_Blended(font_help, "Team 6A", color2);
-  env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
-  SDL_FreeSurface(team_name);
-
-  TTF_CloseFont(font);
-
-  env->g = game_default();
-  env->g2 = game_custom1();
-  game_save(env->g2, "game_load.txt");
-
-  env->help_pressed = false;
-
-  env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
-
-  TTF_Font *victory_font = TTF_OpenFont(MCFONT, FONTSIZE);
-  if (!victory_font) ERROR("TTF_OpenFont: %s\n", MCFONT);
-
-  SDL_Surface *victory_surface =
-      TTF_RenderText_Blended(victory_font, "Victory !!", red);
-  env->victory_font = SDL_CreateTextureFromSurface(ren, victory_surface);
-
-  SDL_Surface *icon = IMG_Load(ICON);
-  if (!icon) ERROR("IMG_Load: %s\n", ICON);
-  SDL_SetWindowIcon(win, icon);
-
-  return env;
-}
-
-/* **************************************************************** */
 
 void set_tile_pos(SDL_Rect *rect, int x, int y) {
   rect->x = x;
@@ -159,8 +73,76 @@ void SDL_set_tile(Env *env, SDL_Renderer *ren, SDL_Rect rect,
   SDL_RenderCopy(ren, tile, NULL, &rect);
 }
 
+Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
+  Env *env = malloc(sizeof(struct Env_t));
+
+  env->background = IMG_LoadTexture(ren, BACKGROUND);
+  if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
+
+  env->white_tile = IMG_LoadTexture(ren, WHITE_TILE);
+  if (!env->white_tile) ERROR("IMG_LoadTexture: %s\n", WHITE_TILE);
+
+  env->black_tile = IMG_LoadTexture(ren, BLACK_TILE);
+  if (!env->black_tile) ERROR("IMG_LoadTexture: %s\n", BLACK_TILE);
+
+  env->empty_tile = IMG_LoadTexture(ren, EMPTY_TILE);
+  if (!env->empty_tile) ERROR("IMG_LoadTexture: %s\n", EMPTY_TILE);
+
+  env->immutable_white = IMG_LoadTexture(ren, IMMUTABLE_WHITE);
+  if (!env->immutable_white) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_WHITE);
+
+  env->immutable_black = IMG_LoadTexture(ren, IMMUTABLE_BLACK);
+  if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
+  
+  SDL_Color red = {255, 0, 0, 255};
+  SDL_Color dark_green = {27, 59, 34, 255};
+  SDL_Color light_green = {0, 255, 122, 255};
+  SDL_Color black = {0, 0, 0, 255};
+
+
+  TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
+  if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
+  TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+
+  TTF_Font *font_help = TTF_OpenFont(FONT, FONTSIZEHELP);
+  if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
+  TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
+
+  SDL_Surface *surface = TTF_RenderText_Blended(font, "T A K I W I Z U", light_green);
+  env->titre = SDL_CreateTextureFromSurface(ren, surface);
+  SDL_FreeSurface(surface);
+
+  // press H for help text:
+  SDL_Surface *help_surface =
+      TTF_RenderText_Blended(font_help, "Press H for help", black);
+  env->help = SDL_CreateTextureFromSurface(ren, help_surface);
+  SDL_FreeSurface(help_surface);
+
+  // Team 6A:
+  SDL_Surface *team_name = TTF_RenderText_Blended(font_help, "Team 6A", dark_green);
+  env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
+  SDL_FreeSurface(team_name);
+
+  TTF_CloseFont(font);
+
+  env->g = game_default();
+  
+  env->help_pressed = false;
+
+  env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
+
+  TTF_Font *victory_font = TTF_OpenFont(MCFONT, FONTSIZE);
+  if (!victory_font) ERROR("TTF_OpenFont: %s\n", MCFONT);
+
+  SDL_Surface *victory_surface =
+      TTF_RenderText_Blended(victory_font, "Victory !!", red);
+  env->victory_font = SDL_CreateTextureFromSurface(ren, victory_surface);
+
+  return env;
+}
+
 void render(SDL_Window *win, SDL_Renderer *ren,
-            Env *env) { /* PUT YOUR CODE HERE TO RENDER TEXTURES, ... */
+            Env *env) { 
 
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
@@ -301,13 +283,98 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   SDL_RenderPresent(ren);
 }
 
-bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
-  // Quitter le jeu si l'utilisateur clique sur la croix en haut à droite de la
-  // fenêtre
-  if (e->type == SDL_QUIT) {
-    return true;
-  }
+void show_error_box(const char *msg) {
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", msg, NULL);
+}
 
+void show_info_box(const char *msg) {
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", msg, NULL);
+}
+
+bool inside_grid(int i, int j) {
+  return ((i >= 0 && i < DEFAULT_SIZE) && (j >= 0 && j < DEFAULT_SIZE));
+}
+
+bool user_want_to_place_tile(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN &&
+          (e->key.keysym.sym == SDLK_b || e->key.keysym.sym == SDLK_w ||
+           e->key.keysym.sym == SDLK_e));
+}
+
+bool user_want_to_load_game(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_l);
+}
+
+bool user_want_to_restart_game(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_r);
+}
+
+bool user_want_to_undo(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_z);
+}
+
+bool user_want_to_redo(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_y);
+}
+
+char *get_filename_input_from_terminal() {
+  char *filename = malloc(sizeof(char) * 100);
+  printf(
+      "Entrez le nom du fichier à charger parmis ceux proposés ci-dessous: "
+      "\n=> nom de la save :");
+  system("ls -g *.txt | grep -v 'CMakeCache.txt'");
+  scanf("%s", filename);
+  return filename;
+}
+
+bool load_game_from_file(Env *env) {
+  show_info_box(
+      "CHARGEMENT D'UNE SAVE (l): \n"
+      "- Prenez en main le terminal joint à l'application;\n"
+      "- Suivez les instructions.\n");
+
+  char *filename = get_filename_input_from_terminal();
+  if (filename != NULL) {
+    game g_test = game_load(filename);
+    if (g_test == NULL) {
+      show_error_box("Impossible de charger la sauvegarde");
+      return false;
+    }
+    env->g = game_load(filename);
+  } else {
+    return false;
+  }
+  free(filename);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                           "Partie chargée avec succès!", NULL);
+  return true;
+}
+
+bool user_requested_help(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_h);
+}
+
+bool user_requested_solving(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s);
+}
+
+void toggle_help(Env *env) { env->help_pressed = !env->help_pressed; }
+
+void toggle_solving(Env *env) {
+
+  game_solve(env->g);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                           "Solution du jeu!", NULL);
+}
+
+square square_soon_placed(SDL_Event *e) {
+  if (e->key.keysym.sym == SDLK_b) return S_ONE;
+  if (e->key.keysym.sym == SDLK_w) return S_ZERO;
+  if (e->key.keysym.sym == SDLK_e) return S_EMPTY;
+  return S_EMPTY;
+}
+
+void compute_move(SDL_Window *win, SDL_Event *e, game g) {
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
 
@@ -316,141 +383,52 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   int grid_x = (w - grid_w) / 2;
   int grid_y = (h - grid_h) / 2;
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'w'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w) {
-    SDL_Rect rect;
-    SDL_GetMouseState(&rect.x, &rect.y);
-    bool move_possible;
+  SDL_Rect pos;
+  SDL_GetMouseState(&pos.x, &pos.y);
 
-    // Calculez l'indice de la colonne et de la rangée correspondantes
-    int col_index = (rect.x - grid_x) / TILE_SIZE;
-    int row_index = (rect.y - grid_y) / TILE_SIZE;
-    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
-                        row_index >= 0 && row_index < game_nb_rows(env->g));
-    if (inside_grid) {
-      square square_pointed_at_event =
-          game_get_square(env->g, row_index, col_index);
-      bool already_zero_square = (square_pointed_at_event == S_ZERO);
-      bool already_immutable = (immutable_square(square_pointed_at_event));
-      move_possible = inside_grid && !already_zero_square && !already_immutable;
-    }
+  int col_index = (pos.x - grid_x) / TILE_SIZE;
+  int row_index = (pos.y - grid_y) / TILE_SIZE;
 
-    if (!move_possible) {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
-                               "The move is impossible", NULL);
-    } else {
-      game_play_move(env->g, row_index, col_index, S_ZERO);
-    }
+  if (!inside_grid(row_index, col_index)) {
+    show_error_box(
+        "Vous placez une tuile en dehors de la grille du jeu. "
+        "Réessayez sur une case disponible");
+    return;
   }
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'b'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_b) {
-    SDL_Rect rect;
-    SDL_GetMouseState(&rect.x, &rect.y);
-    bool move_possible;
+  square square_pointed = game_get_square(g, row_index, col_index);
+  square soon_placed = square_soon_placed(e);
 
-    int col_index = (rect.x - grid_x) / TILE_SIZE;
-    int row_index = (rect.y - grid_y) / TILE_SIZE;
-    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
-                        row_index >= 0 && row_index < game_nb_rows(env->g));
-
-    if (inside_grid) {
-      square square_pointed_at_event =
-          game_get_square(env->g, row_index, col_index);
-      bool already_one_square = (square_pointed_at_event == S_ONE);
-      bool already_immutable = (immutable_square(square_pointed_at_event));
-      move_possible = !already_one_square && !already_immutable;
-
-      if (!move_possible) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
-                                 "The move is impossible", NULL);
-      } else {
-        game_play_move(env->g, row_index, col_index, S_ONE);
-      }
-    } else {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
-                               "The move is impossible", NULL);
-    }
+  if (immutable_square(square_pointed) || square_pointed == soon_placed) {
+    show_error_box(
+        "Vous placez une tuile sur une case déjà occupée. "
+        "Réessayez sur une case disponible");
+    return;
   }
+  game_play_move(g, row_index, col_index, soon_placed);
+}
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'e'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_e) {
-    SDL_Rect rect;
-    SDL_GetMouseState(&rect.x, &rect.y);
-    bool move_possible;
+bool user_quit(SDL_Event *e) {
+  return (e->type == SDL_QUIT || e->key.keysym.sym == SDLK_ESCAPE ||
+          e->key.keysym.sym == SDLK_q);
+}
 
-    int col_index = (rect.x - grid_x) / TILE_SIZE;
-    int row_index = (rect.y - grid_y) / TILE_SIZE;
-    bool inside_grid = (col_index >= 0 && col_index < game_nb_cols(env->g) &&
-                        row_index >= 0 && row_index < game_nb_rows(env->g));
+bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
+  if (user_quit(e)) return true;  // end of processing loop (quit the game)
 
-    if (inside_grid) {
-      square square_pointed_at_event =
-          game_get_square(env->g, row_index, col_index);
-      bool already_two_square = (square_pointed_at_event == S_EMPTY);
-      bool already_immutable = (immutable_square(square_pointed_at_event));
-      move_possible = inside_grid && !already_two_square && !already_immutable;
+  if (user_want_to_place_tile(e)) compute_move(win, e, env->g);
 
-      if (!move_possible) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
-                                 "The move is impossible", NULL);
-      } else {
-        game_play_move(env->g, row_index, col_index, S_EMPTY);
-      }
-    } else {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
-                               "The move is impossible", NULL);
-    }
-  }
+  if (user_want_to_load_game(e)) load_game_from_file(env);
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'l'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_l) {
-    env->g = game_load("game_load.txt");
+  if (user_want_to_restart_game(e)) game_restart(env->g);
 
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
-                             "Game loaded", NULL);
-  }
+  if (user_want_to_undo(e)) game_undo(env->g);
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'r'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_r) {
-    game_restart(env->g);
-  }
+  if (user_want_to_redo(e)) game_redo(env->g);
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'z'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_z) {
-    game_undo(env->g);
-  }
+  if (user_requested_help(e)) toggle_help(env);
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'y'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_y) {
-    game_redo(env->g);
-  }
-
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'h'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_h) {
-    env->help_pressed = !env->help_pressed;
-  }
-
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'q' OU LA TOUCHE 'ESC'
-  if (e->type == SDL_KEYDOWN &&
-      (e->key.keysym.sym == SDLK_ESCAPE || e->key.keysym.sym == SDLK_q)) {
-    return true;
-  }
-
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'm'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_m) {
-    game_solve(env->g);
-    // show message box "game saved"
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
-                             "Game solved", NULL);
-  }
-
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE  's'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
-    game_save(env->g, "game_save.txt");
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
-                             "Game saved", NULL);
-  }
+  if (user_requested_solving(e)) toggle_solving(env);
 
   return false;
 }
