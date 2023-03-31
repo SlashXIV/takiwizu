@@ -14,17 +14,17 @@
 #include "game_struct.h"
 #include "game_tools.h"
 
-#define FONT "sprites/Leaf.ttf"
+#define FONT "sprites/kali.ttf"
 #define MCFONT "sprites/Minecraft.ttf"
 #define FONTSIZE 70
 #define FONTSIZEHELP 30
 
 #define BACKGROUND "sprites/background.jpeg"
-#define WHITE_TILE "sprites/white.png"
-#define BLACK_TILE "sprites/black.png"
+#define WHITE_TILE "sprites/white.jpg"
+#define BLACK_TILE "sprites/black.jpg"
 #define EMPTY_TILE "sprites/empty_frame.jpg"
-#define IMMUTABLE_WHITE "sprites/immutable_white.png"
-#define IMMUTABLE_BLACK "sprites/immutable_black.png"
+#define IMMUTABLE_WHITE "sprites/immutable_white.jpg"
+#define IMMUTABLE_BLACK "sprites/immutable_black.jpg"
 #define HELP_BACKGROUND "sprites/help_background_img.jpg"
 #define ICON "sprites/icon.png"
 #define GAME_1 "sprites/game_1.txt"
@@ -90,7 +90,6 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
   
   SDL_Color red = {255, 0, 0, 255};
-  SDL_Color dark_green = {27, 59, 34, 255};
   SDL_Color light_green = {0, 255, 122, 255};
   SDL_Color black = {0, 0, 0, 255};
 
@@ -101,9 +100,9 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   TTF_Font *font_help = TTF_OpenFont(FONT, FONTSIZEHELP);
   if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
-  TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
+  TTF_SetFontStyle(font_help, TTF_STYLE_NORMAL);
 
-  SDL_Surface *surface = TTF_RenderText_Blended(font, "T A K I W I Z U", light_green);
+  SDL_Surface *surface = TTF_RenderText_Blended(font, "[ Takiwizu !]", light_green);
   env->titre = SDL_CreateTextureFromSurface(ren, surface);
   SDL_FreeSurface(surface);
 
@@ -112,11 +111,6 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
       TTF_RenderText_Blended(font_help, "Press H for help", black);
   env->help = SDL_CreateTextureFromSurface(ren, help_surface);
   SDL_FreeSurface(help_surface);
-
-  // Team 6A:
-  SDL_Surface *team_name = TTF_RenderText_Blended(font_help, "Team 6A", dark_green);
-  env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
-  SDL_FreeSurface(team_name);
 
   TTF_CloseFont(font);
 
