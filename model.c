@@ -30,26 +30,13 @@
 
 #define TILE_SIZE 50
 
-/* Idée pour l'interface graphique:
-
--Fond sombre (noir/ bleu nuit très foncé)
--Ecriture en rouge.
--creation d'un menu avec l'option "jouer" et l'option "rules" qui afficherait
-les régles du jeu. -Un temps de start (avec un compteur 3,2,1... avant que le
-jeu commence après avoir choisi l'option jouer). -une grille au centre de
-l'ecran. -Nom du groupe en petit en bas à droite.
-
--Optionnel : ajout d'une petite takuzu "cagnotte" avec ajout de points à chaque
-coup joué correctement, si erreur la cagnotte se remet à 0.
-
-*/
 
 /* **************************************************************** */
 
 struct Env_t {
-  /* PUT YOUR VARIABLES HERE */
-  SDL_Texture *background;
+  /* METTRE LES VARIABLE CI-DESSOUS */
 
+  SDL_Texture *background;
   SDL_Texture *white_tile;
   SDL_Texture *black_tile;
   SDL_Texture *empty_tile;
@@ -57,12 +44,14 @@ struct Env_t {
   SDL_Texture *immutable_black;
   SDL_Texture *titre;
   SDL_Texture *help;
-  bool help_pressed;
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
+  SDL_Texture *victory_font;
+
   game g;
   game g2;
-  SDL_Texture *victory_font;
+
+  bool help_pressed;
 };
 
 void calculate_grid_position(int window_width, int window_height,
@@ -97,6 +86,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   SDL_Color color = {0, 0, 0, 255};
   SDL_Color red = {255, 0, 0, 255};
+
   TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
   if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
   TTF_SetFontStyle(font, TTF_STYLE_BOLD);
@@ -109,16 +99,15 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   env->titre = SDL_CreateTextureFromSurface(ren, surface);
   SDL_FreeSurface(surface);
 
-  // press H for help text
+  // press H for help text:
   SDL_Surface *help_surface =
       TTF_RenderText_Blended(font_help, "Press H for help", color);
   env->help = SDL_CreateTextureFromSurface(ren, help_surface);
   SDL_FreeSurface(help_surface);
 
   //Team 6A:
-
-    SDL_Surface *team_name =
-      TTF_RenderText_Blended(font_help, "Team 6A", color);
+  SDL_Surface *team_name =
+    TTF_RenderText_Blended(font_help, "Team 6A", color);
   env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
   SDL_FreeSurface(team_name);
 
