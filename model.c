@@ -1,8 +1,8 @@
 #include "model.h"
 
 #include <SDL2/SDL.h>
-#include <SDL_image.h>  // required to load transparent texture from PNG
-#include <SDL_ttf.h>    // required to use TTF fonts
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,11 +88,10 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   env->immutable_black = IMG_LoadTexture(ren, IMMUTABLE_BLACK);
   if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
-  
+
   SDL_Color red = {255, 0, 0, 255};
   SDL_Color light_green = {0, 255, 122, 255};
   SDL_Color black = {0, 0, 0, 255};
-
 
   TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
   if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
@@ -102,7 +101,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
   TTF_SetFontStyle(font_help, TTF_STYLE_NORMAL);
 
-  SDL_Surface *surface = TTF_RenderText_Blended(font, "[ Takiwizu !]", light_green);
+  SDL_Surface *surface =
+      TTF_RenderText_Blended(font, "[ Takiwizu !]", light_green);
   env->titre = SDL_CreateTextureFromSurface(ren, surface);
   SDL_FreeSurface(surface);
 
@@ -115,7 +115,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   TTF_CloseFont(font);
 
   env->g = game_default();
-  
+
   env->help_pressed = false;
 
   env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
@@ -130,9 +130,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   return env;
 }
 
-void render(SDL_Window *win, SDL_Renderer *ren,
-            Env *env) { 
-
+void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
   SDL_RenderCopy(ren, env->background, NULL, NULL); /* étirable */
@@ -311,8 +309,10 @@ char *get_filename_input_from_terminal() {
   printf(
       "Entrez le nom du fichier à charger parmis ceux proposés ci-dessous: "
       "\n=> nom de la save :");
-  system("ls -g *.txt | grep -v 'CMakeCache.txt'");
-  scanf("%s", filename);
+  int warning_unused_var = system("ls -g *.txt | grep -v 'CMakeCache.txt'");
+  warning_unused_var = scanf("%s", filename);
+
+  warning_unused_var++;
   return filename;
 }
 
@@ -350,7 +350,6 @@ bool user_requested_solving(SDL_Event *e) {
 void toggle_help(Env *env) { env->help_pressed = !env->help_pressed; }
 
 void toggle_solving(Env *env) {
-
   game_solve(env->g);
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
                            "Solution du jeu!", NULL);
