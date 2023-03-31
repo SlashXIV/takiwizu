@@ -33,6 +33,8 @@
 
 /* **************************************************************** */
 
+
+//Structure:
 struct Env_t {
   /* METTRE LES VARIABLE CI-DESSOUS */
 
@@ -61,6 +63,7 @@ void calculate_grid_position(int window_width, int window_height,
   *grid_y = (window_height - (grid_height * TILE_SIZE)) / 2;
 }
 
+
 /* **************************************************************** */
 
 Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
@@ -86,6 +89,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   SDL_Color color = {0, 0, 0, 255};
   SDL_Color red = {255, 0, 0, 255};
+  SDL_Color color2 = {27,59,34,255};
 
   TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
   if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
@@ -107,7 +111,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   //Team 6A:
   SDL_Surface *team_name =
-    TTF_RenderText_Blended(font_help, "Team 6A", color);
+    TTF_RenderText_Blended(font_help, "Team 6A", color2);
   env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
   SDL_FreeSurface(team_name);
 
@@ -453,6 +457,7 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 /* **************************************************************** */
 
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
+
   SDL_DestroyTexture(env->background);
 
   SDL_DestroyTexture(env->white_tile);
