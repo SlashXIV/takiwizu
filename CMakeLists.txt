@@ -25,11 +25,8 @@ add_executable(game_sdl main.c model.c)
 target_link_libraries(game_sdl game)
 target_link_libraries(game_sdl ${SDL2_ALL_LIBS} m)
 
-# # copy useful data files in build dir
-# foreach(file "background.jpg" "white.png" "black.png")
-#   file(COPY ${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-# endforeach(file)
-
+#copy useful data files in build dir
+file(COPY "game_example.txt" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 # copy our sprites in build 
 file (COPY sprites DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
