@@ -186,8 +186,8 @@ void render(SDL_Window *win, SDL_Renderer *ren,
       ____________________________________________________  */
 
   SDL_QueryTexture(env->team_name, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 490;
-  rect.y = 551;
+  rect.x = w - rect.w - 20;
+  rect.y = h - rect.h - 20;
   SDL_RenderCopy(ren, env->team_name, NULL, &rect);
 
   /*____________________________________________________
