@@ -401,13 +401,21 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     return true;
   }
 
-  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 's'
-  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'm'
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_m) {
     game_solve(env->g);
     // show message box "game saved"
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
                              "Game solved", NULL);
   }
+
+  // SI L'UTILISATEUR APPUIE SUR LA TOUCHE  's'
+if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
+  game_save(env->g, "game_save.txt");
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                           "Game saved", NULL);
+}
+
 
   return false;
 }
