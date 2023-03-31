@@ -95,7 +95,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
   TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
 
-  SDL_Surface *surface = TTF_RenderText_Blended(font, "Takuzu", color);
+  SDL_Surface *surface = TTF_RenderText_Blended(font, "TAKUZU", color);
   env->titre = SDL_CreateTextureFromSurface(ren, surface);
   SDL_FreeSurface(surface);
 
@@ -186,7 +186,7 @@ void render(SDL_Window *win, SDL_Renderer *ren,
       ____________________________________________________  */
 
   SDL_QueryTexture(env->team_name, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 470;
+  rect.x = 490;
   rect.y = 551;
   SDL_RenderCopy(ren, env->team_name, NULL, &rect);
 
@@ -331,8 +331,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
     }
 
     if (!move_possible) {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
-                               "le move est impossible", NULL);
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
+                               "The move is impossible", NULL);
     } else {
       game_play_move(env->g, row_index, col_index, S_ZERO);
     }
@@ -357,14 +357,14 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
       move_possible = !already_one_square && !already_immutable;
 
       if (!move_possible) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
-                                 "le move est impossible", NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
+                                 "The move is impossible", NULL);
       } else {
         game_play_move(env->g, row_index, col_index, S_ONE);
       }
     } else {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
-                               "le move est impossible", NULL);
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
+                               "The move is impossible", NULL);
     }
   }
 
@@ -387,14 +387,14 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
       move_possible = inside_grid && !already_two_square && !already_immutable;
 
       if (!move_possible) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
-                                 "le move est impossible", NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
+                                 "The move is impossible", NULL);
       } else {
         game_play_move(env->g, row_index, col_index, S_EMPTY);
       }
     } else {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erreur",
-                               "le move est impossible", NULL);
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR",
+                               "The move is impossible", NULL);
     }
   }
 
