@@ -395,10 +395,14 @@ void compute_move(SDL_Window *win, SDL_Event *e, game g) {
   square square_pointed = game_get_square(g, row_index, col_index);
   square soon_placed = square_soon_placed(e);
 
-  if (immutable_square(square_pointed) || square_pointed == soon_placed) {
+  if (immutable_square(square_pointed)) {
     show_error_box(
         "Vous placez une tuile sur une case déjà occupée. "
         "Réessayez sur une case disponible");
+    return;
+  }
+
+  if (square_pointed == soon_placed) {
     return;
   }
   game_play_move(g, row_index, col_index, soon_placed);
