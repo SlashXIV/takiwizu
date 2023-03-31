@@ -17,7 +17,7 @@
 #define FONT "sprites/Leaf.ttf"
 #define MCFONT "sprites/Minecraft.ttf"
 #define FONTSIZE 70
-#define FONTSIZEHELP 
+#define FONTSIZEHELP 30
 
 #define BACKGROUND "sprites/background.jpeg"
 #define WHITE_TILE "sprites/white.png"
