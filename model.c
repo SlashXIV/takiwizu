@@ -43,7 +43,11 @@ struct Env_t {
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
   SDL_Texture *victory_font;
+<<<<<<< HEAD
+
+=======
   SDL_Surface *icon;
+>>>>>>> 26af6b060e7ce01e3b0352cfc04aaf08da4af731
   game g;
   bool help_pressed;
 };
