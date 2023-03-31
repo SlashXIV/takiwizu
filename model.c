@@ -17,7 +17,7 @@
 #define FONT "sprites/Leaf.ttf"
 #define MCFONT "sprites/Minecraft.ttf"
 #define FONTSIZE 70
-#define FONTSIZEHELP 40
+#define FONTSIZEHELP 
 
 #define BACKGROUND "sprites/background.jpeg"
 #define WHITE_TILE "sprites/white.png"
@@ -26,6 +26,7 @@
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
 #define HELP_BACKGROUND "sprites/help_background_img.jpg"
+#define ICON "sprites/icon.png"
 #define GAME_1 "sprites/game_1.txt"
 
 #define TILE_SIZE 50
@@ -42,6 +43,7 @@ struct Env_t {
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
   SDL_Texture *victory_font;
+  SDL_Surface *icon;
   game g;
   bool help_pressed;
 };
@@ -100,7 +102,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   TTF_Font *font_help = TTF_OpenFont(FONT, FONTSIZEHELP);
   if (!font_help) ERROR("TTF_OpenFont: %s\n", FONT);
-  TTF_SetFontStyle(font_help, TTF_STYLE_ITALIC);
+  TTF_SetFontStyle(font_help, TTF_STYLE_BOLD);
 
   SDL_Surface *surface = TTF_RenderText_Blended(font, "T A K I W I Z U", light_green);
   env->titre = SDL_CreateTextureFromSurface(ren, surface);
