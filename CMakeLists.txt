@@ -21,9 +21,9 @@ message(STATUS "SDL2 all libraries: ${SDL2_ALL_LIBS}")
 
 include_directories(${SDL2_ALL_INC})
 
-add_executable(model main.c model.c)
-target_link_libraries(model game)
-target_link_libraries(model ${SDL2_ALL_LIBS} m)
+add_executable(game_sdl main.c model.c)
+target_link_libraries(game_sdl game)
+target_link_libraries(game_sdl ${SDL2_ALL_LIBS} m)
 
 # # copy useful data files in build dir
 # foreach(file "background.jpg" "white.png" "black.png")
