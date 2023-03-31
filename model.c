@@ -15,6 +15,7 @@
 #include "game_tools.h"
 
 #define FONT "sprites/arial.ttf"
+#define MCFONT "sprites/Minecraft.ttf"
 #define FONTSIZE 50
 #define FONTSIZEHELP 20
 
@@ -26,7 +27,6 @@
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
 #define HELP_BACKGROUND "sprites/help_background.jpg"
 #define GAME_1 "sprites/game_1.txt"
-#define WIN_SCREEN "sprites/win_screen.jpg"
 
 #define TILE_SIZE 50
 
@@ -61,7 +61,7 @@ struct Env_t {
   SDL_Texture *help_screen;
   game g;
   game g2;
-  SDL_Texture *win_screen;
+  SDL_Texture *victory_font;
 };
 
 void calculate_grid_position(int window_width, int window_height,
@@ -95,6 +95,7 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   if (!env->immutable_black) ERROR("IMG_LoadTexture: %s\n", IMMUTABLE_BLACK);
 
   SDL_Color color = {0, 0, 0, 255};
+  SDL_Color red = {255, 0, 0, 255};
   TTF_Font *font = TTF_OpenFont(FONT, FONTSIZE);
   if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
   TTF_SetFontStyle(font, TTF_STYLE_BOLD);
@@ -122,8 +123,12 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   env->help_screen = IMG_LoadTexture(ren, HELP_BACKGROUND);
 
-  env->win_screen = IMG_LoadTexture(ren, WIN_SCREEN);
-  if (!env->win_screen) ERROR("IMG_LoadTexture: %s\n", WIN_SCREEN);
+  TTF_Font *victory_font = TTF_OpenFont(MCFONT, FONTSIZE);
+  if (!victory_font) ERROR("TTF_OpenFont: %s\n", MCFONT);
+
+  SDL_Surface *victory_surface =
+      TTF_RenderText_Blended(victory_font, "Victory !!", red);
+  env->victory_font = SDL_CreateTextureFromSurface(ren, victory_surface);
 
   return env;
 }
@@ -259,7 +264,24 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   // SI LE JEU EST GAGNÉ, AFFICHER L'ÉCRAN DE VICTOIRE
 
   if (game_is_over(env->g)) {
-    SDL_RenderCopy(ren, env->win_screen, NULL, NULL);
+    // SDL_RenderCopy(ren, env->win_screen, NULL, NULL);
+    // SDL_SetTextureAlphaMod(env->victory_font, 128); // 50% transparency
+
+    int victory_width, victory_height;
+    SDL_QueryTexture(env->victory_font, NULL, NULL, &victory_width,
+                     &victory_height);
+
+    int grid_w = DEFAULT_SIZE * TILE_SIZE;
+    int grid_h = DEFAULT_SIZE * TILE_SIZE;
+    int grid_x = (w - grid_w) / 2;
+    int grid_y = (h - grid_h) / 2;
+
+    int victory_x = grid_x + (grid_w - victory_width) / 2;
+    int victory_y = grid_y + grid_h + 10;  // 10 pixels below the grid
+
+    SDL_Rect rect = {victory_x, victory_y, victory_width, victory_height};
+    SDL_RenderCopyEx(ren, env->victory_font, NULL, &rect, 0, NULL,
+                     SDL_FLIP_NONE);
   }
 
   SDL_RenderPresent(ren);
@@ -369,8 +391,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'l'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_l) {
-    game_load("game_load.txt");
-    env->g = env->g2;
+    env->g = game_load("game_load.txt");
+
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
                              "Game loaded", NULL);
   }
@@ -410,12 +432,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   }
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE  's'
-if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
-  game_save(env->g, "game_save.txt");
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
-                           "Game saved", NULL);
-}
-
+  if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s) {
+    game_save(env->g, "game_save.txt");
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
+                             "Game saved", NULL);
+  }
 
   return false;
 }
