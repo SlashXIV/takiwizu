@@ -59,6 +59,7 @@ struct Env_t {
   SDL_Texture *help;
   bool help_pressed;
   SDL_Texture *help_screen;
+  SDL_Texture *team_name;
   game g;
   game g2;
   SDL_Texture *victory_font;
@@ -113,6 +114,14 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
       TTF_RenderText_Blended(font_help, "Press H for help", color);
   env->help = SDL_CreateTextureFromSurface(ren, help_surface);
   SDL_FreeSurface(help_surface);
+
+  //Team 6A:
+
+    SDL_Surface *team_name =
+      TTF_RenderText_Blended(font_help, "Team 6A", color);
+  env->team_name = SDL_CreateTextureFromSurface(ren, team_name);
+  SDL_FreeSurface(team_name);
+
   TTF_CloseFont(font);
 
   env->g = game_default();
@@ -182,6 +191,15 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   rect.x = (w - rect.w) / 2;
   rect.y = h - 50;
   SDL_RenderCopy(ren, env->help, NULL, &rect);
+
+  /*____________________________________________________
+          AFFICHAGE DU NOM DE L'EQUIPE
+      ____________________________________________________  */
+
+  SDL_QueryTexture(env->team_name, NULL, NULL, &rect.w, &rect.h);
+  rect.x = 470;
+  rect.y = 551;
+  SDL_RenderCopy(ren, env->team_name, NULL, &rect);
 
   /*____________________________________________________
         CENTRAGE DE LA GRILLE DE JEU DANS LA FENÊTRE
@@ -461,6 +479,8 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   SDL_DestroyTexture(env->titre);
 
   SDL_DestroyTexture(env->help);
+
+  SDL_DestroyTexture(env->team_name);
 
   free(env->g);
 
