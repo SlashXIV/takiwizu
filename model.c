@@ -344,7 +344,7 @@ bool user_requested_help(SDL_Event *e) {
 }
 
 bool user_requested_solving(SDL_Event *e) {
-  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s);
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_m);
 }
 
 void toggle_help(Env *env) { env->help_pressed = !env->help_pressed; }
