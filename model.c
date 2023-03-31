@@ -280,8 +280,10 @@ void render(SDL_Window *win, SDL_Renderer *ren,
     int victory_y = grid_y + grid_h + 10;  // 10 pixels below the grid
 
     SDL_Rect rect = {victory_x, victory_y, victory_width, victory_height};
-    SDL_RenderCopyEx(ren, env->victory_font, NULL, &rect, 0, NULL,
-                     SDL_FLIP_NONE);
+    if (!env->help_pressed) {
+      SDL_RenderCopyEx(ren, env->victory_font, NULL, &rect, 0, NULL,
+                       SDL_FLIP_NONE);
+    }
   }
 
   SDL_RenderPresent(ren);
