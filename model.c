@@ -26,6 +26,7 @@
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
 #define HELP_BACKGROUND "sprites/help_background_img.jpg"
+#define ICON "sprites/icon.png"
 #define GAME_1 "sprites/game_1.txt"
 
 #define TILE_SIZE 50
@@ -47,6 +48,7 @@ struct Env_t {
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
   SDL_Texture *victory_font;
+  SDL_Surface *icon;
 
   game g;
   game g2;
@@ -127,6 +129,10 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   SDL_Surface *victory_surface =
       TTF_RenderText_Blended(victory_font, "Victory !!", red);
   env->victory_font = SDL_CreateTextureFromSurface(ren, victory_surface);
+
+  SDL_Surface *icon = IMG_Load(ICON);
+  if (!icon) ERROR("IMG_Load: %s\n", ICON);
+  SDL_SetWindowIcon(win, icon);
 
   return env;
 }
