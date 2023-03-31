@@ -477,6 +477,8 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   SDL_DestroyTexture(env->team_name);
 
+  SDL_DestroyTexture(env->icon);
+
   free(env->g);
 
   free(env);
