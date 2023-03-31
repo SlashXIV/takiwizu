@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #include "annex_funcs.h"
 #include "game.h"
 #include "game_aux.h"
@@ -28,7 +27,6 @@
 #define HELP_BACKGROUND "sprites/help_background.jpg"
 #define GAME_1 "sprites/game_1.txt"
 #define WIN_SCREEN "sprites/win_screen.jpg"
-#define WIN_SOUND "sprites/win_sound.mp3"
 
 #define TILE_SIZE 50
 
@@ -64,7 +62,6 @@ struct Env_t {
   game g;
   game g2;
   SDL_Texture *win_screen;
-
 };
 
 void calculate_grid_position(int window_width, int window_height,
@@ -118,10 +115,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   TTF_CloseFont(font);
 
   env->g = game_default();
-  game_save(env->g, "game_load.txt");
-
-  env->g2 = game_load("game_load.txt");
   env->g2 = game_custom1();
+  game_save(env->g2, "game_load.txt");
 
   env->help_pressed = false;
 
@@ -129,7 +124,6 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   env->win_screen = IMG_LoadTexture(ren, WIN_SCREEN);
   if (!env->win_screen) ERROR("IMG_LoadTexture: %s\n", WIN_SCREEN);
-
 
   return env;
 }
@@ -146,10 +140,10 @@ void move_to(SDL_Rect *rect, int x, int y) {
   rect->y = y;
 }
 
-void mv_left(SDL_Rect *rect) { rect->x -= TILE_SIZE-2; }
-void mv_right(SDL_Rect *rect) { rect->x += TILE_SIZE-2; }
-void mv_up(SDL_Rect *rect) { rect->y -= TILE_SIZE-2; }
-void mv_down(SDL_Rect *rect) { rect->y += TILE_SIZE-2; }
+void mv_left(SDL_Rect *rect) { rect->x -= TILE_SIZE - 2; }
+void mv_right(SDL_Rect *rect) { rect->x += TILE_SIZE - 2; }
+void mv_up(SDL_Rect *rect) { rect->y -= TILE_SIZE - 2; }
+void mv_down(SDL_Rect *rect) { rect->y += TILE_SIZE - 2; }
 
 void SDL_set_tile(Env *env, SDL_Renderer *ren, SDL_Rect rect,
                   SDL_Texture *tile) {
@@ -174,7 +168,6 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   rect.x = (w - rect.w) / 2;
   rect.y = 50;
   SDL_RenderCopy(ren, env->titre, NULL, &rect);
-  
 
   /*____________________________________________________
           AFFICHAGE DU BOUTON H (HELP) EN BAS AU CENTRE
@@ -194,54 +187,46 @@ void render(SDL_Window *win, SDL_Renderer *ren,
   int grid_x = (w - grid_w) / 2;
   int grid_y = (h - grid_h) / 2;
 
+  /*____________________________________________________
+            AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE
+  ______________________________________________________*/
 
+  // Positionnement initial de la première case de la grille
+  rect.x = grid_x;
+  rect.y = grid_y;
 
+  // Boucle d'affichage des cases de la grille
+  for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
+      // Récupération de la valeur de la case
+      square current_square = game_get_square(env->g, i, j);
 
-/*____________________________________________________
-          AFFICHAGE DU JEU DANS LA GRILLE DE L'INTERFACE
-______________________________________________________*/
+      // Affichage de la case correspondante
+      if (current_square == S_ZERO)
+        SDL_set_tile(env, ren, rect, env->white_tile);
+      else if (current_square == S_ONE)
+        SDL_set_tile(env, ren, rect, env->black_tile);
+      else if (current_square == S_EMPTY)
+        SDL_set_tile(env, ren, rect, env->empty_tile);
+      else if (current_square == S_IMMUTABLE_ZERO)
+        SDL_set_tile(env, ren, rect, env->immutable_white);
+      else if (current_square == S_IMMUTABLE_ONE)
+        SDL_set_tile(env, ren, rect, env->immutable_black);
 
-// Positionnement initial de la première case de la grille
-rect.x = grid_x;
-rect.y = grid_y;
+      // Déplacement à la case suivante
+      mv_right(&rect);
+    }
 
-// Boucle d'affichage des cases de la grille
-for (int i = 0; i < DEFAULT_SIZE; i++) {
-  for (int j = 0; j < DEFAULT_SIZE; j++) {
-    // Récupération de la valeur de la case
-    square current_square = game_get_square(env->g, i, j);
+    // Déplacement à la ligne suivante
+    mv_down(&rect);
 
-    // Affichage de la case correspondante
-    if (current_square == S_ZERO)
-      SDL_set_tile(env, ren, rect, env->white_tile);
-    else if (current_square == S_ONE)
-      SDL_set_tile(env, ren, rect, env->black_tile);
-    else if (current_square == S_EMPTY)
-      SDL_set_tile(env, ren, rect, env->empty_tile);
-    else if (current_square == S_IMMUTABLE_ZERO)
-      SDL_set_tile(env, ren, rect, env->immutable_white);
-    else if (current_square == S_IMMUTABLE_ONE)
-      SDL_set_tile(env, ren, rect, env->immutable_black);
-
-    // Déplacement à la case suivante
-    mv_right(&rect);
+    // Retour au début de la ligne
+    for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
   }
 
-  // Déplacement à la ligne suivante
-  mv_down(&rect);
-
-  // Retour au début de la ligne
-  for (int k = 0; k < game_nb_cols(env->g); k++) mv_left(&rect);
-}
-
-
-
-
-
-
-/*_____________________________________________
-      RECHERCHE D'ERREURS ET AFFICHAGE DE CARRÉS PLEINS
-  _______________________________________________ */
+  /*_____________________________________________
+        RECHERCHE D'ERREURS ET AFFICHAGE DE CARRÉS PLEINS
+    _______________________________________________ */
 
   for (int i = 0; i < game_nb_rows(env->g); i++) {
     for (int j = 0; j < game_nb_cols(env->g); j++) {
@@ -264,7 +249,6 @@ for (int i = 0; i < DEFAULT_SIZE; i++) {
       }
     }
   }
-
 
   // SI H EST APPUYÉ, AFFICHER L'ÉCRAN D'AIDE
 
@@ -385,8 +369,8 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 
   // SI L'UTILISATEUR APPUIE SUR LA TOUCHE 'l'
   if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_l) {
-    game_replace(env->g, env->g2);
-    // show message box "game loaded"
+    game_load("game_load.txt");
+    env->g = env->g2;
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Information",
                              "Game loaded", NULL);
   }
