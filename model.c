@@ -25,7 +25,7 @@
 #define EMPTY_TILE "sprites/empty_frame.jpg"
 #define IMMUTABLE_WHITE "sprites/immutable_white.png"
 #define IMMUTABLE_BLACK "sprites/immutable_black.png"
-#define HELP_BACKGROUND "sprites/help_background.jpg"
+#define HELP_BACKGROUND "sprites/help_background_img.jpg"
 #define GAME_1 "sprites/game_1.txt"
 
 #define TILE_SIZE 50
