@@ -48,7 +48,6 @@ struct Env_t {
   SDL_Texture *help_screen;
   SDL_Texture *team_name;
   SDL_Texture *victory_font;
-  SDL_Surface *icon;
 
   game g;
   game g2;
@@ -476,8 +475,6 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   SDL_DestroyTexture(env->help);
 
   SDL_DestroyTexture(env->team_name);
-
-  SDL_DestroyTexture(env->icon);
 
   free(env->g);
 
