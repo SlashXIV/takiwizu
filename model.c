@@ -405,6 +405,10 @@ bool user_quit(SDL_Event *e) {
           e->key.keysym.sym == SDLK_q);
 }
 
+bool user_want_to_save(SDL_Event *e) {
+  return (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s);
+}
+
 bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   if (user_quit(e)) return true;  // end of processing loop (quit the game)
 
@@ -421,6 +425,11 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
   if (user_requested_help(e)) toggle_help(env);
 
   if (user_requested_solving(e)) toggle_solving(env);
+
+  if (user_want_to_save(e)) {
+    game_save(env->g, "mysave.txt");
+    show_info_box("Partie sauvegardée avec succès! (fichier mysave.txt)");
+  }
 
   return false;
 }
