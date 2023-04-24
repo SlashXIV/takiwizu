@@ -10,10 +10,23 @@
     <!-- ********************* html ********************* -->
 
     <h1>Takiwizu Game Web</h1>
+    <h2 id="game_state"></h2>
+ 
+    <!-- create me a radio button selector for black , white or empty -->
+    <form id="square_selector">
+        <input type="radio" name="square" value="black">
+        <label for="black">Black Square</label><br>
+
+        <input type="radio" name="square" value="white">
+        <label for="white">White Square</label><br>
+        
+        <input type="radio" name="square" value="empty">
+        <label for="empty">Empty Square</label><br>
+    </form>
 
     <p>Kiwi description.</p>
 
-    <pre id="result"></pre>
+    <canvas id="result" width="400" height="400"> </canvas>
 
     <hr>
 
