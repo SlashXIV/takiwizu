@@ -1,1 +1,1 @@
-/chemin/vers/takuzu/queue.c
+../../queue.c

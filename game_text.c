@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "annex_funcs.h"
 #include "game.h"
@@ -8,6 +9,7 @@
 #include "game_ext.h"
 #include "game_struct.h"
 #include "game_tools.h"
+#include "game_random.h"
 
 void list_error_each_square(cgame g) {
   for (uint i = 0; i < game_nb_rows(g); i++)
@@ -60,7 +62,8 @@ int main(int argc, char *argv[]) {
     check(g != NULL, "file not found, try again!");
     printf("game from \"%s\" successfully loaded !\n", argv[1]);
   } else {
-    g = game_default();
+    srand(time(NULL));  // initialize radom seed with current time
+    g = game_random(6,6,false,false,false);
   }
 
   while (!game_is_over(g)) {

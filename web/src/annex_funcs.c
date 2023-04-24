@@ -1,1 +1,1 @@
-/chemin/vers/takuzu/annex_funcs.c
+../../annex_funcs.c

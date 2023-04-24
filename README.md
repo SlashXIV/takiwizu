@@ -16,6 +16,9 @@ Dans ce fichier `README.md`, nous allons ajouter au fur et à mesure les étapes
 8. :gift: Livraison du projet :wrench:
 9. :beer: Défis git :wrench:
 10. :bento: GAME IO :wrench:
+11. Solveur :wrench:
+12. Interface graphique :wrench:
+13. Rapport LateX en cours...
 En attente des prochains TD... :hourglass:
 
 

@@ -1,1 +1,1 @@
-/chemin/vers/takuzu/game_aux.h
+../../game_aux.h

@@ -13,7 +13,10 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
-// #include "game_tools.h"
+#include "game_tools.h"
+#include "game_random.h"
+#include "annex_funcs.h"
+#include "game_struct.h"
 
 /* ******************** Game V1 & V2 API ******************** */
 
@@ -58,23 +61,23 @@ int has_error(cgame g, uint i, uint j) { return game_has_error(g, i, j); }
 
 /* ******************** Game Tools API ******************** */
 
-// EMSCRIPTEN_KEEPALIVE
-// bool solve(game g) { return game_solve(g); }
+EMSCRIPTEN_KEEPALIVE
+bool solve(game g) { return game_solve(g); }
 
-// EMSCRIPTEN_KEEPALIVE
-// uint nb_solutions(cgame g) { return game_nb_solutions(g); }
+EMSCRIPTEN_KEEPALIVE
+uint nb_solutions(cgame g) { return game_nb_solutions(g); }
 
-// EMSCRIPTEN_KEEPALIVE
-// void undo(game g) { game_undo(g); }
+EMSCRIPTEN_KEEPALIVE
+void undo(game g) { game_undo(g); }
 
-// EMSCRIPTEN_KEEPALIVE
-// void redo(game g) { game_redo(g); }
+EMSCRIPTEN_KEEPALIVE
+void redo(game g) { game_redo(g); }
 
-// EMSCRIPTEN_KEEPALIVE
-// game new_random(uint nb_rows, uint nb_cols, bool wrapping, bool uniq)
-// {
-//   srand(time(NULL)); // random seed
-//   return game_random(nb_rows, nb_cols, wrapping, uniq, false);
-// }
+EMSCRIPTEN_KEEPALIVE
+game new_random(uint nb_rows, uint nb_cols, bool wrapping, bool uniq)
+{
+srand(time(NULL));  //random seed
+return game_random(nb_rows, nb_cols, wrapping, uniq, false);
+}
 
-// EOF
+//EOF

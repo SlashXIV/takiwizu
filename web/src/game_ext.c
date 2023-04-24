@@ -1,1 +1,1 @@
-/chemin/vers/takuzu/game_ext.c
+../../game_ext.c

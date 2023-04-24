@@ -1,1 +1,1 @@
-/chemin/vers/takuzu/game_struct.h
+../../game_struct.h

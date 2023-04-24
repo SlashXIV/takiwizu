@@ -30,9 +30,10 @@ function printGame(g) {
     elm.innerHTML = text;
 }
 
+
 function start() {
     console.log("call start routine");
-    var g = Module._new_default();
+    var g = Module._new_random(6,6,false,false);
     const LIGHTBULB = 1;
     Module._play_move(g, 0, 0, LIGHTBULB);
     printGame(g);
