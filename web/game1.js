@@ -1,8 +1,18 @@
 Module.onRuntimeInitialized = () => {
     start();
   };
+    
+
+  function setSolve() {
+    shouldSolve = true;
+  } 
   
+
+
+
   function processGame(g, canvas, ctx, cell_width, cell_height) {
+
+    
     var empty_color = "#FFFFFF";
     var white = "#BDECB6";
     var black = "#000000";
@@ -75,7 +85,6 @@ Module.onRuntimeInitialized = () => {
             }
         }
 
-        console.log(square_to_place);
 
         switch (square_to_place) {
             case "black":
@@ -103,17 +112,32 @@ Module.onRuntimeInitialized = () => {
                 }
                 break;
         }
+
+
+        if(shouldSolve) {
+            Module._solve(g);
+        }
+
         updateGameState(game_state);
-    } );
-  
+        
+    }   
+        
+    );
+    
+    
     function updateGameState(game_state) {
         
         if (Module._is_over(g)) { // add a title in the page if the game is over
             game_state.innerHTML = "Jeu terminé !";
             canvas.removeEventListener('click', null);
+            Module._delete(g);
+
+
         } else {
             game_state.innerHTML = "Jeu en cours !";
+            
         }
+
 
     // draw the cells
     for (var row = 0; row < nb_rows; row++) {
@@ -157,8 +181,9 @@ Module.onRuntimeInitialized = () => {
   
     }
   }
-  
-  function start() {
+
+
+function start() {
     console.log("call start routine");
     var g = Module._new_random(6,6,false,false);
     var canvas = document.getElementById('result');
@@ -169,12 +194,12 @@ Module.onRuntimeInitialized = () => {
     var nb_cols = Module._nb_cols(g);
     var cell_width = width / nb_cols;
     var cell_height = height / nb_rows;
+    shouldSolve = false;
     var game_state = document.getElementById("game_state");
     game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
-    
-    processGame(g, canvas, ctx, cell_width, cell_height, game_state);
-    console.log("goodbye");
-    Module._delete(g);
-    console.log("game supposedly deleted")
-  }
   
+    
+  
+    processGame(g, canvas, ctx, cell_width, cell_height, game_state);   
+
+  }
