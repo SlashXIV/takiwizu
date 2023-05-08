@@ -41,7 +41,6 @@ struct Env_t {
   SDL_Texture *titre;
   SDL_Texture *help;
   SDL_Texture *help_screen;
-  SDL_Texture *team_name;
   SDL_Texture *victory_font;
   game g;
   bool help_pressed;
@@ -154,15 +153,6 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   rect.x = (w - rect.w) / 2;
   rect.y = h - 50;
   SDL_RenderCopy(ren, env->help, NULL, &rect);
-
-  /*____________________________________________________
-          AFFICHAGE DU NOM DE L'EQUIPE
-      ____________________________________________________  */
-
-  SDL_QueryTexture(env->team_name, NULL, NULL, &rect.w, &rect.h);
-  rect.x = w - rect.w - 20;
-  rect.y = h - rect.h - 20;
-  SDL_RenderCopy(ren, env->team_name, NULL, &rect);
 
   /*____________________________________________________
         CENTRAGE DE LA GRILLE DE JEU DANS LA FENÊTRE
@@ -401,8 +391,9 @@ void compute_move(SDL_Window *win, SDL_Event *e, game g) {
 }
 
 bool user_quit(SDL_Event *e) {
-  return (e->type == SDL_QUIT || e->key.keysym.sym == SDLK_ESCAPE ||
-          e->key.keysym.sym == SDLK_q);
+  return (e->type == SDL_QUIT ||
+          (e->type == SDL_KEYDOWN &&
+           (e->key.keysym.sym == SDLK_ESCAPE || e->key.keysym.sym == SDLK_q)));
 }
 
 bool user_want_to_save(SDL_Event *e) {
@@ -452,8 +443,6 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   SDL_DestroyTexture(env->titre);
 
   SDL_DestroyTexture(env->help);
-
-  SDL_DestroyTexture(env->team_name);
 
   free(env->g);
 

@@ -19,8 +19,7 @@
 /*                            Random Game Generator                           */
 /* ************************************************************************** */
 
-static game game_set_some_mutable_squares(game g, uint nb_empty)
-{
+static game game_set_some_mutable_squares(game g, uint nb_empty) {
   assert(g);
   uint nb_rows = game_nb_rows(g);
   uint nb_cols = game_nb_cols(g);
@@ -42,8 +41,7 @@ static game game_set_some_mutable_squares(game g, uint nb_empty)
 
 /* ************************************************************************** */
 
-static void game_flip_one_square(game g, int i, int j)
-{
+static void game_flip_one_square(game g, int i, int j) {
   square s = game_get_square(g, i, j);
   if (s == S_IMMUTABLE_ONE)
     game_set_square(g, i, j, S_IMMUTABLE_ZERO);
@@ -53,8 +51,7 @@ static void game_flip_one_square(game g, int i, int j)
 
 /* ************************************************************************** */
 
-static bool try_flip(game g, int i1, int j1, int i2, int j2)
-{
+static bool try_flip(game g, int i1, int j1, int i2, int j2) {
   if (i1 == i2 && j1 == j2) return false;
   assert(game_is_over(g));
   square s11 = game_get_square(g, i1, j1);
@@ -84,8 +81,7 @@ static bool try_flip(game g, int i1, int j1, int i2, int j2)
 
 /* ************************************************************************** */
 
-static void apply_nb_flips(game g, uint nb)
-{
+static void apply_nb_flips(game g, uint nb) {
   uint nb_rows = game_nb_rows(g);
   uint nb_cols = game_nb_cols(g);
   while (nb > 0) {
@@ -99,14 +95,15 @@ static void apply_nb_flips(game g, uint nb)
 
 /* ************************************************************************** */
 
-game game_random(uint nb_rows, uint nb_cols, bool wrapping, uint uniq, bool with_solution)
-{
+game game_random(uint nb_rows, uint nb_cols, bool wrapping, uint uniq,
+                 bool with_solution) {
   // step 0: create an empty game
   game g = game_new_empty_ext(nb_rows, nb_cols, wrapping, uniq);
 
   // fill the grid with initial values
   for (uint i = 0; i < nb_rows; i++)
-    for (uint j = 0; j < nb_cols; j++) game_set_square(g, i, j, (i + j) % 2 + 3);
+    for (uint j = 0; j < nb_cols; j++)
+      game_set_square(g, i, j, (i + j) % 2 + 3);
 
   // Make it unique if it is square
   if (nb_cols == nb_rows) {

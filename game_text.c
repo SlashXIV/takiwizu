@@ -7,9 +7,9 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_random.h"
 #include "game_struct.h"
 #include "game_tools.h"
-#include "game_random.h"
 
 void list_error_each_square(cgame g) {
   for (uint i = 0; i < game_nb_rows(g); i++)
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     printf("game from \"%s\" successfully loaded !\n", argv[1]);
   } else {
     srand(time(NULL));  // initialize radom seed with current time
-    g = game_random(6,6,false,false,false);
+    g = game_random(6, 6, false, false, false);
   }
 
   while (!game_is_over(g)) {
