@@ -3,10 +3,18 @@ Module.onRuntimeInitialized = () => {
   };
     
 
-  function setSolve() {
-    shouldSolve = true;
-  } 
-  
+    function setSolve() {
+      shouldSolve = true;
+    } 
+
+    function undo(){
+        shouldUndo = true;
+    }
+
+    function redo(){
+        shouldRedo = true;
+    }
+
 
 
 
@@ -50,6 +58,7 @@ Module.onRuntimeInitialized = () => {
         }
         }
     }
+    
   
     // apply border to each rect in the canvas 
     for (var row = 0; row < nb_rows; row++) {
@@ -117,6 +126,20 @@ Module.onRuntimeInitialized = () => {
         if(shouldSolve) {
             Module._solve(g);
         }
+        shouldSolve = false;
+
+        if(shouldUndo) {
+            Module._undo(g);
+            console.log("undo done");
+        }
+        shouldUndo = false;
+
+        if(shouldRedo) {
+            Module._redo(g);
+            console.log("redo done");
+        }
+        shouldRedo = false;
+
 
         updateGameState(game_state);
         
@@ -195,6 +218,8 @@ function start() {
     var cell_width = width / nb_cols;
     var cell_height = height / nb_rows;
     shouldSolve = false;
+    shouldUndo = false;
+    shouldRedo = false;
     var game_state = document.getElementById("game_state");
     game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
   
