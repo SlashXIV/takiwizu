@@ -16,7 +16,7 @@ Module.onRuntimeInitialized = () => {
     }
 
 
-    document.body.style.backgroundImage = "url('background_web_2.jpg')";
+    document.body.style.backgroundImage = "url('background2.jpg')";
 
 
   function processGame(g, canvas, ctx, cell_width, cell_height) {
