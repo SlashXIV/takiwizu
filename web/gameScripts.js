@@ -3,21 +3,6 @@ Module.onRuntimeInitialized = () => {
   };
     
 
-    function setSolve() {
-      shouldSolve = true;
-    } 
-
-    function undo(){
-        shouldUndo = true;
-    }
-
-    function redo(){
-        shouldRedo = true;
-    }
-
-
-
-
   function processGame(g, canvas, ctx, cell_width, cell_height) {
 
     
@@ -120,44 +105,47 @@ Module.onRuntimeInitialized = () => {
                     
                 }
                 break;
+
+            case "undo":
+                Module._undo(g);
+                break;
+            
+            case "redo":
+                Module._redo(g);
+                break;
+
+            case "solve":
+                Module._solve(g);
+                break;
+            
+            
+
         }
 
 
-        if(shouldSolve) {
-            Module._solve(g);
-        }
-        shouldSolve = false;
 
-        if(shouldUndo) {
-            Module._undo(g);
-            console.log("undo done");
-        }
-        shouldUndo = false;
-
-        if(shouldRedo) {
-            Module._redo(g);
-            console.log("redo done");
-        }
-        shouldRedo = false;
+       
 
 
-        updateGameState(game_state);
+        updateGameState(game_state,game_end,game_in_process);
         
     }   
         
     );
     
     
-    function updateGameState(game_state) {
+    function updateGameState(game_state,game_end,game_in_process) {
         
         if (Module._is_over(g)) { // add a title in the page if the game is over
-            game_state.innerHTML = "Jeu terminé !";
+            game_end.innerHTML = "Jeu terminé !";
+            game_state.innerHTML = "";
             canvas.removeEventListener('click', null);
             Module._delete(g);
-
+            
 
         } else {
-            game_state.innerHTML = "Jeu en cours !";
+            game_state.innerHTML = "";
+            game_in_process.innerHTML = "Le jeu est en cours";
             
         }
 
@@ -217,10 +205,9 @@ function start() {
     var nb_cols = Module._nb_cols(g);
     var cell_width = width / nb_cols;
     var cell_height = height / nb_rows;
-    shouldSolve = false;
-    shouldUndo = false;
-    shouldRedo = false;
     var game_state = document.getElementById("game_state");
+    var game_end = document.getElementById("game_end");
+    var game_in_process = document.getElementById("game_in_process");
     game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
   
     

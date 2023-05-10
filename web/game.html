@@ -3,6 +3,8 @@
     
     <head>
         <meta charset="utf-8">
+        <title>Takiwizu Game Web</title>
+        <link rel="stylesheet" href="game.css">
     </head>
     
     <body>
@@ -17,6 +19,8 @@
         
         <h1>Takiwizu Game Web</h1>
     <h2 id="game_state"></h2>
+    <h2 id="game_end"></h2>
+    <h2 id="game_in_process"></h2>
  
     <!-- create me a radio button selector for black , white or empty -->
     <form id="square_selector">
@@ -28,15 +32,25 @@
         
         <input type="radio" name="square" value="empty">
         <label for="empty">Empty Square</label><br>
+
+        <input type="radio" name="square" value="undo">
+        <label for="undo">Undo</label><br>
+
+        <input type="radio" name="square" value="redo">
+        <label for="redo">Redo</label><br>
+
+        <input type="radio" name="square" value="solve">
+        <label for="solve">Solve</label><br>
+
+        <p>Lors de l'utilisation de undo/redo/solve il faut cliquer sur une case non immuable pour rafraîchir le jeu</p><br>
+
+
+
     </form>
     
+    <br>
 
-    <button id="redo-button" onclick="redo()">Redo</button>
-
-    <button id="undo-button" onclick="undo()">Undo</button>
-
-    <button id="solve-button" onclick="setSolve()">Solve</button>
-
+    <input type="button" value = "New Game" onclick="history.go(0)" />
 
     <p>Kiwi description.</p>
 
