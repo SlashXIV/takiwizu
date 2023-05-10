@@ -1,4 +1,5 @@
 /* dark green fade background from top right to bottom left */
+
 body {
     background: linear-gradient(to bottom left, #509b45, #126e5f);
     background-repeat: no-repeat;
@@ -11,9 +12,10 @@ body {
     overflow: hidden;
 }
 
-h1, h2 {
+h1,
+h2 {
     text-align: center;
-}   
+}
 
 canvas {
     position: absolute;
@@ -21,14 +23,30 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-  }
-  
-footer {
-    position : absolute;
-    bottom : 0;
-    width: 100%;
-    z-index: 1;
-    padding: 20px;
-    box-sizing: border-box;
 }
 
+.button-container {
+    float: right;
+    margin-right: 100px;
+}
+
+.button-container>input {
+    margin-bottom: 40px;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    display: list-item;
+}
+
+form {
+    float: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 50px;
+}
+
+form>input {
+    padding: 10px;
+    background-color: #000;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>[Takiwizu]</title>
+    <link rel="stylesheet" href="g.css">
+    <script src="game.js"></script>
+    <script src="game1.js">
+    </script>
+</head>
+
+<body>
+
+    <!-- PAGE TITLE -->
+    <h1>[Takiwizu] (Game Web) </h1>
+
+    <!-- GAME BOARD -->
+    <canvas id="result" width="400" height="400"> </canvas>
+
+    <!-- SQUARE SELECTOR -->
+
+    <form id="square_selector">
+        <p>SQUARE SELECTOR :</p>
+        <input type="radio" name="square" value="black">
+        <label for="black">Black Square</label><br>
+
+        <input type="radio" name="square" value="white">
+        <label for="white">White Square</label><br>
+
+        <input type="radio" name="square" value="empty">
+        <label for="empty">Empty Square</label><br>
+    </form>
+
+    <!-- GAME BUTTONS -->
+    <div class="button-container">
+        <input type="button" value="New Game" onclick="history.go(0)" />
+        <input type="button" value="Undo" id="undo" />
+        <input type="button" value="Redo" id="redo" />
+        <input type="button" value="Solve" id="solve" />
+        <input type="button" value="Restart" id="restart" />
+    </div>
+
+</body>
+
+</html>
