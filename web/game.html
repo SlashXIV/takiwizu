@@ -3,65 +3,57 @@
     
     <head>
         <meta charset="utf-8">
-        <title>Takiwizu Game Web</title>
-        <link rel="stylesheet" href="game.css">
+        <title>[Takiwizu]</title>
+        <link rel="stylesheet" href="game.css">    
+        <script src="game.js"></script>
+        <script src="game1.js"> </script>
     </head>
     
     <body>
-        
-        <!-- ********************* script ********************* -->
-        
-        <script src="game.js"></script>
-        <script src="game1.js"> </script>
-
-
-        <!-- ********************* html ********************* -->
-        
-        <h1>Takiwizu Game Web</h1>
-    <h2 id="game_state"></h2>
-    <h2 id="game_end"></h2>
-    <h2 id="game_in_process"></h2>
- 
-    <!-- create me a radio button selector for black , white or empty -->
-    <form id="square_selector">
-        <input type="radio" name="square" value="black">
-        <label for="black">Black Square</label><br>
-
-        <input type="radio" name="square" value="white">
-        <label for="white">White Square</label><br>
-        
-        <input type="radio" name="square" value="empty">
-        <label for="empty">Empty Square</label><br>
-
-        <input type="radio" name="square" value="undo">
-        <label for="undo">Undo</label><br>
-
-        <input type="radio" name="square" value="redo">
-        <label for="redo">Redo</label><br>
-
-        <input type="radio" name="square" value="solve">
-        <label for="solve">Solve</label><br>
-
-        <input type="radio" name="square" value="restart">
-        <label for="restart">Restart</label><br>
-
-        <p>Lors de l'utilisation de undo/redo/solve il faut cliquer sur une case non immuable pour rafraîchir le jeu</p><br>
-
-
-
-    </form>
     
-    <br>
+    <!-- PAGE TITLE -->
+    <h1>[Takiwizu] (Game Web) </h1>
+    
+    <!-- GAME STATE -->
+    <h2 id="game_state"></h2>
 
-    <input type="button" value = "New Game" onclick="history.go(0)" />
-
-    <p>Kiwi description.</p>
-
+    <!-- GAME BOARD -->
     <canvas id="result" width="400" height="400"> </canvas>
+    
+    <!-- GAME BUTTONS -->
+    <footer>
+        <p>SQUARE SELECTOR :</p>
+        <form id="square_selector">
+            <input type="radio" name="square" value="black">
+            <label for="black">Black Square</label><br>
+    
+            <input type="radio" name="square" value="white">
+            <label for="white">White Square</label><br>
+            
+            <input type="radio" name="square" value="empty">
+            <label for="empty">Empty Square</label><br>
+            
+            <p> TO BUTTON : </p>
 
-    <hr>
+            <input type="radio" name="square" value="undo">
+            <label for="undo">Undo</label><br>
+    
+            <input type="radio" name="square" value="redo">
+            <label for="redo">Redo</label><br>
+    
+            <input type="radio" name="square" value="solve">
+            <label for="solve">Solve</label><br>
+    
+            <input type="radio" name="square" value="restart">
+            <label for="restart">Restart</label><br>
+    
+            <p>WORK-IN-PROGRESS : Lors de l'utilisation de undo/redo/solve il faut cliquer sur une case non immuable pour rafraîchir le jeu</p><br>
+    
+        </form>
+        <input type="button" value = "New Game" onclick="history.go(0)" />
+    
+    </footer>
 
-
-</body>
+    </body>
 
 </html>

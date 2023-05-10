@@ -1,15 +1,8 @@
-Module.onRuntimeInitialized = () => {
-    start();
-  };
+Module.onRuntimeInitialized = () => { start(); };
     
-
-
-
-    //document.body.style.backgroundImage = "url('background2.jpg')";
-
+  //document.body.style.backgroundImage = "url('background2.jpg')";
 
   function processGame(g, canvas, ctx, cell_width, cell_height) {
-
     
     var empty_color = "#FFFFFF";
     var white = "#BDECB6";
@@ -135,27 +128,26 @@ Module.onRuntimeInitialized = () => {
        
 
 
-        updateGameState(game_state,game_end,game_in_process);
+        updateGameState(game_state);
         
     }   
         
     );
     
     
-    function updateGameState(game_state,game_end,game_in_process) {
+    function updateGameState(game_state) {
         
         if (Module._is_over(g)) { // add a title in the page if the game is over
-            game_end.innerHTML = "Jeu terminé !";
-            game_state.innerHTML = "";
-            game_state.innerHTML = "";
+            game_state.innerHTML = "Jeu terminé !";
+            game_state.style.color = "green";
             canvas.removeEventListener('click', null);
             Module._delete(g);
             
 
         } else {
-            game_state.innerHTML = "";
-            game_in_process.innerHTML = "Le jeu est en cours";
-            
+            game_state.innerHTML = "Le jeu est en cours...";
+            //make game_state blink
+            game_state.style.color = "blue";
         }
 
 
@@ -215,12 +207,7 @@ function start() {
     var cell_width = width / nb_cols;
     var cell_height = height / nb_rows;
     var game_state = document.getElementById("game_state");
-    var game_end = document.getElementById("game_end");
-    var game_in_process = document.getElementById("game_in_process");
     game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
-  
-    
-  
+    game_state.style.color = "purple";
     processGame(g, canvas, ctx, cell_width, cell_height, game_state);   
-
-  }
+}
