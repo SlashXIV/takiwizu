@@ -73,16 +73,9 @@ function gamePrint(g, nb_rows, nb_cols, ctx, cell_width, cell_height) {
     for (var row = 0; row < nb_rows; row++) {
         for (var col = 0; col < nb_cols; col++) {
             if (Module._has_error(g, row, col)) {
-                ctx.strokeStyle = "red";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(col * cell_width, row * cell_height);
-                ctx.lineTo((col + 1) * cell_width, (row + 1) * cell_height);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo((col + 1) * cell_width, row * cell_height);
-                ctx.lineTo(col * cell_width, (row + 1) * cell_height);
-                ctx.stroke();
+                ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+                ctx.fillRect(col * cell_width, row * cell_height, cell_width, cell_height);
+
 
             }
         }
@@ -125,6 +118,18 @@ function processGame(g) {
         console.log("solve");
         Module._solve(g);
         gamePrint(g, nb_cols, nb_rows, ctx, cell_width, cell_height);
+    
+
+        if (Module._is_over(g)) {
+            var popup = document.getElementById("popup");
+            var closeButton = document.getElementById("close-button");
+            popup.style.display = "block";
+            closeButton.addEventListener("click", function() {
+              popup.style.display = "none";
+            });
+          }
+        
+
     });
 
     restart_button.addEventListener('click', function(e) {
