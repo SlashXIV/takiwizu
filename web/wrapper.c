@@ -59,6 +59,8 @@ bool is_immutable(cgame g, uint i, uint j) { return game_is_immutable(g, i, j); 
 EMSCRIPTEN_KEEPALIVE
 int has_error(cgame g, uint i, uint j) { return game_has_error(g, i, j); }
 
+
+
 /* ******************** Game Tools API ******************** */
 
 EMSCRIPTEN_KEEPALIVE
@@ -72,6 +74,9 @@ void undo(game g) { game_undo(g); }
 
 EMSCRIPTEN_KEEPALIVE
 void redo(game g) { game_redo(g); }
+
+EMSCRIPTEN_KEEPALIVE
+void game_clears(game g){ game_clear(g); }
 
 EMSCRIPTEN_KEEPALIVE
 game new_random(uint nb_rows, uint nb_cols, bool wrapping, bool uniq)

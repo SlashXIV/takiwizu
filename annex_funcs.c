@@ -331,7 +331,10 @@ void game_replace(game g, game g2) {
 void game_clear(game g) {
   for (int i = 0; i < game_nb_cols(g); i++) {
     for (int j = 0; j < game_nb_rows(g); j++) {
-      game_set_square(g, i, j, S_EMPTY);
+      square s = game_get_square(g, i, j);
+      if(!immutable_square(s)){
+        game_set_square(g, i, j, S_EMPTY);
+      }
     }
   }
 }

@@ -123,6 +123,9 @@ Module.onRuntimeInitialized = () => {
                 Module._solve(g);
                 break;
             
+            case "restart":
+                Module._game_clears(g);
+            
             
 
         }
@@ -143,6 +146,7 @@ Module.onRuntimeInitialized = () => {
         
         if (Module._is_over(g)) { // add a title in the page if the game is over
             game_end.innerHTML = "Jeu terminé !";
+            game_state.innerHTML = "";
             game_state.innerHTML = "";
             canvas.removeEventListener('click', null);
             Module._delete(g);
