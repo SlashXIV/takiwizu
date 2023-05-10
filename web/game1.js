@@ -129,6 +129,14 @@ function processGame(g) {
             });
           }
         
+          if (Module._is_over(g)) {
+            var popup2 = document.getElementById("popup2");
+            var closeButton = document.getElementById("close-button");
+            popup.style.display = "block";
+            closeButton.addEventListener("click", function() {
+              popup.style.display = "none";
+            });
+          }
 
     });
 
