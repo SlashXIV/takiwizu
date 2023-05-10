@@ -1,6 +1,6 @@
 Module.onRuntimeInitialized = () => { start(); };
     
-  //document.body.style.backgroundImage = "url('background2.jpg')";
+  document.body.style.backgroundImage = "url('/sprites/back.png')";
 
   function processGame(g, canvas, ctx, cell_width, cell_height) {
     
@@ -29,15 +29,31 @@ Module.onRuntimeInitialized = () => { start(); };
         }    
         ctx.fillRect(col * cell_width, row * cell_height, cell_width, cell_height);
         if (is_immutable){
-            // draw a red cross on the cell
-            ctx.strokeStyle = "red";
-            ctx.lineWidth = 2;
+            
+            ctx.fillStyle = "#8dc73f";
             ctx.beginPath();
-            ctx.moveTo(col * cell_width, row * cell_height);
-            ctx.lineTo((col + 1) * cell_width, (row + 1) * cell_height);
-            ctx.moveTo((col + 1) * cell_width, row * cell_height);
-            ctx.lineTo(col * cell_width, (row + 1) * cell_height);
-            ctx.stroke();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.5) * cell_height, 0.4 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#6a9a3c";
+            ctx.beginPath();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.5) * cell_height, 0.3 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#3d3d3b";
+            ctx.beginPath();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.6) * cell_height, 0.15 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
         }
         }
     }
@@ -169,18 +185,53 @@ Module.onRuntimeInitialized = () => { start(); };
           }    
           ctx.fillRect(col * cell_width, row * cell_height, cell_width, cell_height);
           if (is_immutable){
-              // draw a red cross on the cell
-              ctx.strokeStyle = "red";
-              ctx.lineWidth = 2;
-              ctx.beginPath();
-              ctx.moveTo(col * cell_width, row * cell_height);
-              ctx.lineTo((col + 1) * cell_width, (row + 1) * cell_height);
-              ctx.moveTo((col + 1) * cell_width, row * cell_height);
-              ctx.lineTo(col * cell_width, (row + 1) * cell_height);
-              ctx.stroke();
+              
+            ctx.fillStyle = "#8dc73f";
+            ctx.beginPath();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.5) * cell_height, 0.4 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#6a9a3c";
+            ctx.beginPath();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.5) * cell_height, 0.3 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = "#3d3d3b";
+            ctx.beginPath();
+            ctx.arc((col + 0.5) * cell_width, (row + 0.6) * cell_height, 0.15 * cell_width, 0, 2 * Math.PI);
+            ctx.fill();
           }
           }
       }
+
+      //if has_error then draw a red cross on the cell
+      for (var row = 0; row < nb_rows; row++) {
+        for (var col = 0; col < nb_cols; col++) {
+            if (Module._has_error(g, row, col)) {
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(col * cell_width, row * cell_height);
+                ctx.lineTo((col + 1) * cell_width, (row + 1) * cell_height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo((col + 1) * cell_width, row * cell_height);
+                ctx.lineTo(col * cell_width, (row + 1) * cell_height);
+                ctx.stroke();
+
+            }
+        }
+    }
     
       // apply border to each rect in the canvas 
       for (var row = 0; row < nb_rows; row++) {
