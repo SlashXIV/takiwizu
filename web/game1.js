@@ -1,6 +1,6 @@
 Module.onRuntimeInitialized = () => { start(); };
     
-  document.body.style.backgroundImage = "url('/sprites/back.png')";
+ 
 
   function processGame(g, canvas, ctx, cell_width, cell_height) {
     
@@ -248,6 +248,7 @@ Module.onRuntimeInitialized = () => { start(); };
 
 function start() {
     console.log("call start routine");
+
     var g = Module._new_random(6,6,false,false);
     var canvas = document.getElementById('result');
     var ctx = canvas.getContext('2d');
@@ -258,7 +259,8 @@ function start() {
     var cell_width = width / nb_cols;
     var cell_height = height / nb_rows;
     var game_state = document.getElementById("game_state");
-    game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
     game_state.style.color = "purple";
-    processGame(g, canvas, ctx, cell_width, cell_height, game_state);   
+    game_state.innerHTML = "Le jeu vient d'apparaître, tentez votre premier coup!";
+    processGame(g, canvas, ctx, cell_width, cell_height, game_state);  
+    
 }
