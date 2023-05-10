@@ -1,7 +1,12 @@
-#game_end {
-    color: #00ff55;
-}
+/* h1 in center */
+h1, h2 {
+    text-align: center;
+}   
 
-#game_in_process {
-    color: #ff0000;
-}
+canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  

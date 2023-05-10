@@ -135,27 +135,25 @@ Module.onRuntimeInitialized = () => {
        
 
 
-        updateGameState(game_state,game_end,game_in_process);
+        updateGameState(game_state);
         
     }   
         
     );
     
     
-    function updateGameState(game_state,game_end,game_in_process) {
+    function updateGameState(game_state) {
         
         if (Module._is_over(g)) { // add a title in the page if the game is over
-            game_end.innerHTML = "Jeu terminé !";
-            game_state.innerHTML = "";
-            game_state.innerHTML = "";
+            game_state.innerHTML = "Jeu terminé !";
             canvas.removeEventListener('click', null);
             Module._delete(g);
             
 
         } else {
-            game_state.innerHTML = "";
-            game_in_process.innerHTML = "Le jeu est en cours";
-            
+            game_state.innerHTML = "Le jeu est en cours";
+            //make game_state blink
+            game_state.style.color = "blue";
         }
 
 

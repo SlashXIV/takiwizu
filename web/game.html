@@ -4,25 +4,20 @@
     <head>
         <meta charset="utf-8">
         <title>Takiwizu Game Web</title>
-        <link rel="stylesheet" href="game.css">
+        <link rel="stylesheet" href="game.css">    
+        <script src="game.js"></script>
+        <script src="game1.js"> </script>
     </head>
     
     <body>
-        
-        <!-- ********************* script ********************* -->
-        
-        <script src="game.js"></script>
-        <script src="game1.js"> </script>
 
+    <h1>Takiwizu Game Web </h1>
 
-        <!-- ********************* html ********************* -->
-        
-        <h1>Takiwizu Game Web</h1>
     <h2 id="game_state"></h2>
-    <h2 id="game_end"></h2>
-    <h2 id="game_in_process"></h2>
- 
-    <!-- create me a radio button selector for black , white or empty -->
+
+    <canvas id="result" width="400" height="400"> </canvas>
+
+    
     <form id="square_selector">
         <input type="radio" name="square" value="black">
         <label for="black">Black Square</label><br>
@@ -48,7 +43,6 @@
         <p>Lors de l'utilisation de undo/redo/solve il faut cliquer sur une case non immuable pour rafraîchir le jeu</p><br>
 
 
-
     </form>
     
     <br>
@@ -57,9 +51,6 @@
 
     <p>Kiwi description.</p>
 
-    <canvas id="result" width="400" height="400"> </canvas>
-
-    <hr>
 
 
 </body>
