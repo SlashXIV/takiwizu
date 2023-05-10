@@ -42,17 +42,20 @@ Module.onRuntimeInitialized = () => { start(); };
 
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.04 * cell_width, 0, 2 * Math.PI);
             ctx.fill();
 
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.04 * cell_width, 0, 2 * Math.PI);
             ctx.fill();
 
             ctx.fillStyle = "#3d3d3b";
             ctx.beginPath();
-            ctx.arc((col + 0.5) * cell_width, (row + 0.6) * cell_height, 0.15 * cell_width, 0, 2 * Math.PI);
+            ctx.moveTo((col + 0.44) * cell_width, (row + 0.48) * cell_height);
+            ctx.lineTo((col + 0.56) * cell_width, (row + 0.48) * cell_height);
+            ctx.lineTo((col + 0.5) * cell_width, (row + 0.70) * cell_height);
+            ctx.closePath();
             ctx.fill();
         }
         }
@@ -198,17 +201,20 @@ Module.onRuntimeInitialized = () => { start(); };
 
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.arc((col + 0.4) * cell_width, (row + 0.4) * cell_height, 0.04 * cell_width, 0, 2 * Math.PI);
             ctx.fill();
 
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.05 * cell_width, 0, 2 * Math.PI);
+            ctx.arc((col + 0.6) * cell_width, (row + 0.4) * cell_height, 0.04 * cell_width, 0, 2 * Math.PI);
             ctx.fill();
 
             ctx.fillStyle = "#3d3d3b";
             ctx.beginPath();
-            ctx.arc((col + 0.5) * cell_width, (row + 0.6) * cell_height, 0.15 * cell_width, 0, 2 * Math.PI);
+            ctx.moveTo((col + 0.44) * cell_width, (row + 0.48) * cell_height);
+            ctx.lineTo((col + 0.56) * cell_width, (row + 0.48) * cell_height);
+            ctx.lineTo((col + 0.5) * cell_width, (row + 0.70) * cell_height);
+            ctx.closePath();
             ctx.fill();
           }
           }
